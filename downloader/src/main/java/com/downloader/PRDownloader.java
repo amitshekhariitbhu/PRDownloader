@@ -14,4 +14,11 @@
  *    limitations under the License.
  */
 
-include ':app', ':downloader'
+package com.downloader;
+
+/**
+ * Created by amitshekhar on 12/11/17.
+ */
+
+public class PRDownloader {
+}
