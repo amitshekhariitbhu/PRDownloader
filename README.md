@@ -1,4 +1,8 @@
-# PRDownloader - A pause-resume downloader library for Android
+<p align="center">
+<img alt="PRDownloader" src=https://raw.githubusercontent.com/MindorksOpenSource/PRDownloader/master/assets/prdownloader.png />
+</p>
+
+# PRDownloader - A file downloader library for Android with pause and resume support
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
