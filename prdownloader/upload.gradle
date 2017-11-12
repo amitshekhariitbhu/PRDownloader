@@ -21,7 +21,7 @@ def siteUrl = 'https://github.com/MindorksOpenSource/PRDownloader'
 def gitUrl = 'https://github.com/MindorksOpenSource/PRDownloader.git'
 
 group = "com.mindorks.android"
-version = '1.0.0'
+version = '0.0.1'
 
 install {
     repositories.mavenInstaller {
