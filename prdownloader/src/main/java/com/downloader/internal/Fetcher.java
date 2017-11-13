@@ -16,7 +16,6 @@
 
 package com.downloader.internal;
 
-import com.downloader.Priority;
 import com.downloader.Response;
 import com.downloader.request.DownloadRequest;
 
@@ -24,22 +23,22 @@ import com.downloader.request.DownloadRequest;
  * Created by amitshekhar on 13/11/17.
  */
 
-public class DownloadRunnable implements Runnable {
+public class Fetcher {
 
-    public final Priority priority;
-    public final int sequence;
-    public final DownloadRequest request;
+    private final DownloadRequest request;
 
-    public DownloadRunnable(DownloadRequest request) {
-        this.request = request;
-        this.priority = request.getPriority();
-        this.sequence = request.getSequenceNumber();
+    public static Fetcher create(DownloadRequest request) {
+        return new Fetcher(request);
     }
 
-    @Override
-    public void run() {
-        Fetcher fetcher = Fetcher.create(request);
-        Response response = fetcher.fetch();
+    private Fetcher(DownloadRequest request) {
+        this.request = request;
+    }
+
+    public Response fetch() {
+        Response response = new Response();
+
+        return response;
     }
 
 }

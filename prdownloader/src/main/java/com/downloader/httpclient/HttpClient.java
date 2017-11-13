@@ -14,30 +14,25 @@
  *    limitations under the License.
  */
 
-package com.downloader.internal;
+package com.downloader.httpclient;
 
-import com.downloader.Response;
 import com.downloader.request.DownloadRequest;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public class DownloadTask {
+public interface HttpClient {
 
-    private final DownloadRequest request;
+    void create(DownloadRequest request) throws IOException;
 
-    public static DownloadTask create(DownloadRequest request) {
-        return new DownloadTask(request);
-    }
+    void connect() throws IOException;
 
-    private DownloadTask(DownloadRequest request) {
-        this.request = request;
-    }
+    int getResponseCode() throws IOException;
 
-    public Response fetch() {
-        Response response = new Response();
-        return response;
-    }
+    InputStream getInputStream() throws IOException;
 
 }
