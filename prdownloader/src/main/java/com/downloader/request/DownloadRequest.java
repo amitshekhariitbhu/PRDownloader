@@ -18,6 +18,8 @@ package com.downloader.request;
 
 import com.downloader.Priority;
 
+import java.util.concurrent.Future;
+
 /**
  * Created by amitshekhar on 13/11/17.
  */
@@ -29,6 +31,8 @@ public class DownloadRequest {
     private String url;
     private String dirPath;
     private String fileName;
+    private int sequenceNumber;
+    private Future future;
 
     public DownloadRequest(DownloadRequestBuilder downloadRequestBuilder) {
         this.url = downloadRequestBuilder.url;
@@ -78,4 +82,19 @@ public class DownloadRequest {
         this.fileName = fileName;
     }
 
+    public int getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    public void setSequenceNumber(int sequenceNumber) {
+        this.sequenceNumber = sequenceNumber;
+    }
+
+    public Future getFuture() {
+        return future;
+    }
+
+    public void setFuture(Future future) {
+        this.future = future;
+    }
 }

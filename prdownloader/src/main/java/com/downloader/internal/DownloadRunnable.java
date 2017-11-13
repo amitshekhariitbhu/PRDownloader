@@ -17,6 +17,7 @@
 package com.downloader.internal;
 
 import com.downloader.Priority;
+import com.downloader.request.DownloadRequest;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -26,10 +27,12 @@ public class DownloadRunnable implements Runnable {
 
     public final Priority priority;
     public final int sequence;
+    public final DownloadRequest request;
 
-    public DownloadRunnable(Priority priority, int sequence) {
-        this.priority = priority;
-        this.sequence = sequence;
+    public DownloadRunnable(DownloadRequest request) {
+        this.request = request;
+        this.priority = request.getPriority();
+        this.sequence = request.getSequenceNumber();
     }
 
     @Override

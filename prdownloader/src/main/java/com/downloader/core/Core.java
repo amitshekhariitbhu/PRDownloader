@@ -22,31 +22,31 @@ package com.downloader.core;
 
 public class Core {
 
-    private static Core sInstance = null;
-    private final ExecutorSupplier mExecutorSupplier;
+    private static Core instance = null;
+    private final ExecutorSupplier executorSupplier;
 
     private Core() {
-        this.mExecutorSupplier = new DefaultExecutorSupplier();
+        this.executorSupplier = new DefaultExecutorSupplier();
     }
 
     public static Core getInstance() {
-        if (sInstance == null) {
+        if (instance == null) {
             synchronized (Core.class) {
-                if (sInstance == null) {
-                    sInstance = new Core();
+                if (instance == null) {
+                    instance = new Core();
                 }
             }
         }
-        return sInstance;
+        return instance;
     }
 
     public ExecutorSupplier getExecutorSupplier() {
-        return mExecutorSupplier;
+        return executorSupplier;
     }
 
     public static void shutDown() {
-        if (sInstance != null) {
-            sInstance = null;
+        if (instance != null) {
+            instance = null;
         }
     }
 }
