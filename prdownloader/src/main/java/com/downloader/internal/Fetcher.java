@@ -16,7 +16,10 @@
 
 package com.downloader.internal;
 
+import com.downloader.Constants;
+import com.downloader.Progress;
 import com.downloader.Response;
+import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.request.DownloadRequest;
@@ -38,6 +41,7 @@ public class Fetcher {
 
     private static final int BUFFER_SIZE = 1024 * 4;
     private final DownloadRequest request;
+    private ProgressHandler progressHandler;
 
     public static Fetcher create(DownloadRequest request) {
         return new Fetcher(request);
@@ -53,11 +57,17 @@ public class Fetcher {
 
         try {
 
+            if (request.getProgressListener() != null) {
+                progressHandler = new ProgressHandler(request.getProgressListener());
+            }
+
             HttpClient httpClient = new DefaultHttpClient();
 
             httpClient.connect(request);
 
             final int responseCode = httpClient.getResponseCode();
+
+            final long contentLength = httpClient.getContentLength();
 
             InputStream inputStream = httpClient.getInputStream();
 
@@ -97,6 +107,13 @@ public class Fetcher {
                     outputStream.write(buff, 0, byteCount);
 
                     request.setDownloadedBytes(request.getDownloadedBytes() + byteCount);
+
+                    if (progressHandler != null) {
+                        progressHandler
+                                .obtainMessage(Constants.UPDATE,
+                                        new Progress(request.getDownloadedBytes(),
+                                                contentLength)).sendToTarget();
+                    }
 
                     // flush and sync
                     outputStream.flush();

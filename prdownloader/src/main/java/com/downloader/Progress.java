@@ -14,21 +14,22 @@
  *    limitations under the License.
  */
 
-package com.downloader.request;
+package com.downloader;
 
-import com.downloader.Priority;
-import com.downloader.ProgressListener;
+import java.io.Serializable;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public interface RequestBuilder {
+public class Progress implements Serializable {
 
-    RequestBuilder setPriority(Priority priority);
+    public long currentBytes;
+    public long totalBytes;
 
-    RequestBuilder setTag(Object tag);
-
-    RequestBuilder setProgressListener(ProgressListener progressListener);
+    public Progress(long currentBytes, long totalBytes) {
+        this.currentBytes = currentBytes;
+        this.totalBytes = totalBytes;
+    }
 
 }

@@ -14,21 +14,14 @@
  *    limitations under the License.
  */
 
-package com.downloader.request;
-
-import com.downloader.Priority;
-import com.downloader.ProgressListener;
+package com.downloader;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public interface RequestBuilder {
+public interface ProgressListener {
 
-    RequestBuilder setPriority(Priority priority);
-
-    RequestBuilder setTag(Object tag);
-
-    RequestBuilder setProgressListener(ProgressListener progressListener);
+    void onProgress(Progress progress);
 
 }

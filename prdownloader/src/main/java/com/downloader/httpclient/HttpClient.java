@@ -35,4 +35,6 @@ public interface HttpClient {
 
     void addHeader(String key, String value);
 
+    long getContentLength();
+
 }

@@ -17,6 +17,7 @@
 package com.downloader.request;
 
 import com.downloader.Priority;
+import com.downloader.ProgressListener;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -29,6 +30,7 @@ public class DownloadRequestBuilder implements RequestBuilder {
     String fileName;
     Priority priority = Priority.MEDIUM;
     Object tag;
+    ProgressListener progressListener;
 
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
         this.url = url;
@@ -45,6 +47,12 @@ public class DownloadRequestBuilder implements RequestBuilder {
     @Override
     public DownloadRequestBuilder setTag(Object tag) {
         this.tag = tag;
+        return this;
+    }
+
+    @Override
+    public RequestBuilder setProgressListener(ProgressListener progressListener) {
+        this.progressListener = progressListener;
         return this;
     }
 

@@ -60,4 +60,14 @@ public class DefaultHttpClient implements HttpClient {
     public void addHeader(String key, String value) {
         connection.addRequestProperty(key, value);
     }
+
+    @Override
+    public long getContentLength() {
+        String length = connection.getHeaderField("Content-Length");
+        try {
+            return Long.parseLong(length);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
 }

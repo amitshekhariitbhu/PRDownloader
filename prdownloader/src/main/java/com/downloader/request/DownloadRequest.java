@@ -16,7 +16,10 @@
 
 package com.downloader.request;
 
+import com.downloader.DownloadListener;
 import com.downloader.Priority;
+import com.downloader.ProgressListener;
+import com.downloader.internal.DownloadRequestQueue;
 
 import java.util.concurrent.Future;
 
@@ -35,6 +38,8 @@ public class DownloadRequest {
     private Future future;
     private long downloadedBytes;
     private boolean paused;
+    private ProgressListener progressListener;
+    private DownloadListener downloadListener;
 
     public DownloadRequest(DownloadRequestBuilder downloadRequestBuilder) {
         this.url = downloadRequestBuilder.url;
@@ -42,6 +47,7 @@ public class DownloadRequest {
         this.fileName = downloadRequestBuilder.fileName;
         this.priority = downloadRequestBuilder.priority;
         this.tag = downloadRequestBuilder.tag;
+        this.progressListener = downloadRequestBuilder.progressListener;
     }
 
     public Priority getPriority() {
@@ -114,5 +120,18 @@ public class DownloadRequest {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    public ProgressListener getProgressListener() {
+        return progressListener;
+    }
+
+    public void setProgressListener(ProgressListener progressListener) {
+        this.progressListener = progressListener;
+    }
+
+    public void start(DownloadListener downloadListener) {
+        this.downloadListener = downloadListener;
+        DownloadRequestQueue.getInstance().addRequest(this);
     }
 }
