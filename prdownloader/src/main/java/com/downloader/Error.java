@@ -14,32 +14,11 @@
  *    limitations under the License.
  */
 
-package com.downloader.internal;
-
-import com.downloader.Priority;
-import com.downloader.Response;
-import com.downloader.request.DownloadRequest;
+package com.downloader;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public class DownloadRunnable implements Runnable {
-
-    public final Priority priority;
-    public final int sequence;
-    public final DownloadRequest request;
-
-    public DownloadRunnable(DownloadRequest request) {
-        this.request = request;
-        this.priority = request.getPriority();
-        this.sequence = request.getSequenceNumber();
-    }
-
-    @Override
-    public void run() {
-        DownloadTask downloadTask = DownloadTask.create(request);
-        Response response = downloadTask.fetch();
-    }
-
+public class Error {
 }
