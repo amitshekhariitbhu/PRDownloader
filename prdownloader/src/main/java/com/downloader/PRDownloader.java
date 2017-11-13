@@ -20,5 +20,51 @@ package com.downloader;
  * Created by amitshekhar on 12/11/17.
  */
 
+import android.content.Context;
+
+import com.downloader.core.Core;
+import com.downloader.internal.DownloadRequestQueue;
+import com.downloader.request.DownloadRequestBuilder;
+
+/**
+ * PRDownloader entry point.
+ * You must initialize this class before use. The simplest way is to just do
+ * {#code PRDownloader.initialize(context)}.
+ */
 public class PRDownloader {
+
+    /**
+     * private constructor to prevent instantiation of this class
+     */
+    private PRDownloader() {
+    }
+
+    /**
+     * Initializes PRDownloader with the default config.
+     *
+     * @param context The context
+     */
+    public static void initialize(Context context) {
+        DownloadRequestQueue.initialize();
+    }
+
+    /**
+     * Method to make download request
+     *
+     * @param url      The url on which request is to be made
+     * @param dirPath  The directory path on which file is to be saved
+     * @param fileName The file name with which file is to be saved
+     * @return the DownloadRequestBuilder
+     */
+    public static DownloadRequestBuilder download(String url, String dirPath, String fileName) {
+        return new DownloadRequestBuilder(url, dirPath, fileName);
+    }
+
+    /**
+     * Shuts PRDownloader down
+     */
+    public static void shutDown() {
+        Core.shutDown();
+    }
+
 }
