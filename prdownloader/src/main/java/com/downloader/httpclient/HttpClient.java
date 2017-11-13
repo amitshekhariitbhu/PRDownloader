@@ -27,12 +27,12 @@ import java.io.InputStream;
 
 public interface HttpClient {
 
-    void create(DownloadRequest request) throws IOException;
-
-    void connect() throws IOException;
+    void connect(DownloadRequest request) throws IOException;
 
     int getResponseCode() throws IOException;
 
     InputStream getInputStream() throws IOException;
+
+    void addHeader(String key, String value);
 
 }

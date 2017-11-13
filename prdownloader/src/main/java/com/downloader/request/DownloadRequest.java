@@ -33,6 +33,8 @@ public class DownloadRequest {
     private String fileName;
     private int sequenceNumber;
     private Future future;
+    private long downloadedBytes;
+    private boolean paused;
 
     public DownloadRequest(DownloadRequestBuilder downloadRequestBuilder) {
         this.url = downloadRequestBuilder.url;
@@ -96,5 +98,21 @@ public class DownloadRequest {
 
     public void setFuture(Future future) {
         this.future = future;
+    }
+
+    public long getDownloadedBytes() {
+        return downloadedBytes;
+    }
+
+    public void setDownloadedBytes(long downloadedBytes) {
+        this.downloadedBytes = downloadedBytes;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }

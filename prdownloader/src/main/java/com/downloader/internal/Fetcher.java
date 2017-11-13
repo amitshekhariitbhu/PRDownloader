@@ -17,7 +17,18 @@
 package com.downloader.internal;
 
 import com.downloader.Response;
+import com.downloader.httpclient.DefaultHttpClient;
+import com.downloader.httpclient.HttpClient;
 import com.downloader.request.DownloadRequest;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.util.Locale;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -25,6 +36,7 @@ import com.downloader.request.DownloadRequest;
 
 public class Fetcher {
 
+    private static final int BUFFER_SIZE = 1024 * 4;
     private final DownloadRequest request;
 
     public static Fetcher create(DownloadRequest request) {
@@ -36,7 +48,98 @@ public class Fetcher {
     }
 
     public Response fetch() {
+
         Response response = new Response();
+
+        try {
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            httpClient.connect(request);
+
+            final int responseCode = httpClient.getResponseCode();
+
+            InputStream inputStream = httpClient.getInputStream();
+
+            byte[] buff = new byte[BUFFER_SIZE];
+
+            BufferedOutputStream outputStream = null;
+
+            FileDescriptor fileDescriptor = null;
+
+            try {
+
+                final String path = request.getDirPath() + File.separator + request.getFileName();
+
+                File file = new File(path);
+
+                RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
+
+                fileDescriptor = randomAccess.getFD();
+
+                outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
+
+                if (request.getDownloadedBytes() != 0) {
+                    randomAccess.seek(request.getDownloadedBytes());
+                    final String range = String.format(Locale.ENGLISH,
+                            "bytes=%d-", request.getDownloadedBytes());
+                    httpClient.addHeader("Range", range);
+                }
+
+                do {
+
+                    int byteCount = inputStream.read(buff);
+
+                    if (byteCount == -1) {
+                        break;
+                    }
+
+                    outputStream.write(buff, 0, byteCount);
+
+                    request.setDownloadedBytes(request.getDownloadedBytes() + byteCount);
+
+                    // flush and sync
+                    outputStream.flush();
+
+                    fileDescriptor.sync();
+
+                    if (request.isPaused()) {
+                        return response;
+                    }
+
+                } while (true);
+
+                response.setSuccessful(true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null)
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                try {
+                    if (outputStream != null) {
+                        outputStream.flush();
+                    }
+                    if (fileDescriptor != null) {
+                        fileDescriptor.sync();
+                    }
+                } finally {
+                    if (outputStream != null)
+                        try {
+                            outputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return response;
     }

@@ -37,12 +37,8 @@ public class DefaultHttpClient implements HttpClient {
     }
 
     @Override
-    public void create(DownloadRequest request) throws IOException {
+    public void connect(DownloadRequest request) throws IOException {
         connection = new URL(request.getUrl()).openConnection();
-    }
-
-    @Override
-    public void connect() throws IOException {
         connection.connect();
     }
 
@@ -58,5 +54,10 @@ public class DefaultHttpClient implements HttpClient {
     @Override
     public InputStream getInputStream() throws IOException {
         return connection.getInputStream();
+    }
+
+    @Override
+    public void addHeader(String key, String value) {
+        connection.addRequestProperty(key, value);
     }
 }
