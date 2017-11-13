@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Locale;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -41,6 +42,11 @@ public class DefaultHttpClient implements HttpClient {
         connection = new URL(request.getUrl()).openConnection();
         connection.setReadTimeout(request.getReadTimeout());
         connection.setConnectTimeout(request.getConnectTimeout());
+        if (request.getDownloadedBytes() != 0) {
+            final String range = String.format(Locale.ENGLISH,
+                    "bytes=%d-", request.getDownloadedBytes());
+            connection.addRequestProperty("Range", range);
+        }
         connection.connect();
     }
 
@@ -56,11 +62,6 @@ public class DefaultHttpClient implements HttpClient {
     @Override
     public InputStream getInputStream() throws IOException {
         return connection.getInputStream();
-    }
-
-    @Override
-    public void addHeader(String key, String value) {
-        connection.addRequestProperty(key, value);
     }
 
     @Override

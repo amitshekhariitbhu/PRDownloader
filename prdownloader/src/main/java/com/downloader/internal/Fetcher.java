@@ -91,9 +91,6 @@ public class Fetcher {
 
                 if (request.getDownloadedBytes() != 0) {
                     randomAccess.seek(request.getDownloadedBytes());
-                    final String range = String.format(Locale.ENGLISH,
-                            "bytes=%d-", request.getDownloadedBytes());
-                    httpClient.addHeader("Range", range);
                 }
 
                 do {
@@ -121,6 +118,7 @@ public class Fetcher {
                     fileDescriptor.sync();
 
                     if (request.isPaused()) {
+                        response.setPaused(true);
                         return response;
                     }
 

@@ -52,6 +52,37 @@ public class DownloadRequestQueue {
         return sequenceGenerator.incrementAndGet();
     }
 
+    private DownloadRequest getWithDownloadId(int downloadId) {
+        for (DownloadRequest request : currentRequests) {
+            if (request.getDownloadId() == downloadId) {
+                return request;
+            }
+        }
+        return null;
+    }
+
+    public void pause(int downloadId) {
+        DownloadRequest request = getWithDownloadId(downloadId);
+        if (request != null) {
+            request.setPaused(true);
+        }
+    }
+
+    public void resume(int downloadId) {
+        DownloadRequest request = getWithDownloadId(downloadId);
+        if (request != null) {
+            try {
+                request.setPaused(false);
+                request.setFuture(Core.getInstance()
+                        .getExecutorSupplier()
+                        .forDownloadTasks()
+                        .submit(new DownloadRunnable(request)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public DownloadRequest addRequest(DownloadRequest request) {
         synchronized (currentRequests) {
             try {

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.downloader.DownloadListener;
 import com.downloader.Error;
 import com.downloader.PRDownloader;
+import com.downloader.PauseListener;
 import com.downloader.Progress;
 import com.downloader.ProgressListener;
 import com.sample.utils.Utils;
@@ -46,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             progressBarFour, progressBarFive, progressBarSix,
             progressBarSeven, progressBarEight, progressBarNine,
             progressBarTen;
+
+    int downloadIdOne;
+
+    boolean runningOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +106,29 @@ public class MainActivity extends AppCompatActivity {
         buttonOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonOne.setText("Downloading...");
-                PRDownloader.download(URL1, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
+
+                if (downloadIdOne != 0 && !runningOne) {
+                    PRDownloader.resume(downloadIdOne);
+                    buttonOne.setText("Pause");
+                    return;
+                }
+
+                if (downloadIdOne != 0 && runningOne) {
+                    PRDownloader.pause(downloadIdOne);
+                    return;
+                }
+
+                buttonOne.setText("Pause");
+                runningOne = true;
+                downloadIdOne = PRDownloader.download(URL1, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
                         .build()
+                        .setPauseListener(new PauseListener() {
+                            @Override
+                            public void onPause() {
+                                runningOne = false;
+                                buttonOne.setText("Resume");
+                            }
+                        })
                         .setProgressListener(new ProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {

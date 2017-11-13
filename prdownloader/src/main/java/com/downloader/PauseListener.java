@@ -14,25 +14,14 @@
  *    limitations under the License.
  */
 
-package com.downloader.httpclient;
-
-import com.downloader.request.DownloadRequest;
-
-import java.io.IOException;
-import java.io.InputStream;
+package com.downloader;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public interface HttpClient {
+public interface PauseListener {
 
-    void connect(DownloadRequest request) throws IOException;
-
-    int getResponseCode() throws IOException;
-
-    InputStream getInputStream() throws IOException;
-
-    long getContentLength();
+    void onPause();
 
 }

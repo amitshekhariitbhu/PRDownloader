@@ -61,6 +61,24 @@ public class PRDownloader {
     }
 
     /**
+     * Method to pause request with the given downloadId
+     *
+     * @param downloadId The downloadId with which request is to be paused
+     */
+    public static void pause(int downloadId) {
+        DownloadRequestQueue.getInstance().pause(downloadId);
+    }
+
+    /**
+     * Method to resume request with the given downloadId
+     *
+     * @param downloadId The downloadId with which request is to be resumed
+     */
+    public static void resume(int downloadId) {
+        DownloadRequestQueue.getInstance().resume(downloadId);
+    }
+
+    /**
      * Shuts PRDownloader down
      */
     public static void shutDown() {

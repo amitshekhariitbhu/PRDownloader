@@ -43,6 +43,8 @@ public class DownloadRunnable implements Runnable {
         Response response = fetcher.fetch();
         if (response.isSuccessful()) {
             request.deliverSuccess();
+        } else if (response.isPaused()) {
+            request.deliverPauseEvent();
         } else {
             request.deliverError(new Error());
         }
