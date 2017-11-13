@@ -29,6 +29,8 @@ public class DownloadRequestBuilder implements RequestBuilder {
     String fileName;
     Priority priority = Priority.MEDIUM;
     Object tag;
+    int readTimeout;
+    int connectTimeout;
 
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
         this.url = url;
@@ -45,6 +47,18 @@ public class DownloadRequestBuilder implements RequestBuilder {
     @Override
     public DownloadRequestBuilder setTag(Object tag) {
         this.tag = tag;
+        return this;
+    }
+
+    @Override
+    public DownloadRequestBuilder setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+        return this;
+    }
+
+    @Override
+    public DownloadRequestBuilder setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
         return this;
     }
 

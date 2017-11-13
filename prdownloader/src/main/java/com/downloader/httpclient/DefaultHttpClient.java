@@ -39,6 +39,8 @@ public class DefaultHttpClient implements HttpClient {
     @Override
     public void connect(DownloadRequest request) throws IOException {
         connection = new URL(request.getUrl()).openConnection();
+        connection.setReadTimeout(request.getReadTimeout());
+        connection.setConnectTimeout(request.getConnectTimeout());
         connection.connect();
     }
 

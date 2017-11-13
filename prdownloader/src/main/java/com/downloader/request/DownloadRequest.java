@@ -40,15 +40,23 @@ public class DownloadRequest {
     private Future future;
     private long downloadedBytes;
     private boolean paused;
+    private int readTimeout = 20_000;
+    private int connectTimeout = 20_000;
     private ProgressListener progressListener;
     private DownloadListener downloadListener;
 
-    public DownloadRequest(DownloadRequestBuilder downloadRequestBuilder) {
-        this.url = downloadRequestBuilder.url;
-        this.dirPath = downloadRequestBuilder.dirPath;
-        this.fileName = downloadRequestBuilder.fileName;
-        this.priority = downloadRequestBuilder.priority;
-        this.tag = downloadRequestBuilder.tag;
+    public DownloadRequest(DownloadRequestBuilder builder) {
+        this.url = builder.url;
+        this.dirPath = builder.dirPath;
+        this.fileName = builder.fileName;
+        this.priority = builder.priority;
+        this.tag = builder.tag;
+        if (builder.readTimeout != 0) {
+            this.readTimeout = builder.readTimeout;
+        }
+        if (builder.connectTimeout != 0) {
+            this.connectTimeout = builder.connectTimeout;
+        }
     }
 
     public Priority getPriority() {
@@ -121,6 +129,22 @@ public class DownloadRequest {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+    }
+
+    public int getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+    }
+
+    public int getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
     }
 
     public ProgressListener getProgressListener() {

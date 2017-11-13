@@ -14,22 +14,35 @@
  *    limitations under the License.
  */
 
-package com.downloader.request;
-
-import com.downloader.Priority;
+package com.downloader;
 
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
-public interface RequestBuilder {
+public class PRDownloaderConfig {
 
-    RequestBuilder setPriority(Priority priority);
+    private int readTimeout;
+    private int connectTimeout;
 
-    RequestBuilder setTag(Object tag);
+    public PRDownloaderConfig(PRDownloaderConfigBuilder builder) {
+        this.readTimeout = builder.readTimeout;
+        this.connectTimeout = builder.connectTimeout;
+    }
 
-    RequestBuilder setReadTimeout(int readTimeout);
+    public int getReadTimeout() {
+        return readTimeout;
+    }
 
-    RequestBuilder setConnectTimeout(int connectTimeout);
+    public void setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
+    }
 
+    public int getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
 }
