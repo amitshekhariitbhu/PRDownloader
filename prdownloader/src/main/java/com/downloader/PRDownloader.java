@@ -23,6 +23,7 @@ package com.downloader;
 import android.content.Context;
 
 import com.downloader.core.Core;
+import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.request.DownloadRequestBuilder;
 
 /**
@@ -44,7 +45,7 @@ public class PRDownloader {
      * @param context The context
      */
     public static void initialize(Context context) {
-
+        DownloadRequestQueue.initialize();
     }
 
     /**
