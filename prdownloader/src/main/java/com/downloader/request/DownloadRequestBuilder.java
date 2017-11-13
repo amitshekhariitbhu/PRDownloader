@@ -37,13 +37,13 @@ public class DownloadRequestBuilder implements RequestBuilder {
     }
 
     @Override
-    public RequestBuilder setPriority(Priority priority) {
+    public DownloadRequestBuilder setPriority(Priority priority) {
         this.priority = priority;
         return this;
     }
 
     @Override
-    public RequestBuilder setTag(Object tag) {
+    public DownloadRequestBuilder setTag(Object tag) {
         this.tag = tag;
         return this;
     }
