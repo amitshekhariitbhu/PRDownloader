@@ -41,6 +41,7 @@ public class DownloadRequest {
     private int sequenceNumber;
     private Future future;
     private long downloadedBytes;
+    private long totalBytes;
     private boolean paused;
     private int readTimeout = 20_000;
     private int connectTimeout = 20_000;
@@ -125,6 +126,14 @@ public class DownloadRequest {
 
     public void setDownloadedBytes(long downloadedBytes) {
         this.downloadedBytes = downloadedBytes;
+    }
+
+    public long getTotalBytes() {
+        return totalBytes;
+    }
+
+    public void setTotalBytes(long totalBytes) {
+        this.totalBytes = totalBytes;
     }
 
     public boolean isPaused() {
