@@ -32,4 +32,11 @@ public class Progress implements Serializable {
         this.totalBytes = totalBytes;
     }
 
+    @Override
+    public String toString() {
+        return "Progress{" +
+                "currentBytes=" + currentBytes +
+                ", totalBytes=" + totalBytes +
+                '}';
+    }
 }

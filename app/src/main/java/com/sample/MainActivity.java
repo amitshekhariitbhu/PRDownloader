@@ -18,12 +18,42 @@ package com.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.downloader.DownloadListener;
+import com.downloader.Error;
+import com.downloader.PRDownloader;
+import com.downloader.Progress;
+import com.downloader.ProgressListener;
+import com.sample.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String URL = "http://www.appsapk.com/downloading/latest/Facebook-119.0.0.23.70.apk";
+        PRDownloader.download(URL, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
+                .build()
+                .setProgressListener(new ProgressListener() {
+                    @Override
+                    public void onProgress(Progress progress) {
+                        Log.d(TAG, " onProgress :" + progress.toString());
+                    }
+                })
+                .start(new DownloadListener() {
+                    @Override
+                    public void onDownloadComplete() {
+                        Log.d(TAG, "onDownloadComplete");
+                    }
+
+                    @Override
+                    public void onError(Error error) {
+                        Log.d(TAG, "onError");
+                    }
+                });
     }
 }
