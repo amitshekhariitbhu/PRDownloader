@@ -17,8 +17,10 @@
 package com.downloader.request;
 
 import com.downloader.DownloadListener;
+import com.downloader.Error;
 import com.downloader.Priority;
 import com.downloader.ProgressListener;
+import com.downloader.core.Core;
 import com.downloader.internal.DownloadRequestQueue;
 
 import java.util.concurrent.Future;
@@ -133,5 +135,37 @@ public class DownloadRequest {
     public void start(DownloadListener downloadListener) {
         this.downloadListener = downloadListener;
         DownloadRequestQueue.getInstance().addRequest(this);
+    }
+
+    public void deliverError(final Error error) {
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
+            public void run() {
+                if (downloadListener != null) {
+                    downloadListener.onError(error);
+                }
+                finish();
+            }
+        });
+    }
+
+    public void deliverSuccess() {
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
+            public void run() {
+                if (downloadListener != null) {
+                    downloadListener.onDownloadComplete();
+                }
+                finish();
+            }
+        });
+    }
+
+    private void finish() {
+        destroy();
+        DownloadRequestQueue.getInstance().finish(this);
+    }
+
+    private void destroy() {
+        this.progressListener = null;
+        this.downloadListener = null;
     }
 }
