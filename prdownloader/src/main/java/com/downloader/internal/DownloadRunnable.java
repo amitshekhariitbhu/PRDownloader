@@ -16,6 +16,7 @@
 
 package com.downloader.internal;
 
+import com.downloader.Error;
 import com.downloader.Priority;
 import com.downloader.Response;
 import com.downloader.request.DownloadRequest;
@@ -40,6 +41,11 @@ public class DownloadRunnable implements Runnable {
     public void run() {
         Fetcher fetcher = Fetcher.create(request);
         Response response = fetcher.fetch();
+        if (response.isSuccessful()) {
+            request.deliverSuccess();
+        } else {
+            request.deliverError(new Error());
+        }
     }
 
 }
