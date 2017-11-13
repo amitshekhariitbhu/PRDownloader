@@ -103,12 +103,14 @@ public class MainActivity extends AppCompatActivity {
         final String URL10 = "http://www.appsapk.com/downloading/latest/Barcode%20Scanner-1.2.apk";
 
 
+        //60 mb apk
         buttonOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (downloadIdOne != 0 && !runningOne) {
                     PRDownloader.resume(downloadIdOne);
+                    runningOne = true;
                     buttonOne.setText("Pause");
                     return;
                 }
@@ -149,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Some error occurred", Toast.LENGTH_SHORT).show();
                                 tvProgressOne.setText("Progress");
                                 progressBarOne.setProgress(0);
+                                downloadIdOne = 0;
+                                runningOne = false;
                             }
                         });
             }
@@ -309,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //5 mb apk
         buttonSeven.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -402,6 +407,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //8 mb apk
         buttonTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
