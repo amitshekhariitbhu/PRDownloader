@@ -47,7 +47,6 @@ public class DownloadRequest {
         this.fileName = downloadRequestBuilder.fileName;
         this.priority = downloadRequestBuilder.priority;
         this.tag = downloadRequestBuilder.tag;
-        this.progressListener = downloadRequestBuilder.progressListener;
     }
 
     public Priority getPriority() {
@@ -126,8 +125,9 @@ public class DownloadRequest {
         return progressListener;
     }
 
-    public void setProgressListener(ProgressListener progressListener) {
+    public DownloadRequest setProgressListener(ProgressListener progressListener) {
         this.progressListener = progressListener;
+        return this;
     }
 
     public void start(DownloadListener downloadListener) {
