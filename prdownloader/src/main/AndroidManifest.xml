@@ -23,7 +23,7 @@
 
         <!-- C (see PRDownloaderProvider.java for more info)-->
         <provider
-            android:name=".common.provider.PRDownloaderProvider"
+            android:name=".provider.PRDownloaderProvider"
             android:authorities="${applicationId}.prdownloaderprovider"
             android:exported="false"></provider>
     </application>

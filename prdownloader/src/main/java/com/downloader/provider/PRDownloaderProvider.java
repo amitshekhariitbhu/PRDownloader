@@ -1,4 +1,4 @@
-package com.downloader.common.provider;
+package com.downloader.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
