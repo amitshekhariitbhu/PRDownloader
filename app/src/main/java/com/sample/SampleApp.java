@@ -29,7 +29,6 @@ public class SampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        PRDownloader.initialize(getApplicationContext());
     }
 
 }
