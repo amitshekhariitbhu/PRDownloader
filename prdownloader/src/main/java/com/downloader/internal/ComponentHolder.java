@@ -14,29 +14,33 @@
  *    limitations under the License.
  */
 
-package com.downloader.httpclient;
+package com.downloader.internal;
 
-import com.downloader.request.DownloadRequest;
-
-import java.io.IOException;
-import java.io.InputStream;
+import com.downloader.PRDownloaderConfig;
 
 /**
- * Created by amitshekhar on 13/11/17.
+ * Created by amitshekhar on 14/11/17.
  */
 
-public interface HttpClient {
+public class ComponentHolder {
 
-    void connect(DownloadRequest request) throws IOException;
+    private final static ComponentHolder INSTANCE = new ComponentHolder();
 
-    int getResponseCode() throws IOException;
+    private PRDownloaderConfig config;
 
-    InputStream getInputStream() throws IOException;
+    public static ComponentHolder getInstance() {
+        return INSTANCE;
+    }
 
-    long getContentLength();
+    public PRDownloaderConfig getConfig() {
+        if (config == null) {
+            config = PRDownloaderConfig.newBuilder().build();
+        }
+        return config;
+    }
 
-    String getResponseHeaderForKey(String key);
-
-    void close();
+    public void setConfig(PRDownloaderConfig config) {
+        this.config = config;
+    }
 
 }

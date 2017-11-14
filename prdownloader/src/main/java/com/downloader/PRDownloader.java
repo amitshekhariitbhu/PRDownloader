@@ -23,6 +23,7 @@ package com.downloader;
 import android.content.Context;
 
 import com.downloader.core.Core;
+import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.request.DownloadRequestBuilder;
 
@@ -45,6 +46,17 @@ public class PRDownloader {
      * @param context The context
      */
     public static void initialize(Context context) {
+        initialize(context, PRDownloaderConfig.newBuilder().build());
+    }
+
+    /**
+     * Initializes PRDownloader with the custom config.
+     *
+     * @param context The context
+     * @param config  The PRDownloaderConfig
+     */
+    public static void initialize(Context context, PRDownloaderConfig config) {
+        ComponentHolder.getInstance().setConfig(config);
         DownloadRequestQueue.initialize();
     }
 
