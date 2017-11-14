@@ -35,7 +35,7 @@ import com.downloader.PRDownloader;
  * then our library can't be used by different application.
  * <p>
  * Solution.
- * 1. Authorities - In manifest we have given authorities as "${applicationId}.prdownloaderprovider".
+ * 1. Authorities - In manifest we have given authorities as "${applicationId}.PRDownloaderProvider".
  * 2. ${applicationId} - In run time android will replace applicationId with application's appId (not our library's appId).
  * 3. For above step to happen - Application using our library must have set applicationId in build.gradle.
  * <p>
