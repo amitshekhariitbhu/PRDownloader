@@ -23,6 +23,7 @@ import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.request.DownloadRequest;
+import com.downloader.utils.Utils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -63,6 +64,8 @@ public class Fetcher {
             HttpClient httpClient = new DefaultHttpClient();
 
             httpClient.connect(request);
+
+            httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
 
             final int responseCode = httpClient.getResponseCode();
 
@@ -133,12 +136,18 @@ public class Fetcher {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if (inputStream != null)
+                try {
+                    httpClient.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (inputStream != null) {
                     try {
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
                 try {
                     if (outputStream != null) {
                         outputStream.flush();
@@ -157,6 +166,8 @@ public class Fetcher {
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 

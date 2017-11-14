@@ -73,4 +73,14 @@ public class DefaultHttpClient implements HttpClient {
             return -1;
         }
     }
+
+    @Override
+    public String getResponseHeaderForKey(String key) {
+        return connection.getHeaderField(key);
+    }
+
+    @Override
+    public void close() {
+        // no operation
+    }
 }

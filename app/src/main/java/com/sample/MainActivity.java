@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarNine = findViewById(R.id.progressBarNine);
         progressBarTen = findViewById(R.id.progressBarTen);
 
-        final String URL1 = "http://www.appsapk.com/downloading/latest/Facebook-119.0.0.23.70.apk";
+        final String URL1 = "http://www.colorado.edu/conflict/peace/download/peace_problem.ZIP";
         final String URL2 = "http://www.appsapk.com/downloading/latest/WeChat-6.5.7.apk";
         final String URL3 = "http://www.appsapk.com/downloading/latest/Instagram.apk";
         final String URL4 = "http://www.appsapk.com/downloading/latest/Emoji%20Flashlight%20-%20Brightest%20Flashlight%202018-2.0.1.apk";

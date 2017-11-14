@@ -16,8 +16,14 @@
 
 package com.downloader.utils;
 
+import com.downloader.httpclient.DefaultHttpClient;
+import com.downloader.httpclient.HttpClient;
+import com.downloader.request.DownloadRequest;
+
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -26,6 +32,8 @@ import java.security.NoSuchAlgorithmException;
  */
 
 public final class Utils {
+
+    private final static int MAX_REDIRECTION = 10;
 
     private Utils() {
         // no instance
@@ -55,4 +63,41 @@ public final class Utils {
         return hex.toString().hashCode();
 
     }
+
+    public static HttpClient getRedirectedConnectionIfAny(HttpClient httpClient,
+                                                          DownloadRequest request)
+            throws IOException, IllegalAccessException {
+        int redirectTimes = 0;
+        int code = httpClient.getResponseCode();
+        String location = httpClient.getResponseHeaderForKey("Location");
+
+        while (isRedirection(code)) {
+            if (location == null) {
+                throw new IllegalAccessException("Location is null");
+            }
+            httpClient.close();
+
+            request.setUrl(location);
+            httpClient = new DefaultHttpClient();
+            httpClient.connect(request);
+            code = httpClient.getResponseCode();
+            location = httpClient.getResponseHeaderForKey("Location");
+            redirectTimes++;
+            if (redirectTimes >= MAX_REDIRECTION) {
+                throw new IllegalAccessException("Max redirection done");
+            }
+        }
+
+        return httpClient;
+    }
+
+    private static boolean isRedirection(int code) {
+        return code == HttpURLConnection.HTTP_MOVED_PERM
+                || code == HttpURLConnection.HTTP_MOVED_TEMP
+                || code == HttpURLConnection.HTTP_SEE_OTHER
+                || code == HttpURLConnection.HTTP_MULT_CHOICE
+                || code == 307  // temporary redirect
+                || code == 308; // permanent redirect
+    }
+
 }
