@@ -18,10 +18,12 @@ package com.downloader.request;
 
 import com.downloader.DownloadListener;
 import com.downloader.Error;
+import com.downloader.PRDownloaderConfig;
 import com.downloader.PauseListener;
 import com.downloader.Priority;
 import com.downloader.ProgressListener;
 import com.downloader.core.Core;
+import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.utils.Utils;
 
@@ -43,25 +45,27 @@ public class DownloadRequest {
     private long downloadedBytes;
     private long totalBytes;
     private boolean paused;
-    private int readTimeout = 20_000;
-    private int connectTimeout = 20_000;
+    private int readTimeout;
+    private int connectTimeout;
     private ProgressListener progressListener;
     private DownloadListener downloadListener;
     private PauseListener pauseListener;
     private int downloadId;
 
-    public DownloadRequest(DownloadRequestBuilder builder) {
+    DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
         this.dirPath = builder.dirPath;
         this.fileName = builder.fileName;
         this.priority = builder.priority;
         this.tag = builder.tag;
-        if (builder.readTimeout != 0) {
-            this.readTimeout = builder.readTimeout;
-        }
-        if (builder.connectTimeout != 0) {
-            this.connectTimeout = builder.connectTimeout;
-        }
+        this.readTimeout =
+                builder.readTimeout != 0 ?
+                        builder.readTimeout :
+                        getReadTimeoutFromConfig();
+        this.connectTimeout =
+                builder.connectTimeout != 0 ?
+                        builder.connectTimeout :
+                        getConnectTimeoutFromConfig();
     }
 
     public Priority getPriority() {
@@ -230,5 +234,15 @@ public class DownloadRequest {
         this.progressListener = null;
         this.downloadListener = null;
         this.pauseListener = null;
+    }
+
+    private int getReadTimeoutFromConfig() {
+        PRDownloaderConfig config = ComponentHolder.getInstance().getConfig();
+        return config.getReadTimeout();
+    }
+
+    private int getConnectTimeoutFromConfig() {
+        PRDownloaderConfig config = ComponentHolder.getInstance().getConfig();
+        return config.getConnectTimeout();
     }
 }

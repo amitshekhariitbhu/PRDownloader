@@ -25,7 +25,7 @@ public class PRDownloaderConfig {
     private int readTimeout;
     private int connectTimeout;
 
-    public PRDownloaderConfig(Builder builder) {
+    private PRDownloaderConfig(Builder builder) {
         this.readTimeout = builder.readTimeout;
         this.connectTimeout = builder.connectTimeout;
     }
@@ -46,7 +46,12 @@ public class PRDownloaderConfig {
         this.connectTimeout = connectTimeout;
     }
 
-    public final class Builder {
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
         int readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
         int connectTimeout = Constants.DEFAULT_CONNECTION_TIMEOUT_IN_MILLS;
 
