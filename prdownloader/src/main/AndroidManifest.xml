@@ -17,14 +17,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.downloader">
 
-    <application android:label="@string/app_name">
-
+    <application>
         <!-- Providers. -->
 
         <!-- C (see PRDownloaderProvider.java for more info)-->
         <provider
             android:name=".provider.PRDownloaderProvider"
-            android:authorities="${applicationId}.prdownloaderprovider"
-            android:exported="false"></provider>
+            android:authorities="${applicationId}.PRDownloaderProvider"
+            android:exported="false" />
     </application>
+
 </manifest>
