@@ -26,6 +26,8 @@ public class Response {
 
     private boolean isSuccessful;
 
+    private boolean isPaused;
+
     public Error getError() {
         return error;
     }
@@ -42,4 +44,11 @@ public class Response {
         isSuccessful = successful;
     }
 
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
 }

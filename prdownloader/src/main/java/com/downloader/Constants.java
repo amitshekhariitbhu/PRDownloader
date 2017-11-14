@@ -28,4 +28,9 @@ public final class Constants {
 
     public static final int UPDATE = 0x01;
 
+
+    public static final int DEFAULT_READ_TIMEOUT_IN_MILLS =  20_000;
+    public static final int DEFAULT_CONNECTION_TIMEOUT_IN_MILLS =  20_000;
+
+
 }

@@ -31,7 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.util.Locale;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -67,7 +66,12 @@ public class Fetcher {
 
             final int responseCode = httpClient.getResponseCode();
 
-            final long contentLength = httpClient.getContentLength();
+            long contentLength = request.getTotalBytes();
+
+            if (contentLength == 0) {
+                contentLength = httpClient.getContentLength();
+                request.setTotalBytes(contentLength);
+            }
 
             InputStream inputStream = httpClient.getInputStream();
 
@@ -91,9 +95,6 @@ public class Fetcher {
 
                 if (request.getDownloadedBytes() != 0) {
                     randomAccess.seek(request.getDownloadedBytes());
-                    final String range = String.format(Locale.ENGLISH,
-                            "bytes=%d-", request.getDownloadedBytes());
-                    httpClient.addHeader("Range", range);
                 }
 
                 do {
@@ -121,6 +122,7 @@ public class Fetcher {
                     fileDescriptor.sync();
 
                     if (request.isPaused()) {
+                        response.setPaused(true);
                         return response;
                     }
 

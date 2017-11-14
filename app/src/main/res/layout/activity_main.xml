@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~    Copyright (C) 2017 MINDORKS NEXTGEN PRIVATE LIMITED
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,20 +14,468 @@
   ~    limitations under the License.
   -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sample.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewOne"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="1" />
+
+            <ProgressBar
+                android:id="@+id/progressBarOne"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewOne" />
+
+            <TextView
+                android:id="@+id/tvProgressOne"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonOne"
+                android:layout_toRightOf="@+id/textViewOne"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonOne"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarOne"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewTwo"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="2" />
+
+            <ProgressBar
+                android:id="@+id/progressBarTwo"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewTwo" />
+
+            <TextView
+                android:id="@+id/tvProgressTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonTwo"
+                android:layout_toRightOf="@+id/textViewTwo"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonTwo"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarTwo"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewThree"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="3" />
+
+            <ProgressBar
+                android:id="@+id/progressBarThree"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewThree" />
+
+            <TextView
+                android:id="@+id/tvProgressThree"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonThree"
+                android:layout_toRightOf="@+id/textViewThree"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonThree"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarThree"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewFour"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="4" />
+
+            <ProgressBar
+                android:id="@+id/progressBarFour"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewFour" />
+
+            <TextView
+                android:id="@+id/tvProgressFour"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonFour"
+                android:layout_toRightOf="@+id/textViewFour"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonFour"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarFour"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewFive"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="5" />
+
+            <ProgressBar
+                android:id="@+id/progressBarFive"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewFive" />
+
+            <TextView
+                android:id="@+id/tvProgressFive"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonFive"
+                android:layout_toRightOf="@+id/textViewFive"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonFive"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarFive"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewSix"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="6" />
+
+            <ProgressBar
+                android:id="@+id/progressBarSix"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewSix" />
+
+            <TextView
+                android:id="@+id/tvProgressSix"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonSix"
+                android:layout_toRightOf="@+id/textViewSix"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonSix"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarSix"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewSeven"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="7" />
+
+            <ProgressBar
+                android:id="@+id/progressBarSeven"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewSeven" />
+
+            <TextView
+                android:id="@+id/tvProgressSeven"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonSeven"
+                android:layout_toRightOf="@+id/textViewSeven"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonSeven"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarSeven"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewEight"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="8" />
+
+            <ProgressBar
+                android:id="@+id/progressBarEight"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewEight" />
+
+            <TextView
+                android:id="@+id/tvProgressEight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonEight"
+                android:layout_toRightOf="@+id/textViewEight"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonEight"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarEight"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewNine"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="9" />
+
+            <ProgressBar
+                android:id="@+id/progressBarNine"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewNine" />
+
+            <TextView
+                android:id="@+id/tvProgressNine"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonNine"
+                android:layout_toRightOf="@+id/textViewNine"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonNine"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarNine"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:id="@+id/textViewTen"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:text="10" />
+
+            <ProgressBar
+                android:id="@+id/progressBarTen"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@+id/textViewTen" />
+
+            <TextView
+                android:id="@+id/tvProgressTen"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/buttonTen"
+                android:layout_toRightOf="@+id/textViewTen"
+                android:padding="12dp"
+                android:text="Progress"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/buttonTen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/progressBarTen"
+                android:layout_margin="2dp"
+                android:text="START" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

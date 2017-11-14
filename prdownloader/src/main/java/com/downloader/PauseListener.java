@@ -20,22 +20,8 @@ package com.downloader;
  * Created by amitshekhar on 13/11/17.
  */
 
-public class PRDownloaderConfigBuilder {
+public interface PauseListener {
 
-    int readTimeout;
-    int connectTimeout;
+    void onPause();
 
-    public PRDownloaderConfigBuilder setReadTimeout(int readTimeout) {
-        this.readTimeout = readTimeout;
-        return this;
-    }
-
-    public PRDownloaderConfigBuilder setConnectTimeout(int connectTimeout) {
-        this.connectTimeout = connectTimeout;
-        return this;
-    }
-
-    public PRDownloaderConfig build() {
-        return new PRDownloaderConfig(this);
-    }
 }

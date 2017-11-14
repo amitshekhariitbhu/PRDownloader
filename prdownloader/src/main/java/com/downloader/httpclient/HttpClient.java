@@ -33,8 +33,6 @@ public interface HttpClient {
 
     InputStream getInputStream() throws IOException;
 
-    void addHeader(String key, String value);
-
     long getContentLength();
 
 }

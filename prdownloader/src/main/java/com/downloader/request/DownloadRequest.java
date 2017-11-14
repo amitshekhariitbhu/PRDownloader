@@ -18,10 +18,12 @@ package com.downloader.request;
 
 import com.downloader.DownloadListener;
 import com.downloader.Error;
+import com.downloader.PauseListener;
 import com.downloader.Priority;
 import com.downloader.ProgressListener;
 import com.downloader.core.Core;
 import com.downloader.internal.DownloadRequestQueue;
+import com.downloader.utils.Utils;
 
 import java.util.concurrent.Future;
 
@@ -39,11 +41,14 @@ public class DownloadRequest {
     private int sequenceNumber;
     private Future future;
     private long downloadedBytes;
+    private long totalBytes;
     private boolean paused;
     private int readTimeout = 20_000;
     private int connectTimeout = 20_000;
     private ProgressListener progressListener;
     private DownloadListener downloadListener;
+    private PauseListener pauseListener;
+    private int downloadId;
 
     public DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
@@ -123,6 +128,14 @@ public class DownloadRequest {
         this.downloadedBytes = downloadedBytes;
     }
 
+    public long getTotalBytes() {
+        return totalBytes;
+    }
+
+    public void setTotalBytes(long totalBytes) {
+        this.totalBytes = totalBytes;
+    }
+
     public boolean isPaused() {
         return paused;
     }
@@ -147,6 +160,14 @@ public class DownloadRequest {
         this.connectTimeout = connectTimeout;
     }
 
+    public int getDownloadId() {
+        return downloadId;
+    }
+
+    public void setDownloadId(int downloadId) {
+        this.downloadId = downloadId;
+    }
+
     public ProgressListener getProgressListener() {
         return progressListener;
     }
@@ -156,9 +177,16 @@ public class DownloadRequest {
         return this;
     }
 
-    public void start(DownloadListener downloadListener) {
+    public DownloadRequest setPauseListener(PauseListener pauseListener) {
+        this.pauseListener = pauseListener;
+        return this;
+    }
+
+    public int start(DownloadListener downloadListener) {
         this.downloadListener = downloadListener;
         DownloadRequestQueue.getInstance().addRequest(this);
+        downloadId = Utils.getUniqueId(url, dirPath, fileName);
+        return downloadId;
     }
 
     public void deliverError(final Error error) {
@@ -183,6 +211,16 @@ public class DownloadRequest {
         });
     }
 
+    public void deliverPauseEvent() {
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
+            public void run() {
+                if (pauseListener != null) {
+                    pauseListener.onPause();
+                }
+            }
+        });
+    }
+
     private void finish() {
         destroy();
         DownloadRequestQueue.getInstance().finish(this);
@@ -191,5 +229,6 @@ public class DownloadRequest {
     private void destroy() {
         this.progressListener = null;
         this.downloadListener = null;
+        this.pauseListener = null;
     }
 }
