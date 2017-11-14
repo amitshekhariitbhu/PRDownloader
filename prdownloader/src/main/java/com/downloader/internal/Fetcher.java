@@ -19,6 +19,7 @@ package com.downloader.internal;
 import com.downloader.Constants;
 import com.downloader.Progress;
 import com.downloader.Response;
+import com.downloader.database.DownloadModel;
 import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
@@ -61,6 +62,13 @@ public class Fetcher {
                 progressHandler = new ProgressHandler(request.getProgressListener());
             }
 
+            DownloadModel model = ComponentHolder.getInstance().getDbHelper().find(request.getDownloadId());
+
+            if (model != null) {
+                request.setTotalBytes(model.getTotalBytes());
+                request.setDownloadedBytes(model.getDownloadedBytes());
+            }
+
             HttpClient httpClient = new DefaultHttpClient();
 
             httpClient.connect(request);
@@ -74,6 +82,17 @@ public class Fetcher {
             if (contentLength == 0) {
                 contentLength = httpClient.getContentLength();
                 request.setTotalBytes(contentLength);
+            }
+
+            if (model == null) {
+                model = new DownloadModel();
+                model.setId(request.getDownloadId());
+                model.setUrl(request.getUrl());
+                model.setDirPath(request.getDirPath());
+                model.setFileName(request.getFileName());
+                model.setDownloadedBytes(request.getDownloadedBytes());
+                model.setTotalBytes(contentLength);
+                ComponentHolder.getInstance().getDbHelper().insert(model);
             }
 
             InputStream inputStream = httpClient.getInputStream();
@@ -124,6 +143,9 @@ public class Fetcher {
 
                     fileDescriptor.sync();
 
+                    ComponentHolder.getInstance().getDbHelper()
+                            .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+
                     if (request.isPaused()) {
                         response.setPaused(true);
                         return response;
@@ -132,6 +154,8 @@ public class Fetcher {
                 } while (true);
 
                 response.setSuccessful(true);
+
+                ComponentHolder.getInstance().getDbHelper().remove(request.getDownloadId());
 
             } catch (Exception e) {
                 e.printStackTrace();

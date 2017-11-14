@@ -17,6 +17,8 @@
 package com.downloader.internal;
 
 import com.downloader.PRDownloaderConfig;
+import com.downloader.database.DbHelper;
+import com.downloader.database.NoOpsDbHelper;
 
 /**
  * Created by amitshekhar on 14/11/17.
@@ -25,8 +27,8 @@ import com.downloader.PRDownloaderConfig;
 public class ComponentHolder {
 
     private final static ComponentHolder INSTANCE = new ComponentHolder();
-
     private PRDownloaderConfig config;
+    private DbHelper dbHelper;
 
     public static ComponentHolder getInstance() {
         return INSTANCE;
@@ -41,6 +43,17 @@ public class ComponentHolder {
 
     public void setConfig(PRDownloaderConfig config) {
         this.config = config;
+    }
+
+    public DbHelper getDbHelper() {
+        if (dbHelper == null) {
+            dbHelper = new NoOpsDbHelper();
+        }
+        return dbHelper;
+    }
+
+    public void setDbHelper(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
     }
 
 }

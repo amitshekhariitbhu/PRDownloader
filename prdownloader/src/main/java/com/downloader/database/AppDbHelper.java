@@ -22,18 +22,19 @@ public class AppDbHelper implements DbHelper {
     @Override
     public DownloadModel find(int id) {
         Cursor cursor = null;
-        DownloadModel model;
+        DownloadModel model = null;
         try {
             cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " +
-                    DownloadModel.ID + " = " + id, new String[]{String.valueOf(id)});
-            cursor.moveToFirst();
-            model = new DownloadModel();
-            model.setId(id);
-            model.setUrl(cursor.getString(cursor.getColumnIndex(DownloadModel.URL)));
-            model.setDirPath(cursor.getString(cursor.getColumnIndex(DownloadModel.DIR_PATH)));
-            model.setFileName(cursor.getString(cursor.getColumnIndex(DownloadModel.FILE_NAME)));
-            model.setTotalBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.TOTAL_BYTES)));
-            model.setDownloadedBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.DOWNLOADED_BYTES)));
+                    DownloadModel.ID + " = " + id, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                model = new DownloadModel();
+                model.setId(id);
+                model.setUrl(cursor.getString(cursor.getColumnIndex(DownloadModel.URL)));
+                model.setDirPath(cursor.getString(cursor.getColumnIndex(DownloadModel.DIR_PATH)));
+                model.setFileName(cursor.getString(cursor.getColumnIndex(DownloadModel.FILE_NAME)));
+                model.setTotalBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.TOTAL_BYTES)));
+                model.setDownloadedBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.DOWNLOADED_BYTES)));
+            }
         } finally {
             if (cursor != null) {
                 cursor.close();
