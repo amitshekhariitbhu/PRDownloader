@@ -22,7 +22,7 @@ public class AppDbHelper implements DbHelper {
     @Override
     public DownloadModel find(int id) {
         Cursor cursor = null;
-        DownloadModel model = null;
+        DownloadModel model;
         try {
             cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " +
                     DownloadModel.ID + " = " + id, new String[]{String.valueOf(id)});
