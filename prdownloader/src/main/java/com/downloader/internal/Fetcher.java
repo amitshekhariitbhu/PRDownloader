@@ -41,8 +41,12 @@ import java.io.RandomAccessFile;
 public class Fetcher {
 
     private static final int BUFFER_SIZE = 1024 * 4;
+    private static final long TIME_GAP_FOR_SYNC = 2000;
     private final DownloadRequest request;
     private ProgressHandler progressHandler;
+    private long lastSyncTime;
+    private BufferedOutputStream outputStream;
+    private FileDescriptor fileDescriptor;
 
     public static Fetcher create(DownloadRequest request) {
         return new Fetcher(request);
@@ -99,9 +103,6 @@ public class Fetcher {
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            BufferedOutputStream outputStream = null;
-
-            FileDescriptor fileDescriptor = null;
 
             try {
 
@@ -138,15 +139,12 @@ public class Fetcher {
                                                 contentLength)).sendToTarget();
                     }
 
-                    // flush and sync
-                    outputStream.flush();
-
-                    fileDescriptor.sync();
-
-                    ComponentHolder.getInstance().getDbHelper()
-                            .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+                    if (System.currentTimeMillis() - lastSyncTime > TIME_GAP_FOR_SYNC) {
+                        sync();
+                    }
 
                     if (request.isPaused()) {
+                        sync();
                         response.setPaused(true);
                         return response;
                     }
@@ -196,6 +194,14 @@ public class Fetcher {
         }
 
         return response;
+    }
+
+    private void sync() throws IOException {
+        outputStream.flush();
+        fileDescriptor.sync();
+        ComponentHolder.getInstance().getDbHelper()
+                .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+        lastSyncTime = System.currentTimeMillis();
     }
 
 }
