@@ -52,6 +52,8 @@ public class AppDbHelper implements DbHelper {
                 model.setTotalBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.TOTAL_BYTES)));
                 model.setDownloadedBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.DOWNLOADED_BYTES)));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (cursor != null) {
                 cursor.close();
@@ -62,46 +64,66 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public void insert(DownloadModel model) {
-        ContentValues values = new ContentValues();
-        values.put(DownloadModel.ID, model.getId());
-        values.put(DownloadModel.URL, model.getUrl());
-        values.put(DownloadModel.ETAG, model.getETag());
-        values.put(DownloadModel.DIR_PATH, model.getDirPath());
-        values.put(DownloadModel.FILE_NAME, model.getFileName());
-        values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
-        values.put(DownloadModel.DOWNLOADED_BYTES, model.getDownloadedBytes());
-        db.insert(TABLE_NAME, null, values);
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DownloadModel.ID, model.getId());
+            values.put(DownloadModel.URL, model.getUrl());
+            values.put(DownloadModel.ETAG, model.getETag());
+            values.put(DownloadModel.DIR_PATH, model.getDirPath());
+            values.put(DownloadModel.FILE_NAME, model.getFileName());
+            values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
+            values.put(DownloadModel.DOWNLOADED_BYTES, model.getDownloadedBytes());
+            db.insert(TABLE_NAME, null, values);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(DownloadModel model) {
-        ContentValues values = new ContentValues();
-        values.put(DownloadModel.URL, model.getUrl());
-        values.put(DownloadModel.ETAG, model.getETag());
-        values.put(DownloadModel.DIR_PATH, model.getDirPath());
-        values.put(DownloadModel.FILE_NAME, model.getFileName());
-        values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
-        values.put(DownloadModel.DOWNLOADED_BYTES, model.getDownloadedBytes());
-        db.update(TABLE_NAME, values, DownloadModel.ID + " = ? ",
-                new String[]{String.valueOf(model.getId())});
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DownloadModel.URL, model.getUrl());
+            values.put(DownloadModel.ETAG, model.getETag());
+            values.put(DownloadModel.DIR_PATH, model.getDirPath());
+            values.put(DownloadModel.FILE_NAME, model.getFileName());
+            values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
+            values.put(DownloadModel.DOWNLOADED_BYTES, model.getDownloadedBytes());
+            db.update(TABLE_NAME, values, DownloadModel.ID + " = ? ",
+                    new String[]{String.valueOf(model.getId())});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updateProgress(int id, long downloadedBytes) {
-        ContentValues values = new ContentValues();
-        values.put(DownloadModel.DOWNLOADED_BYTES, downloadedBytes);
-        db.update(TABLE_NAME, values, DownloadModel.ID + " = ? ",
-                new String[]{String.valueOf(id)});
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DownloadModel.DOWNLOADED_BYTES, downloadedBytes);
+            db.update(TABLE_NAME, values, DownloadModel.ID + " = ? ",
+                    new String[]{String.valueOf(id)});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remove(int id) {
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " +
-                DownloadModel.ID + " = " + id);
+        try {
+            db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " +
+                    DownloadModel.ID + " = " + id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void clear() {
-        db.delete(TABLE_NAME, null, null);
+        try {
+            db.delete(TABLE_NAME, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

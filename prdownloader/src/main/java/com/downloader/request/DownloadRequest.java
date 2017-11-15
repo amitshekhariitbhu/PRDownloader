@@ -222,6 +222,7 @@ public class DownloadRequest {
     }
 
     public void deliverSuccess() {
+        setStatus(Status.COMPLETED);
         Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                 .execute(new Runnable() {
                     public void run() {

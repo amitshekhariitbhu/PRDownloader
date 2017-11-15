@@ -52,7 +52,6 @@ public class DownloadRunnable implements Runnable {
         } else if (!response.isCancelled()) {
             request.deliverError(new Error());
         }
-        request.setStatus(Status.COMPLETED);
     }
 
 }
