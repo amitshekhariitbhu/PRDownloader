@@ -112,7 +112,7 @@ public final class Utils {
             throws IOException, IllegalAccessException {
         int redirectTimes = 0;
         int code = httpClient.getResponseCode();
-        String location = httpClient.getResponseHeaderForKey("Location");
+        String location = httpClient.getResponseHeader("Location");
 
         while (isRedirection(code)) {
             if (location == null) {
@@ -124,7 +124,7 @@ public final class Utils {
             httpClient = new DefaultHttpClient();
             httpClient.connect(request);
             code = httpClient.getResponseCode();
-            location = httpClient.getResponseHeaderForKey("Location");
+            location = httpClient.getResponseHeader("Location");
             redirectTimes++;
             if (redirectTimes >= MAX_REDIRECTION) {
                 throw new IllegalAccessException("Max redirection done");

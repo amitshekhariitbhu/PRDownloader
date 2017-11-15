@@ -109,7 +109,7 @@ public class Fetcher {
 
             responseCode = httpClient.getResponseCode();
 
-            eTag = httpClient.getResponseHeaderForKey("ETag");
+            eTag = httpClient.getResponseHeader("ETag");
 
             if (checkIfFreshStartRequiredAndStart(model)) {
                 model = null;

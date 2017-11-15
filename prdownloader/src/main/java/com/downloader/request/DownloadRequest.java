@@ -28,6 +28,8 @@ import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.utils.Utils;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -55,11 +57,13 @@ public class DownloadRequest {
     private int downloadId;
     private boolean isCancelled;
     private boolean isRunning;
+    private HashMap<String, List<String>> headerMap;
 
     DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
         this.dirPath = builder.dirPath;
         this.fileName = builder.fileName;
+        this.headerMap = builder.headerMap;
         this.priority = builder.priority;
         this.tag = builder.tag;
         this.readTimeout =
@@ -118,6 +122,10 @@ public class DownloadRequest {
 
     public void setSequenceNumber(int sequenceNumber) {
         this.sequenceNumber = sequenceNumber;
+    }
+
+    public HashMap<String, List<String>> getHeaders() {
+        return headerMap;
     }
 
     public Future getFuture() {

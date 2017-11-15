@@ -24,6 +24,8 @@ import com.downloader.Priority;
 
 public interface RequestBuilder {
 
+    RequestBuilder addHeader(String name, String value);
+
     RequestBuilder setPriority(Priority priority);
 
     RequestBuilder setTag(Object tag);

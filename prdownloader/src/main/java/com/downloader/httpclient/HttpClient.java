@@ -35,7 +35,7 @@ public interface HttpClient {
 
     long getContentLength();
 
-    String getResponseHeaderForKey(String key);
+    String getResponseHeader(String name);
 
     void close();
 
