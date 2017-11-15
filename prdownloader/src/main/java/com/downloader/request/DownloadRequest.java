@@ -23,6 +23,7 @@ import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Priority;
+import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
@@ -47,7 +48,6 @@ public class DownloadRequest {
     private Future future;
     private long downloadedBytes;
     private long totalBytes;
-    private boolean paused;
     private int readTimeout;
     private int connectTimeout;
     private OnProgressListener onProgressListener;
@@ -55,9 +55,8 @@ public class DownloadRequest {
     private OnPauseListener onPauseListener;
     private OnCancelListener onCancelListener;
     private int downloadId;
-    private boolean isCancelled;
-    private boolean isRunning;
     private HashMap<String, List<String>> headerMap;
+    private Status status;
 
     DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
@@ -152,30 +151,6 @@ public class DownloadRequest {
         this.totalBytes = totalBytes;
     }
 
-    public boolean isPaused() {
-        return paused;
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    public void setCancelled(boolean cancelled) {
-        isCancelled = cancelled;
-    }
-
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    public void setRunning(boolean running) {
-        isRunning = running;
-    }
-
     public int getReadTimeout() {
         return readTimeout;
     }
@@ -198,6 +173,14 @@ public class DownloadRequest {
 
     public void setDownloadId(int downloadId) {
         this.downloadId = downloadId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public OnProgressListener getOnProgressListener() {
@@ -273,8 +256,7 @@ public class DownloadRequest {
     }
 
     public void cancel() {
-        isCancelled = true;
-        isRunning = false;
+        status = Status.CANCELLED;
         if (future != null) {
             future.cancel(true);
         }

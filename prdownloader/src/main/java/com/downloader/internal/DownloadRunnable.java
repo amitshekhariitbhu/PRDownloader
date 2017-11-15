@@ -19,6 +19,7 @@ package com.downloader.internal;
 import com.downloader.Error;
 import com.downloader.Priority;
 import com.downloader.Response;
+import com.downloader.Status;
 import com.downloader.request.DownloadRequest;
 
 /**
@@ -39,7 +40,7 @@ public class DownloadRunnable implements Runnable {
 
     @Override
     public void run() {
-        request.setRunning(true);
+        request.setStatus(Status.RUNNING);
         Fetcher fetcher = Fetcher.create(request);
         Response response = fetcher.fetch();
         if (response.isSuccessful()) {
@@ -51,7 +52,7 @@ public class DownloadRunnable implements Runnable {
         } else if (!response.isCancelled()) {
             request.deliverError(new Error());
         }
-        request.setRunning(false);
+        request.setStatus(Status.COMPLETED);
     }
 
 }

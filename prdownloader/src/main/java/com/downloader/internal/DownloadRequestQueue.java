@@ -16,6 +16,7 @@
 
 package com.downloader.internal;
 
+import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.request.DownloadRequest;
 
@@ -65,7 +66,7 @@ public class DownloadRequestQueue {
     public void pause(int downloadId) {
         DownloadRequest request = getWithDownloadId(downloadId);
         if (request != null) {
-            request.setPaused(true);
+            request.setStatus(Status.PAUSED);
         }
     }
 
@@ -73,7 +74,7 @@ public class DownloadRequestQueue {
         DownloadRequest request = getWithDownloadId(downloadId);
         if (request != null) {
             try {
-                request.setPaused(false);
+                request.setStatus(Status.QUEUED);
                 request.setFuture(Core.getInstance()
                         .getExecutorSupplier()
                         .forDownloadTasks()
@@ -114,12 +115,12 @@ public class DownloadRequestQueue {
         }
     }
 
-    public boolean isRunning(int downloadId) {
+    public Status getStatus(int downloadId) {
         DownloadRequest request = getWithDownloadId(downloadId);
         if (request != null) {
-            return request.isRunning();
+            return request.getStatus();
         }
-        return false;
+        return Status.UNKNOWN;
     }
 
     public DownloadRequest addRequest(DownloadRequest request) {
@@ -131,6 +132,7 @@ public class DownloadRequestQueue {
             }
         }
         try {
+            request.setStatus(Status.QUEUED);
             request.setSequenceNumber(getSequenceNumber());
             request.setFuture(Core.getInstance()
                     .getExecutorSupplier()

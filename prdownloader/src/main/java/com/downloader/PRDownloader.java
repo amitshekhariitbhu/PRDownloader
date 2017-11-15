@@ -114,8 +114,8 @@ public class PRDownloader {
      * @param downloadId The downloadId with which request status is to be checked
      * @return the running status
      */
-    public static boolean isRunning(int downloadId) {
-        return DownloadRequestQueue.getInstance().isRunning(downloadId);
+    public static Status getStatus(int downloadId) {
+        return DownloadRequestQueue.getInstance().getStatus(downloadId);
     }
 
     /**

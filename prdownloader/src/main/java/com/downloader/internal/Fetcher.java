@@ -20,6 +20,7 @@ import com.downloader.Constants;
 import com.downloader.Error;
 import com.downloader.Progress;
 import com.downloader.Response;
+import com.downloader.Status;
 import com.downloader.database.DownloadModel;
 import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
@@ -70,10 +71,10 @@ public class Fetcher {
 
         Response response = new Response();
 
-        if (request.isCancelled()) {
+        if (request.getStatus() == Status.CANCELLED) {
             response.setCancelled(true);
             return response;
-        } else if (request.isPaused()) {
+        } else if (request.getStatus() == Status.PAUSED) {
             response.setPaused(true);
             return response;
         }
@@ -97,10 +98,10 @@ public class Fetcher {
 
             httpClient.connect(request);
 
-            if (request.isCancelled()) {
+            if (request.getStatus() == Status.CANCELLED) {
                 response.setCancelled(true);
                 return response;
-            } else if (request.isPaused()) {
+            } else if (request.getStatus() == Status.PAUSED) {
                 response.setPaused(true);
                 return response;
             }
@@ -135,10 +136,10 @@ public class Fetcher {
                 createAndInsertNewModel();
             }
 
-            if (request.isCancelled()) {
+            if (request.getStatus() == Status.CANCELLED) {
                 response.setCancelled(true);
                 return response;
-            } else if (request.isPaused()) {
+            } else if (request.getStatus() == Status.PAUSED) {
                 response.setPaused(true);
                 return response;
             }
@@ -159,10 +160,10 @@ public class Fetcher {
                 randomAccess.seek(request.getDownloadedBytes());
             }
 
-            if (request.isCancelled()) {
+            if (request.getStatus() == Status.CANCELLED) {
                 response.setCancelled(true);
                 return response;
-            } else if (request.isPaused()) {
+            } else if (request.getStatus() == Status.PAUSED) {
                 response.setPaused(true);
                 return response;
             }
@@ -183,10 +184,10 @@ public class Fetcher {
 
                 syncIfRequired();
 
-                if (request.isCancelled()) {
+                if (request.getStatus() == Status.CANCELLED) {
                     response.setCancelled(true);
                     return response;
-                } else if (request.isPaused()) {
+                } else if (request.getStatus() == Status.PAUSED) {
                     sync();
                     response.setPaused(true);
                     return response;
