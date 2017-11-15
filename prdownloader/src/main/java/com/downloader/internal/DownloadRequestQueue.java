@@ -30,9 +30,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DownloadRequestQueue {
 
+    private static DownloadRequestQueue instance;
     private final Set<DownloadRequest> currentRequests = new HashSet<>();
     private AtomicInteger sequenceGenerator = new AtomicInteger();
-    private static DownloadRequestQueue instance;
 
     public static void initialize() {
         getInstance();
@@ -112,6 +112,14 @@ public class DownloadRequestQueue {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isRunning(int downloadId) {
+        DownloadRequest request = getWithDownloadId(downloadId);
+        if (request != null) {
+            return request.isRunning();
+        }
+        return false;
     }
 
     public DownloadRequest addRequest(DownloadRequest request) {

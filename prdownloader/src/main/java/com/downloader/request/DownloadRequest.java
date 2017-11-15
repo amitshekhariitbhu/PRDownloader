@@ -54,6 +54,7 @@ public class DownloadRequest {
     private OnCancelListener onCancelListener;
     private int downloadId;
     private boolean isCancelled;
+    private boolean isRunning;
 
     DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
@@ -159,6 +160,14 @@ public class DownloadRequest {
         isCancelled = cancelled;
     }
 
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
     public int getReadTimeout() {
         return readTimeout;
     }
@@ -257,6 +266,7 @@ public class DownloadRequest {
 
     public void cancel() {
         isCancelled = true;
+        isRunning = false;
         if (future != null) {
             future.cancel(true);
         }

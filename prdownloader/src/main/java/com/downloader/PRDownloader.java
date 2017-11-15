@@ -109,6 +109,16 @@ public class PRDownloader {
     }
 
     /**
+     * Method to check the request with the given downloadId is running or not
+     *
+     * @param downloadId The downloadId with which request status is to be checked
+     * @return the running status
+     */
+    public static boolean isRunning(int downloadId) {
+        return DownloadRequestQueue.getInstance().isRunning(downloadId);
+    }
+
+    /**
      * Shuts PRDownloader down
      */
     public static void shutDown() {

@@ -39,6 +39,7 @@ public class DownloadRunnable implements Runnable {
 
     @Override
     public void run() {
+        request.setRunning(true);
         Fetcher fetcher = Fetcher.create(request);
         Response response = fetcher.fetch();
         if (response.isSuccessful()) {
@@ -50,6 +51,7 @@ public class DownloadRunnable implements Runnable {
         } else if (!response.isCancelled()) {
             request.deliverError(new Error());
         }
+        request.setRunning(false);
     }
 
 }
