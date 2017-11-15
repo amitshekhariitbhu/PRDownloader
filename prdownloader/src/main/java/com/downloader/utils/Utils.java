@@ -16,8 +16,10 @@
 
 package com.downloader.utils;
 
+import com.downloader.core.Core;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
+import com.downloader.internal.ComponentHolder;
 import com.downloader.request.DownloadRequest;
 
 import java.io.File;
@@ -64,6 +66,20 @@ public final class Utils {
                 oldFile.delete();
             }
         }
+    }
+
+    public static void deleteTempFileAndDatabaseEntryInBackground(final String path, final int downloadId) {
+        Core.getInstance().getExecutorSupplier().forBackgroundTasks()
+                .execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ComponentHolder.getInstance().getDbHelper().remove(downloadId);
+                        File file = new File(path);
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                });
     }
 
     public static int getUniqueId(String url, String dirPath, String fileName) {

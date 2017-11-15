@@ -24,12 +24,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.downloader.DownloadListener;
 import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
 import com.downloader.PRDownloader;
-import com.downloader.PauseListener;
 import com.downloader.Progress;
-import com.downloader.ProgressListener;
 import com.sample.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -124,14 +125,21 @@ public class MainActivity extends AppCompatActivity {
                 runningOne = true;
                 downloadIdOne = PRDownloader.download(URL1, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
                         .build()
-                        .setPauseListener(new PauseListener() {
+                        .setOnCancelListener(new OnCancelListener() {
+                            @Override
+                            public void onCancel() {
+                                runningOne = false;
+                                buttonOne.setText("Cancelled");
+                            }
+                        })
+                        .setOnPauseListener(new OnPauseListener() {
                             @Override
                             public void onPause() {
                                 runningOne = false;
                                 buttonOne.setText("Resume");
                             }
                         })
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -139,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarOne.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonOne.setText("Completed");
@@ -164,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonTwo.setText("Downloading...");
                 PRDownloader.download(URL2, Utils.getRootDirPath(getApplicationContext()), "wechat.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -172,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarTwo.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonTwo.setText("Completed");
@@ -195,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonThree.setText("Downloading...");
                 PRDownloader.download(URL3, Utils.getRootDirPath(getApplicationContext()), "instagram.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -203,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarThree.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonThree.setText("Completed");
@@ -226,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonFour.setText("Downloading...");
                 PRDownloader.download(URL4, Utils.getRootDirPath(getApplicationContext()), "emojiflashlight.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -234,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarFour.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonFour.setText("Completed");
@@ -257,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonFive.setText("Downloading...");
                 PRDownloader.download(URL5, Utils.getRootDirPath(getApplicationContext()), "screenrecorder.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -265,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarFive.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonFive.setText("Completed");
@@ -288,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSix.setText("Downloading...");
                 PRDownloader.download(URL6, Utils.getRootDirPath(getApplicationContext()), "callrecorder.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -296,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarSix.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonSix.setText("Completed");
@@ -320,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonSeven.setText("Downloading...");
                 PRDownloader.download(URL7, Utils.getRootDirPath(getApplicationContext()), "soundprofile.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -328,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarSeven.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonSeven.setText("Completed");
@@ -351,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonEight.setText("Downloading...");
                 PRDownloader.download(URL8, Utils.getRootDirPath(getApplicationContext()), "evernote.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -359,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarEight.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonEight.setText("Completed");
@@ -382,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonNine.setText("Downloading...");
                 PRDownloader.download(URL9, Utils.getRootDirPath(getApplicationContext()), "ucbrowser.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -390,7 +398,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarNine.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonNine.setText("Completed");
@@ -414,7 +422,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonTen.setText("Downloading...");
                 PRDownloader.download(URL10, Utils.getRootDirPath(getApplicationContext()), "barcodescanner.apk")
                         .build()
-                        .setProgressListener(new ProgressListener() {
+                        .setOnProgressListener(new OnProgressListener() {
                             @Override
                             public void onProgress(Progress progress) {
                                 Long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
@@ -422,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
                                 progressBarTen.setProgress(progressPercent.intValue());
                             }
                         })
-                        .start(new DownloadListener() {
+                        .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
                                 buttonTen.setText("Completed");

@@ -20,6 +20,7 @@ import com.downloader.core.Core;
 import com.downloader.request.DownloadRequest;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,6 +78,36 @@ public class DownloadRequestQueue {
                         .getExecutorSupplier()
                         .forDownloadTasks()
                         .submit(new DownloadRunnable(request)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void cancel(int downloadId) {
+        synchronized (currentRequests) {
+            try {
+                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
+                    DownloadRequest request = iterator.next();
+                    if (request.getDownloadId() == downloadId) {
+                        request.cancel();
+                        iterator.remove();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void cancelAll() {
+        synchronized (currentRequests) {
+            try {
+                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
+                    DownloadRequest request = iterator.next();
+                    request.cancel();
+                    iterator.remove();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

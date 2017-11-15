@@ -93,6 +93,22 @@ public class PRDownloader {
     }
 
     /**
+     * Method to cancel request with the given downloadId
+     *
+     * @param downloadId The downloadId with which request is to be cancelled
+     */
+    public static void cancel(int downloadId) {
+        DownloadRequestQueue.getInstance().cancel(downloadId);
+    }
+
+    /**
+     * Method to cancel all requests
+     */
+    public static void cancelAll() {
+        DownloadRequestQueue.getInstance().cancelAll();
+    }
+
+    /**
      * Shuts PRDownloader down
      */
     public static void shutDown() {

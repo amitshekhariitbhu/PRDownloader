@@ -70,10 +70,18 @@ public class Fetcher {
 
         Response response = new Response();
 
+        if (request.isCancelled()) {
+            response.setCancelled(true);
+            return response;
+        } else if (request.isPaused()) {
+            response.setPaused(true);
+            return response;
+        }
+
         try {
 
-            if (request.getProgressListener() != null) {
-                progressHandler = new ProgressHandler(request.getProgressListener());
+            if (request.getOnProgressListener() != null) {
+                progressHandler = new ProgressHandler(request.getOnProgressListener());
             }
 
             tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
@@ -88,6 +96,14 @@ public class Fetcher {
             httpClient = new DefaultHttpClient();
 
             httpClient.connect(request);
+
+            if (request.isCancelled()) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.isPaused()) {
+                response.setPaused(true);
+                return response;
+            }
 
             httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
 
@@ -119,6 +135,14 @@ public class Fetcher {
                 createAndInsertNewModel();
             }
 
+            if (request.isCancelled()) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.isPaused()) {
+                response.setPaused(true);
+                return response;
+            }
+
             inputStream = httpClient.getInputStream();
 
             byte[] buff = new byte[BUFFER_SIZE];
@@ -133,6 +157,14 @@ public class Fetcher {
 
             if (isResumeSupported && request.getDownloadedBytes() != 0) {
                 randomAccess.seek(request.getDownloadedBytes());
+            }
+
+            if (request.isCancelled()) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.isPaused()) {
+                response.setPaused(true);
+                return response;
             }
 
             do {
@@ -151,7 +183,10 @@ public class Fetcher {
 
                 syncIfRequired();
 
-                if (request.isPaused()) {
+                if (request.isCancelled()) {
+                    response.setCancelled(true);
+                    return response;
+                } else if (request.isPaused()) {
                     sync();
                     response.setPaused(true);
                     return response;

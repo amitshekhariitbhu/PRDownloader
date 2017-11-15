@@ -22,7 +22,7 @@ import android.os.Message;
 
 import com.downloader.Constants;
 import com.downloader.Progress;
-import com.downloader.ProgressListener;
+import com.downloader.OnProgressListener;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -30,9 +30,9 @@ import com.downloader.ProgressListener;
 
 public class ProgressHandler extends Handler {
 
-    private final ProgressListener listener;
+    private final OnProgressListener listener;
 
-    public ProgressHandler(ProgressListener listener) {
+    public ProgressHandler(OnProgressListener listener) {
         super(Looper.getMainLooper());
         this.listener = listener;
     }

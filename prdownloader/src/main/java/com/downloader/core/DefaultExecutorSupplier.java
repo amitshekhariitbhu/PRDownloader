@@ -19,6 +19,7 @@ package com.downloader.core;
 import android.os.Process;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -28,22 +29,29 @@ import java.util.concurrent.ThreadFactory;
 public class DefaultExecutorSupplier implements ExecutorSupplier {
 
     public static final int DEFAULT_MAX_NUM_THREADS = 2 * Runtime.getRuntime().availableProcessors() + 1;
-    private final DownloadExecutor mNetworkExecutor;
-    private final Executor mMainThreadExecutor;
+    private final DownloadExecutor networkExecutor;
+    private final Executor backgroundExecutor;
+    private final Executor mainThreadExecutor;
 
     public DefaultExecutorSupplier() {
         ThreadFactory backgroundPriorityThreadFactory = new PriorityThreadFactory(Process.THREAD_PRIORITY_BACKGROUND);
-        mNetworkExecutor = new DownloadExecutor(DEFAULT_MAX_NUM_THREADS, backgroundPriorityThreadFactory);
-        mMainThreadExecutor = new MainThreadExecutor();
+        networkExecutor = new DownloadExecutor(DEFAULT_MAX_NUM_THREADS, backgroundPriorityThreadFactory);
+        backgroundExecutor = Executors.newSingleThreadExecutor();
+        mainThreadExecutor = new MainThreadExecutor();
     }
 
     @Override
     public DownloadExecutor forDownloadTasks() {
-        return mNetworkExecutor;
+        return networkExecutor;
+    }
+
+    @Override
+    public Executor forBackgroundTasks() {
+        return backgroundExecutor;
     }
 
     @Override
     public Executor forMainThreadTasks() {
-        return mMainThreadExecutor;
+        return mainThreadExecutor;
     }
 }
