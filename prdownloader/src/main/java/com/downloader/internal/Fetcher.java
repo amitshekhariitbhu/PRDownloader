@@ -144,6 +144,8 @@ public class Fetcher {
                 return response;
             }
 
+            request.deliverStartEvent();
+
             inputStream = httpClient.getInputStream();
 
             byte[] buff = new byte[BUFFER_SIZE];

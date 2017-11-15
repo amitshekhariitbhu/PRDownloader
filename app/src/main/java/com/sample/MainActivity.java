@@ -29,6 +29,7 @@ import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
+import com.downloader.OnStartListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
 import com.sample.utils.Utils;
@@ -125,11 +126,10 @@ public class MainActivity extends AppCompatActivity {
                 runningOne = true;
                 downloadIdOne = PRDownloader.download(URL1, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
                         .build()
-                        .setOnCancelListener(new OnCancelListener() {
+                        .setOnStartListener(new OnStartListener() {
                             @Override
-                            public void onCancel() {
-                                runningOne = false;
-                                buttonOne.setText("Cancelled");
+                            public void onStart() {
+
                             }
                         })
                         .setOnPauseListener(new OnPauseListener() {
@@ -137,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
                             public void onPause() {
                                 runningOne = false;
                                 buttonOne.setText("Resume");
+                            }
+                        })
+                        .setOnCancelListener(new OnCancelListener() {
+                            @Override
+                            public void onCancel() {
+                                runningOne = false;
+                                buttonOne.setText("Cancelled");
                             }
                         })
                         .setOnProgressListener(new OnProgressListener() {
