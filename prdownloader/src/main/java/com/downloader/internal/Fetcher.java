@@ -17,6 +17,7 @@
 package com.downloader.internal;
 
 import com.downloader.Constants;
+import com.downloader.Error;
 import com.downloader.Progress;
 import com.downloader.Response;
 import com.downloader.database.DownloadModel;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.io.SyncFailedException;
+import java.net.HttpURLConnection;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -84,6 +86,13 @@ public class Fetcher {
             httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
 
             final int responseCode = httpClient.getResponseCode();
+
+            if (!isSuccessful(responseCode)) {
+                Error error = new Error();
+                error.setServerError(true);
+                response.setError(error);
+                return response;
+            }
 
             totalBytes = request.getTotalBytes();
 
@@ -143,12 +152,18 @@ public class Fetcher {
             removeCompletedModelFromDatabase();
 
         } catch (IOException | IllegalAccessException e) {
-            e.printStackTrace();
+            Error error = new Error();
+            error.setConnectionError(true);
+            response.setError(error);
         } finally {
             closeAllSafely();
         }
 
         return response;
+    }
+
+    private boolean isSuccessful(int code) {
+        return code == HttpURLConnection.HTTP_OK || code == HttpURLConnection.HTTP_PARTIAL;
     }
 
     private DownloadModel getDownloadModelIfAlreadyPresentInDatabase() {

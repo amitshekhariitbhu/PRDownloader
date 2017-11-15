@@ -23,9 +23,7 @@ package com.downloader;
 public class Response {
 
     private Error error;
-
     private boolean isSuccessful;
-
     private boolean isPaused;
 
     public Error getError() {
