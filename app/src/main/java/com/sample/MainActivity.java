@@ -32,6 +32,7 @@ import com.downloader.OnProgressListener;
 import com.downloader.OnStartListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
+import com.downloader.Status;
 import com.sample.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
             progressBarTen;
 
     int downloadIdOne;
-
-    boolean runningOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,39 +109,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (downloadIdOne != 0 && !runningOne) {
-                    PRDownloader.resume(downloadIdOne);
-                    runningOne = true;
-                    buttonOne.setText("Pause");
-                    return;
-                }
-
-                if (downloadIdOne != 0 && runningOne) {
+                if (Status.RUNNING == PRDownloader.getStatus(downloadIdOne)) {
                     PRDownloader.pause(downloadIdOne);
                     return;
                 }
 
-                buttonOne.setText("Pause");
-                runningOne = true;
+                buttonOne.setEnabled(false);
+
+                if (Status.PAUSED == PRDownloader.getStatus(downloadIdOne)) {
+                    PRDownloader.resume(downloadIdOne);
+                    return;
+                }
+
                 downloadIdOne = PRDownloader.download(URL1, Utils.getRootDirPath(getApplicationContext()), "facebook.apk")
                         .build()
                         .setOnStartListener(new OnStartListener() {
                             @Override
                             public void onStart() {
-
+                                buttonOne.setEnabled(true);
+                                buttonOne.setText("Pause");
                             }
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
                             public void onPause() {
-                                runningOne = false;
                                 buttonOne.setText("Resume");
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
                             public void onCancel() {
-                                runningOne = false;
                                 buttonOne.setText("Cancelled");
                             }
                         })
@@ -157,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
+                                buttonOne.setEnabled(false);
                                 buttonOne.setText("Completed");
                             }
 
@@ -167,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
                                 tvProgressOne.setText("Progress");
                                 progressBarOne.setProgress(0);
                                 downloadIdOne = 0;
-                                runningOne = false;
                             }
                         });
             }

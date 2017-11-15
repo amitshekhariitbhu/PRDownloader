@@ -59,12 +59,12 @@ public class Fetcher {
     private boolean isResumeSupported;
     private String tempPath;
 
-    public static Fetcher create(DownloadRequest request) {
-        return new Fetcher(request);
-    }
-
     private Fetcher(DownloadRequest request) {
         this.request = request;
+    }
+
+    public static Fetcher create(DownloadRequest request) {
+        return new Fetcher(request);
     }
 
     public Response fetch() {
