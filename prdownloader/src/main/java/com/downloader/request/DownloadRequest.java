@@ -21,6 +21,7 @@ import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
+import com.downloader.OnStartListener;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.Priority;
 import com.downloader.Status;
@@ -52,6 +53,7 @@ public class DownloadRequest {
     private int connectTimeout;
     private OnProgressListener onProgressListener;
     private OnDownloadListener onDownloadListener;
+    private OnStartListener onStartListener;
     private OnPauseListener onPauseListener;
     private OnCancelListener onCancelListener;
     private int downloadId;
@@ -187,6 +189,11 @@ public class DownloadRequest {
         return onProgressListener;
     }
 
+    public DownloadRequest setOnStartListener(OnStartListener onStartListener) {
+        this.onStartListener = onStartListener;
+        return this;
+    }
+
     public DownloadRequest setOnProgressListener(OnProgressListener onProgressListener) {
         this.onProgressListener = onProgressListener;
         return this;
@@ -234,6 +241,17 @@ public class DownloadRequest {
                 });
     }
 
+    public void deliverStartEvent() {
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                .execute(new Runnable() {
+                    public void run() {
+                        if (onStartListener != null) {
+                            onStartListener.onStart();
+                        }
+                    }
+                });
+    }
+
     public void deliverPauseEvent() {
         Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                 .execute(new Runnable() {
@@ -273,6 +291,7 @@ public class DownloadRequest {
     private void destroy() {
         this.onProgressListener = null;
         this.onDownloadListener = null;
+        this.onStartListener = null;
         this.onPauseListener = null;
         this.onCancelListener = null;
     }
