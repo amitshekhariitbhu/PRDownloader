@@ -39,6 +39,33 @@ public final class Utils {
         // no instance
     }
 
+    public static String getPath(String dirPath, String fileName) {
+        return dirPath + File.separator + fileName;
+    }
+
+    public static String getTempPath(String dirPath, String fileName) {
+        return getPath(dirPath, fileName) + ".temp";
+    }
+
+    public static void renameFileName(String oldPath, String newPath) throws IOException {
+        final File oldFile = new File(oldPath);
+        try {
+            final File newFile = new File(newPath);
+            if (newFile.exists()) {
+                if (!newFile.delete()) {
+                    throw new IOException("Deletion Failed");
+                }
+            }
+            if (!oldFile.renameTo(newFile)) {
+                throw new IOException("Rename Failed");
+            }
+        } finally {
+            if (oldFile.exists()) {
+                oldFile.delete();
+            }
+        }
+    }
+
     public static int getUniqueId(String url, String dirPath, String fileName) {
 
         String string = url + File.separator + dirPath + File.separator + fileName;

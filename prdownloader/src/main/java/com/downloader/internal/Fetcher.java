@@ -56,6 +56,7 @@ public class Fetcher {
     private int responseCode;
     private String eTag;
     private boolean isResumeSupported;
+    private String tempPath;
 
     public static Fetcher create(DownloadRequest request) {
         return new Fetcher(request);
@@ -120,9 +121,9 @@ public class Fetcher {
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            final String path = request.getDirPath() + File.separator + request.getFileName();
+            tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
 
-            File file = new File(path);
+            File file = new File(tempPath);
 
             RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
 
@@ -158,6 +159,10 @@ public class Fetcher {
 
             } while (true);
 
+            final String path = Utils.getPath(request.getDirPath(), request.getFileName());
+
+            Utils.renameFileName(tempPath, path);
+
             response.setSuccessful(true);
 
             if (isResumeSupported) {
@@ -165,6 +170,9 @@ public class Fetcher {
             }
 
         } catch (IOException | IllegalAccessException e) {
+            if (!isResumeSupported) {
+                deleteTempFile();
+            }
             Error error = new Error();
             error.setConnectionError(true);
             response.setError(error);
@@ -173,6 +181,13 @@ public class Fetcher {
         }
 
         return response;
+    }
+
+    private void deleteTempFile() {
+        File file = new File(tempPath);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     private boolean isSuccessful() {
