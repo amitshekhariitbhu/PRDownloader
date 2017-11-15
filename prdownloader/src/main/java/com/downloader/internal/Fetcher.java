@@ -76,6 +76,8 @@ public class Fetcher {
                 progressHandler = new ProgressHandler(request.getProgressListener());
             }
 
+            tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
+
             DownloadModel model = getDownloadModelIfAlreadyPresentInDatabase();
 
             if (model != null) {
@@ -120,8 +122,6 @@ public class Fetcher {
             inputStream = httpClient.getInputStream();
 
             byte[] buff = new byte[BUFFER_SIZE];
-
-            tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
 
             File file = new File(tempPath);
 
@@ -205,6 +205,7 @@ public class Fetcher {
             if (model != null) {
                 removeNoMoreNeededModelFromDatabase();
             }
+            deleteTempFile();
             request.setDownloadedBytes(0);
             request.setTotalBytes(0);
             httpClient = new DefaultHttpClient();
