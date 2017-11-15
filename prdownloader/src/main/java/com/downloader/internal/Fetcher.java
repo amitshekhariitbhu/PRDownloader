@@ -130,7 +130,7 @@ public class Fetcher {
 
             outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
 
-            if (request.getDownloadedBytes() != 0) {
+            if (isResumeSupported && request.getDownloadedBytes() != 0) {
                 randomAccess.seek(request.getDownloadedBytes());
             }
 
