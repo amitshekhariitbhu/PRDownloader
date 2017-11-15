@@ -23,6 +23,7 @@ package com.downloader;
 import android.content.Context;
 
 import com.downloader.core.Core;
+import com.downloader.database.AppDbHelper;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.request.DownloadRequestBuilder;
@@ -57,6 +58,7 @@ public class PRDownloader {
      */
     public static void initialize(Context context, PRDownloaderConfig config) {
         ComponentHolder.getInstance().setConfig(config);
+        ComponentHolder.getInstance().setDbHelper(new AppDbHelper(context));
         DownloadRequestQueue.initialize();
     }
 

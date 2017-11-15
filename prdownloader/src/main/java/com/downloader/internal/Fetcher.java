@@ -19,6 +19,7 @@ package com.downloader.internal;
 import com.downloader.Constants;
 import com.downloader.Progress;
 import com.downloader.Response;
+import com.downloader.database.DownloadModel;
 import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
@@ -32,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.io.SyncFailedException;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -40,8 +42,15 @@ import java.io.RandomAccessFile;
 public class Fetcher {
 
     private static final int BUFFER_SIZE = 1024 * 4;
+    private static final long TIME_GAP_FOR_SYNC = 2000;
     private final DownloadRequest request;
     private ProgressHandler progressHandler;
+    private long lastSyncTime;
+    private BufferedOutputStream outputStream;
+    private FileDescriptor fileDescriptor;
+    private InputStream inputStream;
+    private HttpClient httpClient;
+    private long totalBytes;
 
     public static Fetcher create(DownloadRequest request) {
         return new Fetcher(request);
@@ -61,7 +70,14 @@ public class Fetcher {
                 progressHandler = new ProgressHandler(request.getProgressListener());
             }
 
-            HttpClient httpClient = new DefaultHttpClient();
+            DownloadModel model = getDownloadModelIfAlreadyPresentInDatabase();
+
+            if (model != null) {
+                request.setTotalBytes(model.getTotalBytes());
+                request.setDownloadedBytes(model.getDownloadedBytes());
+            }
+
+            httpClient = new DefaultHttpClient();
 
             httpClient.connect(request);
 
@@ -69,109 +85,152 @@ public class Fetcher {
 
             final int responseCode = httpClient.getResponseCode();
 
-            long contentLength = request.getTotalBytes();
+            totalBytes = request.getTotalBytes();
 
-            if (contentLength == 0) {
-                contentLength = httpClient.getContentLength();
-                request.setTotalBytes(contentLength);
+            if (totalBytes == 0) {
+                totalBytes = httpClient.getContentLength();
+                request.setTotalBytes(totalBytes);
             }
 
-            InputStream inputStream = httpClient.getInputStream();
+            if (model == null) {
+                createAndInsertNewModel();
+            }
+
+            inputStream = httpClient.getInputStream();
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            BufferedOutputStream outputStream = null;
+            final String path = request.getDirPath() + File.separator + request.getFileName();
 
-            FileDescriptor fileDescriptor = null;
+            File file = new File(path);
 
-            try {
+            RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
 
-                final String path = request.getDirPath() + File.separator + request.getFileName();
+            fileDescriptor = randomAccess.getFD();
 
-                File file = new File(path);
+            outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
 
-                RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
-
-                fileDescriptor = randomAccess.getFD();
-
-                outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
-
-                if (request.getDownloadedBytes() != 0) {
-                    randomAccess.seek(request.getDownloadedBytes());
-                }
-
-                do {
-
-                    int byteCount = inputStream.read(buff);
-
-                    if (byteCount == -1) {
-                        break;
-                    }
-
-                    outputStream.write(buff, 0, byteCount);
-
-                    request.setDownloadedBytes(request.getDownloadedBytes() + byteCount);
-
-                    if (progressHandler != null) {
-                        progressHandler
-                                .obtainMessage(Constants.UPDATE,
-                                        new Progress(request.getDownloadedBytes(),
-                                                contentLength)).sendToTarget();
-                    }
-
-                    // flush and sync
-                    outputStream.flush();
-
-                    fileDescriptor.sync();
-
-                    if (request.isPaused()) {
-                        response.setPaused(true);
-                        return response;
-                    }
-
-                } while (true);
-
-                response.setSuccessful(true);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    httpClient.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if (inputStream != null) {
-                    try {
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    if (outputStream != null) {
-                        outputStream.flush();
-                    }
-                    if (fileDescriptor != null) {
-                        fileDescriptor.sync();
-                    }
-                } finally {
-                    if (outputStream != null)
-                        try {
-                            outputStream.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                }
+            if (request.getDownloadedBytes() != 0) {
+                randomAccess.seek(request.getDownloadedBytes());
             }
 
-        } catch (IOException e) {
+            do {
+
+                final int byteCount = inputStream.read(buff);
+
+                if (byteCount == -1) {
+                    break;
+                }
+
+                outputStream.write(buff, 0, byteCount);
+
+                request.setDownloadedBytes(request.getDownloadedBytes() + byteCount);
+
+                sendProgress();
+
+                syncIfRequired();
+
+                if (request.isPaused()) {
+                    sync();
+                    response.setPaused(true);
+                    return response;
+                }
+
+            } while (true);
+
+            response.setSuccessful(true);
+
+            removeCompletedModelFromDatabase();
+
+        } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } finally {
+            closeAllSafely();
         }
 
         return response;
+    }
+
+    private DownloadModel getDownloadModelIfAlreadyPresentInDatabase() {
+        return ComponentHolder.getInstance().getDbHelper().find(request.getDownloadId());
+    }
+
+    private void createAndInsertNewModel() {
+        DownloadModel model = new DownloadModel();
+        model.setId(request.getDownloadId());
+        model.setUrl(request.getUrl());
+        model.setDirPath(request.getDirPath());
+        model.setFileName(request.getFileName());
+        model.setDownloadedBytes(request.getDownloadedBytes());
+        model.setTotalBytes(totalBytes);
+        ComponentHolder.getInstance().getDbHelper().insert(model);
+    }
+
+    private void removeCompletedModelFromDatabase() {
+        ComponentHolder.getInstance().getDbHelper().remove(request.getDownloadId());
+    }
+
+    private void sendProgress() {
+        if (progressHandler != null) {
+            progressHandler
+                    .obtainMessage(Constants.UPDATE,
+                            new Progress(request.getDownloadedBytes(),
+                                    totalBytes)).sendToTarget();
+        }
+    }
+
+    private void syncIfRequired() throws IOException {
+        if (System.currentTimeMillis() - lastSyncTime > TIME_GAP_FOR_SYNC) {
+            sync();
+        }
+    }
+
+    private void sync() throws IOException {
+        outputStream.flush();
+        fileDescriptor.sync();
+        ComponentHolder.getInstance().getDbHelper()
+                .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+        lastSyncTime = System.currentTimeMillis();
+    }
+
+    private void closeAllSafely() {
+        if (httpClient != null) {
+            try {
+                httpClient.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (inputStream != null) {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            if (outputStream != null) {
+                try {
+                    outputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fileDescriptor != null) {
+                try {
+                    fileDescriptor.sync();
+                } catch (SyncFailedException e) {
+                    e.printStackTrace();
+                }
+            }
+        } finally {
+            if (outputStream != null)
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 
 }
