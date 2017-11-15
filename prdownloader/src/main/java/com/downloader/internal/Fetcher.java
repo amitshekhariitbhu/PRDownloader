@@ -20,6 +20,7 @@ import com.downloader.Constants;
 import com.downloader.Error;
 import com.downloader.Progress;
 import com.downloader.Response;
+import com.downloader.Status;
 import com.downloader.database.DownloadModel;
 import com.downloader.handler.ProgressHandler;
 import com.downloader.httpclient.DefaultHttpClient;
@@ -70,11 +71,21 @@ public class Fetcher {
 
         Response response = new Response();
 
+        if (request.getStatus() == Status.CANCELLED) {
+            response.setCancelled(true);
+            return response;
+        } else if (request.getStatus() == Status.PAUSED) {
+            response.setPaused(true);
+            return response;
+        }
+
         try {
 
-            if (request.getProgressListener() != null) {
-                progressHandler = new ProgressHandler(request.getProgressListener());
+            if (request.getOnProgressListener() != null) {
+                progressHandler = new ProgressHandler(request.getOnProgressListener());
             }
+
+            tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
 
             DownloadModel model = getDownloadModelIfAlreadyPresentInDatabase();
 
@@ -87,11 +98,19 @@ public class Fetcher {
 
             httpClient.connect(request);
 
+            if (request.getStatus() == Status.CANCELLED) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.getStatus() == Status.PAUSED) {
+                response.setPaused(true);
+                return response;
+            }
+
             httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
 
             responseCode = httpClient.getResponseCode();
 
-            eTag = httpClient.getResponseHeaderForKey("ETag");
+            eTag = httpClient.getResponseHeader("ETag");
 
             if (checkIfFreshStartRequiredAndStart(model)) {
                 model = null;
@@ -117,11 +136,17 @@ public class Fetcher {
                 createAndInsertNewModel();
             }
 
+            if (request.getStatus() == Status.CANCELLED) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.getStatus() == Status.PAUSED) {
+                response.setPaused(true);
+                return response;
+            }
+
             inputStream = httpClient.getInputStream();
 
             byte[] buff = new byte[BUFFER_SIZE];
-
-            tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
 
             File file = new File(tempPath);
 
@@ -133,6 +158,14 @@ public class Fetcher {
 
             if (isResumeSupported && request.getDownloadedBytes() != 0) {
                 randomAccess.seek(request.getDownloadedBytes());
+            }
+
+            if (request.getStatus() == Status.CANCELLED) {
+                response.setCancelled(true);
+                return response;
+            } else if (request.getStatus() == Status.PAUSED) {
+                response.setPaused(true);
+                return response;
             }
 
             do {
@@ -151,7 +184,10 @@ public class Fetcher {
 
                 syncIfRequired();
 
-                if (request.isPaused()) {
+                if (request.getStatus() == Status.CANCELLED) {
+                    response.setCancelled(true);
+                    return response;
+                } else if (request.getStatus() == Status.PAUSED) {
                     sync();
                     response.setPaused(true);
                     return response;
@@ -205,6 +241,7 @@ public class Fetcher {
             if (model != null) {
                 removeNoMoreNeededModelFromDatabase();
             }
+            deleteTempFile();
             request.setDownloadedBytes(0);
             request.setTotalBytes(0);
             httpClient = new DefaultHttpClient();

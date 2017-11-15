@@ -16,10 +16,12 @@
 
 package com.downloader.internal;
 
+import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.request.DownloadRequest;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -29,9 +31,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DownloadRequestQueue {
 
+    private static DownloadRequestQueue instance;
     private final Set<DownloadRequest> currentRequests = new HashSet<>();
     private AtomicInteger sequenceGenerator = new AtomicInteger();
-    private static DownloadRequestQueue instance;
 
     public static void initialize() {
         getInstance();
@@ -64,7 +66,7 @@ public class DownloadRequestQueue {
     public void pause(int downloadId) {
         DownloadRequest request = getWithDownloadId(downloadId);
         if (request != null) {
-            request.setPaused(true);
+            request.setStatus(Status.PAUSED);
         }
     }
 
@@ -72,7 +74,7 @@ public class DownloadRequestQueue {
         DownloadRequest request = getWithDownloadId(downloadId);
         if (request != null) {
             try {
-                request.setPaused(false);
+                request.setStatus(Status.QUEUED);
                 request.setFuture(Core.getInstance()
                         .getExecutorSupplier()
                         .forDownloadTasks()
@@ -81,6 +83,44 @@ public class DownloadRequestQueue {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void cancel(int downloadId) {
+        synchronized (currentRequests) {
+            try {
+                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
+                    DownloadRequest request = iterator.next();
+                    if (request.getDownloadId() == downloadId) {
+                        request.cancel();
+                        iterator.remove();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void cancelAll() {
+        synchronized (currentRequests) {
+            try {
+                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
+                    DownloadRequest request = iterator.next();
+                    request.cancel();
+                    iterator.remove();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Status getStatus(int downloadId) {
+        DownloadRequest request = getWithDownloadId(downloadId);
+        if (request != null) {
+            return request.getStatus();
+        }
+        return Status.UNKNOWN;
     }
 
     public DownloadRequest addRequest(DownloadRequest request) {
@@ -92,6 +132,7 @@ public class DownloadRequestQueue {
             }
         }
         try {
+            request.setStatus(Status.QUEUED);
             request.setSequenceNumber(getSequenceNumber());
             request.setFuture(Core.getInstance()
                     .getExecutorSupplier()

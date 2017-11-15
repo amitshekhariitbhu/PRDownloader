@@ -18,6 +18,10 @@ package com.downloader.request;
 
 import com.downloader.Priority;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by amitshekhar on 13/11/17.
  */
@@ -31,11 +35,28 @@ public class DownloadRequestBuilder implements RequestBuilder {
     Object tag;
     int readTimeout;
     int connectTimeout;
+    HashMap<String, List<String>> headerMap;
 
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
         this.url = url;
         this.dirPath = dirPath;
         this.fileName = fileName;
+    }
+
+    @Override
+    public DownloadRequestBuilder addHeader(String name, String value) {
+        if (headerMap == null) {
+            headerMap = new HashMap<>();
+        }
+        List<String> list = headerMap.get(name);
+        if (list == null) {
+            list = new ArrayList<>();
+            headerMap.put(name, list);
+        }
+        if (!list.contains(value)) {
+            list.add(value);
+        }
+        return this;
     }
 
     @Override

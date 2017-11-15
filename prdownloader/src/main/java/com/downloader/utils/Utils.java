@@ -16,8 +16,10 @@
 
 package com.downloader.utils;
 
+import com.downloader.core.Core;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
+import com.downloader.internal.ComponentHolder;
 import com.downloader.request.DownloadRequest;
 
 import java.io.File;
@@ -66,6 +68,20 @@ public final class Utils {
         }
     }
 
+    public static void deleteTempFileAndDatabaseEntryInBackground(final String path, final int downloadId) {
+        Core.getInstance().getExecutorSupplier().forBackgroundTasks()
+                .execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ComponentHolder.getInstance().getDbHelper().remove(downloadId);
+                        File file = new File(path);
+                        if (file.exists()) {
+                            file.delete();
+                        }
+                    }
+                });
+    }
+
     public static int getUniqueId(String url, String dirPath, String fileName) {
 
         String string = url + File.separator + dirPath + File.separator + fileName;
@@ -96,7 +112,7 @@ public final class Utils {
             throws IOException, IllegalAccessException {
         int redirectTimes = 0;
         int code = httpClient.getResponseCode();
-        String location = httpClient.getResponseHeaderForKey("Location");
+        String location = httpClient.getResponseHeader("Location");
 
         while (isRedirection(code)) {
             if (location == null) {
@@ -108,7 +124,7 @@ public final class Utils {
             httpClient = new DefaultHttpClient();
             httpClient.connect(request);
             code = httpClient.getResponseCode();
-            location = httpClient.getResponseHeaderForKey("Location");
+            location = httpClient.getResponseHeader("Location");
             redirectTimes++;
             if (redirectTimes >= MAX_REDIRECTION) {
                 throw new IllegalAccessException("Max redirection done");

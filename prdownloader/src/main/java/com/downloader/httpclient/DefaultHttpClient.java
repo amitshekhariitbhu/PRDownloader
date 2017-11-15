@@ -23,7 +23,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -45,6 +49,7 @@ public class DefaultHttpClient implements HttpClient {
         final String range = String.format(Locale.ENGLISH,
                 "bytes=%d-", request.getDownloadedBytes());
         connection.addRequestProperty("Range", range);
+        addHeaders(request);
         connection.connect();
     }
 
@@ -73,12 +78,29 @@ public class DefaultHttpClient implements HttpClient {
     }
 
     @Override
-    public String getResponseHeaderForKey(String key) {
-        return connection.getHeaderField(key);
+    public String getResponseHeader(String name) {
+        return connection.getHeaderField(name);
     }
 
     @Override
     public void close() {
         // no operation
     }
+
+    private void addHeaders(DownloadRequest request) {
+        final HashMap<String, List<String>> headers = request.getHeaders();
+        if (headers != null) {
+            Set<Map.Entry<String, List<String>>> entries = headers.entrySet();
+            for (Map.Entry<String, List<String>> entry : entries) {
+                String name = entry.getKey();
+                List<String> list = entry.getValue();
+                if (list != null) {
+                    for (String value : list) {
+                        connection.addRequestProperty(name, value);
+                    }
+                }
+            }
+        }
+    }
+
 }

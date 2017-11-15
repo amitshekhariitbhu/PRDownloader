@@ -14,20 +14,14 @@
  *    limitations under the License.
  */
 
-package com.downloader.core;
-
-import java.util.concurrent.Executor;
+package com.downloader;
 
 /**
- * Created by amitshekhar on 13/11/17.
+ * Created by amitshekhar on 15/11/17.
  */
 
-public interface ExecutorSupplier {
+public interface OnCancelListener {
 
-    DownloadExecutor forDownloadTasks();
-
-    Executor forBackgroundTasks();
-
-    Executor forMainThreadTasks();
+    void onCancel();
 
 }

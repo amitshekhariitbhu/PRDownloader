@@ -16,17 +16,21 @@
 
 package com.downloader.request;
 
-import com.downloader.DownloadListener;
 import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
 import com.downloader.PRDownloaderConfig;
-import com.downloader.PauseListener;
 import com.downloader.Priority;
-import com.downloader.ProgressListener;
+import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.utils.Utils;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -44,18 +48,21 @@ public class DownloadRequest {
     private Future future;
     private long downloadedBytes;
     private long totalBytes;
-    private boolean paused;
     private int readTimeout;
     private int connectTimeout;
-    private ProgressListener progressListener;
-    private DownloadListener downloadListener;
-    private PauseListener pauseListener;
+    private OnProgressListener onProgressListener;
+    private OnDownloadListener onDownloadListener;
+    private OnPauseListener onPauseListener;
+    private OnCancelListener onCancelListener;
     private int downloadId;
+    private HashMap<String, List<String>> headerMap;
+    private Status status;
 
     DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
         this.dirPath = builder.dirPath;
         this.fileName = builder.fileName;
+        this.headerMap = builder.headerMap;
         this.priority = builder.priority;
         this.tag = builder.tag;
         this.readTimeout =
@@ -116,6 +123,10 @@ public class DownloadRequest {
         this.sequenceNumber = sequenceNumber;
     }
 
+    public HashMap<String, List<String>> getHeaders() {
+        return headerMap;
+    }
+
     public Future getFuture() {
         return future;
     }
@@ -138,14 +149,6 @@ public class DownloadRequest {
 
     public void setTotalBytes(long totalBytes) {
         this.totalBytes = totalBytes;
-    }
-
-    public boolean isPaused() {
-        return paused;
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
     }
 
     public int getReadTimeout() {
@@ -172,57 +175,94 @@ public class DownloadRequest {
         this.downloadId = downloadId;
     }
 
-    public ProgressListener getProgressListener() {
-        return progressListener;
+    public Status getStatus() {
+        return status;
     }
 
-    public DownloadRequest setProgressListener(ProgressListener progressListener) {
-        this.progressListener = progressListener;
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public OnProgressListener getOnProgressListener() {
+        return onProgressListener;
+    }
+
+    public DownloadRequest setOnProgressListener(OnProgressListener onProgressListener) {
+        this.onProgressListener = onProgressListener;
         return this;
     }
 
-    public DownloadRequest setPauseListener(PauseListener pauseListener) {
-        this.pauseListener = pauseListener;
+    public DownloadRequest setOnPauseListener(OnPauseListener onPauseListener) {
+        this.onPauseListener = onPauseListener;
         return this;
     }
 
-    public int start(DownloadListener downloadListener) {
-        this.downloadListener = downloadListener;
+    public DownloadRequest setOnCancelListener(OnCancelListener onCancelListener) {
+        this.onCancelListener = onCancelListener;
+        return this;
+    }
+
+    public int start(OnDownloadListener onDownloadListener) {
+        this.onDownloadListener = onDownloadListener;
         DownloadRequestQueue.getInstance().addRequest(this);
         downloadId = Utils.getUniqueId(url, dirPath, fileName);
         return downloadId;
     }
 
     public void deliverError(final Error error) {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
-            public void run() {
-                if (downloadListener != null) {
-                    downloadListener.onError(error);
-                }
-                finish();
-            }
-        });
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                .execute(new Runnable() {
+                    public void run() {
+                        if (onDownloadListener != null) {
+                            onDownloadListener.onError(error);
+                        }
+                        finish();
+                    }
+                });
     }
 
     public void deliverSuccess() {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
-            public void run() {
-                if (downloadListener != null) {
-                    downloadListener.onDownloadComplete();
-                }
-                finish();
-            }
-        });
+        setStatus(Status.COMPLETED);
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                .execute(new Runnable() {
+                    public void run() {
+                        if (onDownloadListener != null) {
+                            onDownloadListener.onDownloadComplete();
+                        }
+                        finish();
+                    }
+                });
     }
 
     public void deliverPauseEvent() {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks().execute(new Runnable() {
-            public void run() {
-                if (pauseListener != null) {
-                    pauseListener.onPause();
-                }
-            }
-        });
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                .execute(new Runnable() {
+                    public void run() {
+                        if (onPauseListener != null) {
+                            onPauseListener.onPause();
+                        }
+                    }
+                });
+    }
+
+    public void deliverCancelEvent() {
+        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                .execute(new Runnable() {
+                    public void run() {
+                        if (onCancelListener != null) {
+                            onCancelListener.onCancel();
+                        }
+                    }
+                });
+    }
+
+    public void cancel() {
+        status = Status.CANCELLED;
+        if (future != null) {
+            future.cancel(true);
+        }
+        deliverCancelEvent();
+        Utils.deleteTempFileAndDatabaseEntryInBackground(Utils.getTempPath(dirPath, fileName), downloadId);
     }
 
     private void finish() {
@@ -231,9 +271,10 @@ public class DownloadRequest {
     }
 
     private void destroy() {
-        this.progressListener = null;
-        this.downloadListener = null;
-        this.pauseListener = null;
+        this.onProgressListener = null;
+        this.onDownloadListener = null;
+        this.onPauseListener = null;
+        this.onCancelListener = null;
     }
 
     private int getReadTimeoutFromConfig() {
