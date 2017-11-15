@@ -42,11 +42,9 @@ public class DefaultHttpClient implements HttpClient {
         connection = new URL(request.getUrl()).openConnection();
         connection.setReadTimeout(request.getReadTimeout());
         connection.setConnectTimeout(request.getConnectTimeout());
-        if (request.getDownloadedBytes() != 0) {
-            final String range = String.format(Locale.ENGLISH,
-                    "bytes=%d-", request.getDownloadedBytes());
-            connection.addRequestProperty("Range", range);
-        }
+        final String range = String.format(Locale.ENGLISH,
+                "bytes=%d-", request.getDownloadedBytes());
+        connection.addRequestProperty("Range", range);
         connection.connect();
     }
 
