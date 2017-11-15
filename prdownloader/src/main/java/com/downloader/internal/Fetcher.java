@@ -53,6 +53,9 @@ public class Fetcher {
     private InputStream inputStream;
     private HttpClient httpClient;
     private long totalBytes;
+    private int responseCode;
+    private String eTag;
+    private boolean isResumeSupported;
 
     public static Fetcher create(DownloadRequest request) {
         return new Fetcher(request);
@@ -85,14 +88,22 @@ public class Fetcher {
 
             httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
 
-            final int responseCode = httpClient.getResponseCode();
+            responseCode = httpClient.getResponseCode();
 
-            if (!isSuccessful(responseCode)) {
+            eTag = httpClient.getResponseHeaderForKey("ETag");
+
+            if (checkIfFreshStartRequiredAndStart(model)) {
+                model = null;
+            }
+
+            if (!isSuccessful()) {
                 Error error = new Error();
                 error.setServerError(true);
                 response.setError(error);
                 return response;
             }
+
+            setResumeSupportedOrNot();
 
             totalBytes = request.getTotalBytes();
 
@@ -101,7 +112,7 @@ public class Fetcher {
                 request.setTotalBytes(totalBytes);
             }
 
-            if (model == null) {
+            if (isResumeSupported && model == null) {
                 createAndInsertNewModel();
             }
 
@@ -149,7 +160,9 @@ public class Fetcher {
 
             response.setSuccessful(true);
 
-            removeCompletedModelFromDatabase();
+            if (isResumeSupported) {
+                removeNoMoreNeededModelFromDatabase();
+            }
 
         } catch (IOException | IllegalAccessException e) {
             Error error = new Error();
@@ -162,8 +175,35 @@ public class Fetcher {
         return response;
     }
 
-    private boolean isSuccessful(int code) {
-        return code == HttpURLConnection.HTTP_OK || code == HttpURLConnection.HTTP_PARTIAL;
+    private boolean isSuccessful() {
+        return responseCode >= HttpURLConnection.HTTP_OK
+                && responseCode < HttpURLConnection.HTTP_MULT_CHOICE;
+    }
+
+    private void setResumeSupportedOrNot() {
+        isResumeSupported = (responseCode == HttpURLConnection.HTTP_PARTIAL);
+    }
+
+    private boolean checkIfFreshStartRequiredAndStart(DownloadModel model) throws IOException,
+            IllegalAccessException {
+        if (responseCode == Constants.HTTP_RANGE_NOT_SATISFIABLE || isETagChanged(model)) {
+            if (model != null) {
+                removeNoMoreNeededModelFromDatabase();
+            }
+            request.setDownloadedBytes(0);
+            request.setTotalBytes(0);
+            httpClient = new DefaultHttpClient();
+            httpClient.connect(request);
+            httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
+            responseCode = httpClient.getResponseCode();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isETagChanged(DownloadModel model) {
+        return !(eTag == null || model == null || model.getETag() == null)
+                && !model.getETag().equals(eTag);
     }
 
     private DownloadModel getDownloadModelIfAlreadyPresentInDatabase() {
@@ -174,6 +214,7 @@ public class Fetcher {
         DownloadModel model = new DownloadModel();
         model.setId(request.getDownloadId());
         model.setUrl(request.getUrl());
+        model.setETag(eTag);
         model.setDirPath(request.getDirPath());
         model.setFileName(request.getFileName());
         model.setDownloadedBytes(request.getDownloadedBytes());
@@ -181,7 +222,7 @@ public class Fetcher {
         ComponentHolder.getInstance().getDbHelper().insert(model);
     }
 
-    private void removeCompletedModelFromDatabase() {
+    private void removeNoMoreNeededModelFromDatabase() {
         ComponentHolder.getInstance().getDbHelper().remove(request.getDownloadId());
     }
 
@@ -203,8 +244,10 @@ public class Fetcher {
     private void sync() throws IOException {
         outputStream.flush();
         fileDescriptor.sync();
-        ComponentHolder.getInstance().getDbHelper()
-                .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+        if (isResumeSupported) {
+            ComponentHolder.getInstance().getDbHelper()
+                    .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+        }
         lastSyncTime = System.currentTimeMillis();
     }
 

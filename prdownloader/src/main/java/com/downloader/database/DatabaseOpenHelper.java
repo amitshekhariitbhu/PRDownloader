@@ -24,6 +24,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 AppDbHelper.TABLE_NAME + "( " +
                 DownloadModel.ID + " INTEGER PRIMARY KEY, " +
                 DownloadModel.URL + " VARCHAR, " +
+                DownloadModel.ETAG + " VARCHAR, " +
                 DownloadModel.DIR_PATH + " VARCHAR, " +
                 DownloadModel.FILE_NAME + " VARCHAR, " +
                 DownloadModel.TOTAL_BYTES + " INTEGER, " +

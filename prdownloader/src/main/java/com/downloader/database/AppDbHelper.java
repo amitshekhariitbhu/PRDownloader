@@ -30,6 +30,7 @@ public class AppDbHelper implements DbHelper {
                 model = new DownloadModel();
                 model.setId(id);
                 model.setUrl(cursor.getString(cursor.getColumnIndex(DownloadModel.URL)));
+                model.setETag(cursor.getString(cursor.getColumnIndex(DownloadModel.ETAG)));
                 model.setDirPath(cursor.getString(cursor.getColumnIndex(DownloadModel.DIR_PATH)));
                 model.setFileName(cursor.getString(cursor.getColumnIndex(DownloadModel.FILE_NAME)));
                 model.setTotalBytes(cursor.getLong(cursor.getColumnIndex(DownloadModel.TOTAL_BYTES)));
@@ -48,6 +49,7 @@ public class AppDbHelper implements DbHelper {
         ContentValues values = new ContentValues();
         values.put(DownloadModel.ID, model.getId());
         values.put(DownloadModel.URL, model.getUrl());
+        values.put(DownloadModel.ETAG, model.getETag());
         values.put(DownloadModel.DIR_PATH, model.getDirPath());
         values.put(DownloadModel.FILE_NAME, model.getFileName());
         values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
@@ -59,6 +61,7 @@ public class AppDbHelper implements DbHelper {
     public void update(DownloadModel model) {
         ContentValues values = new ContentValues();
         values.put(DownloadModel.URL, model.getUrl());
+        values.put(DownloadModel.ETAG, model.getETag());
         values.put(DownloadModel.DIR_PATH, model.getDirPath());
         values.put(DownloadModel.FILE_NAME, model.getFileName());
         values.put(DownloadModel.TOTAL_BYTES, model.getTotalBytes());
