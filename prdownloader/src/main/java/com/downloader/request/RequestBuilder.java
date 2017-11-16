@@ -34,4 +34,6 @@ public interface RequestBuilder {
 
     RequestBuilder setConnectTimeout(int connectTimeout);
 
+    RequestBuilder setUserAgent(String userAgent);
+
 }

@@ -16,6 +16,7 @@
 
 package com.downloader.httpclient;
 
+import com.downloader.Constants;
 import com.downloader.request.DownloadRequest;
 
 import java.io.IOException;
@@ -54,7 +55,8 @@ public class DefaultHttpClient implements HttpClient {
         connection.setConnectTimeout(request.getConnectTimeout());
         final String range = String.format(Locale.ENGLISH,
                 "bytes=%d-", request.getDownloadedBytes());
-        connection.addRequestProperty("Range", range);
+        connection.addRequestProperty(Constants.RANGE, range);
+        connection.addRequestProperty(Constants.USER_AGENT, request.getUserAgent());
         addHeaders(request);
         connection.connect();
     }

@@ -50,6 +50,7 @@ public class DownloadRequest {
     private long totalBytes;
     private int readTimeout;
     private int connectTimeout;
+    private String userAgent;
     private OnProgressListener onProgressListener;
     private OnDownloadListener onDownloadListener;
     private OnStartListener onStartListener;
@@ -74,6 +75,7 @@ public class DownloadRequest {
                 builder.connectTimeout != 0 ?
                         builder.connectTimeout :
                         getConnectTimeoutFromConfig();
+        this.userAgent = builder.userAgent;
     }
 
     public Priority getPriority() {
@@ -166,6 +168,17 @@ public class DownloadRequest {
 
     public void setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
+    }
+
+    public String getUserAgent() {
+        if (userAgent == null) {
+            userAgent = ComponentHolder.getInstance().getUserAgent();
+        }
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 
     public int getDownloadId() {

@@ -27,12 +27,14 @@ public class PRDownloaderConfig {
 
     private int readTimeout;
     private int connectTimeout;
+    private String userAgent;
     private HttpClient httpClient;
     private boolean databaseEnabled;
 
     private PRDownloaderConfig(Builder builder) {
         this.readTimeout = builder.readTimeout;
         this.connectTimeout = builder.connectTimeout;
+        this.userAgent = builder.userAgent;
         this.httpClient = builder.httpClient;
         this.databaseEnabled = builder.databaseEnabled;
     }
@@ -51,6 +53,14 @@ public class PRDownloaderConfig {
 
     public void setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
     }
 
     public HttpClient getHttpClient() {
@@ -77,6 +87,7 @@ public class PRDownloaderConfig {
 
         int readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
         int connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
+        String userAgent = Constants.DEFAULT_USER_AGENT;
         HttpClient httpClient = new DefaultHttpClient();
         boolean databaseEnabled = false;
 
@@ -87,6 +98,11 @@ public class PRDownloaderConfig {
 
         public Builder setConnectTimeout(int connectTimeout) {
             this.connectTimeout = connectTimeout;
+            return this;
+        }
+
+        public Builder setUserAgent(String userAgent) {
+            this.userAgent = userAgent;
             return this;
         }
 

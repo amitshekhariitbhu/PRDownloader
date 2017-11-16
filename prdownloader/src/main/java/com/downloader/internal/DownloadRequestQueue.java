@@ -76,19 +76,37 @@ public class DownloadRequestQueue {
         }
     }
 
-    public void cancel(int downloadId) {
-        DownloadRequest request = currentRequestMap.get(downloadId);
+    private void cancelAndRemoveFromMap(DownloadRequest request) {
         if (request != null) {
             request.cancel();
-            currentRequestMap.remove(downloadId);
+            currentRequestMap.remove(request.getDownloadId());
+        }
+    }
+
+    public void cancel(int downloadId) {
+        DownloadRequest request = currentRequestMap.get(downloadId);
+        cancelAndRemoveFromMap(request);
+    }
+
+    public void cancel(Object tag) {
+        for (Map.Entry<Integer, DownloadRequest> currentRequestMapEntry : currentRequestMap.entrySet()) {
+            DownloadRequest request = currentRequestMapEntry.getValue();
+            if (request.getTag() instanceof String && tag instanceof String) {
+                final String tempRequestTag = (String) request.getTag();
+                final String tempTag = (String) tag;
+                if (tempRequestTag.equals(tempTag)) {
+                    cancelAndRemoveFromMap(request);
+                }
+            } else if (request.getTag().equals(tag)) {
+                cancelAndRemoveFromMap(request);
+            }
         }
     }
 
     public void cancelAll() {
         for (Map.Entry<Integer, DownloadRequest> currentRequestMapEntry : currentRequestMap.entrySet()) {
             DownloadRequest request = currentRequestMapEntry.getValue();
-            request.cancel();
-            currentRequestMap.remove(request.getDownloadId());
+            cancelAndRemoveFromMap(request);
         }
     }
 
@@ -108,7 +126,6 @@ public class DownloadRequestQueue {
                 .getExecutorSupplier()
                 .forDownloadTasks()
                 .submit(new DownloadRunnable(request)));
-
     }
 
     public void finish(DownloadRequest request) {

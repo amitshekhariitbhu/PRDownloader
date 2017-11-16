@@ -35,6 +35,7 @@ public class DownloadRequestBuilder implements RequestBuilder {
     Object tag;
     int readTimeout;
     int connectTimeout;
+    String userAgent;
     HashMap<String, List<String>> headerMap;
 
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
@@ -80,6 +81,12 @@ public class DownloadRequestBuilder implements RequestBuilder {
     @Override
     public DownloadRequestBuilder setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
+        return this;
+    }
+
+    @Override
+    public DownloadRequestBuilder setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
         return this;
     }
 
