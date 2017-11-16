@@ -126,6 +126,10 @@ public class Fetcher {
 
             totalBytes = request.getTotalBytes();
 
+            if (!isResumeSupported) {
+                deleteTempFile();
+            }
+
             if (totalBytes == 0) {
                 totalBytes = httpClient.getContentLength();
                 request.setTotalBytes(totalBytes);
@@ -149,17 +153,7 @@ public class Fetcher {
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            File file = new File(tempPath);
-
-            RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
-
-            fileDescriptor = randomAccess.getFD();
-
-            outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
-
-            if (isResumeSupported && request.getDownloadedBytes() != 0) {
-                randomAccess.seek(request.getDownloadedBytes());
-            }
+            createOutputStreamAndSeekIfRequired();
 
             if (request.getStatus() == Status.CANCELLED) {
                 response.setCancelled(true);
@@ -218,6 +212,16 @@ public class Fetcher {
         }
 
         return response;
+    }
+
+    private void createOutputStreamAndSeekIfRequired() throws IOException {
+        File file = new File(tempPath);
+        RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
+        fileDescriptor = randomAccess.getFD();
+        outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
+        if (isResumeSupported && request.getDownloadedBytes() != 0) {
+            randomAccess.seek(request.getDownloadedBytes());
+        }
     }
 
     private void deleteTempFile() {
