@@ -210,8 +210,8 @@ public class DownloadRequest {
 
     public int start(OnDownloadListener onDownloadListener) {
         this.onDownloadListener = onDownloadListener;
-        DownloadRequestQueue.getInstance().addRequest(this);
         downloadId = Utils.getUniqueId(url, dirPath, fileName);
+        DownloadRequestQueue.getInstance().addRequest(this);
         return downloadId;
     }
 
