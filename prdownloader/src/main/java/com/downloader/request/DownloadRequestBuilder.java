@@ -44,7 +44,7 @@ public class DownloadRequestBuilder implements RequestBuilder {
     }
 
     @Override
-    public DownloadRequestBuilder addHeader(String name, String value) {
+    public DownloadRequestBuilder setHeader(String name, String value) {
         if (headerMap == null) {
             headerMap = new HashMap<>();
         }
