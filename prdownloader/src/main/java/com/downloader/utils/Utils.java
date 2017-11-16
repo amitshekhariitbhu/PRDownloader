@@ -16,6 +16,7 @@
 
 package com.downloader.utils;
 
+import com.downloader.Constants;
 import com.downloader.core.Core;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.internal.ComponentHolder;
@@ -138,8 +139,8 @@ public final class Utils {
                 || code == HttpURLConnection.HTTP_MOVED_TEMP
                 || code == HttpURLConnection.HTTP_SEE_OTHER
                 || code == HttpURLConnection.HTTP_MULT_CHOICE
-                || code == 307  // temporary redirect
-                || code == 308; // permanent redirect
+                || code == Constants.HTTP_TEMPORARY_REDIRECT
+                || code == Constants.HTTP_PERMANENT_REDIRECT;
     }
 
 }

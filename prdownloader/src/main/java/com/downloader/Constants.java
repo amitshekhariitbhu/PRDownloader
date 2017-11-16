@@ -32,5 +32,7 @@ public final class Constants {
     public static final int DEFAULT_CONNECT_TIMEOUT_IN_MILLS = 20_000;
 
     public static final int HTTP_RANGE_NOT_SATISFIABLE = 416;
+    public static final int HTTP_TEMPORARY_REDIRECT = 307;
+    public static final int HTTP_PERMANENT_REDIRECT = 308;
 
 }
