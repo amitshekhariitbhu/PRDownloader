@@ -41,6 +41,12 @@ public class DefaultHttpClient implements HttpClient {
 
     }
 
+    @SuppressWarnings("CloneDoesntCallSuperClone")
+    @Override
+    public HttpClient clone() {
+        return new DefaultHttpClient();
+    }
+
     @Override
     public void connect(DownloadRequest request) throws IOException {
         connection = new URL(request.getUrl()).openConnection();

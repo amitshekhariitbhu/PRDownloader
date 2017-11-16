@@ -16,9 +16,15 @@
 
 package com.downloader.internal;
 
+import android.content.Context;
+
+import com.downloader.Constants;
 import com.downloader.PRDownloaderConfig;
+import com.downloader.database.AppDbHelper;
 import com.downloader.database.DbHelper;
 import com.downloader.database.NoOpsDbHelper;
+import com.downloader.httpclient.DefaultHttpClient;
+import com.downloader.httpclient.HttpClient;
 
 /**
  * Created by amitshekhar on 14/11/17.
@@ -27,33 +33,48 @@ import com.downloader.database.NoOpsDbHelper;
 public class ComponentHolder {
 
     private final static ComponentHolder INSTANCE = new ComponentHolder();
-    private PRDownloaderConfig config;
+    private int readTimeout;
+    private int connectTimeout;
+    private HttpClient httpClient;
     private DbHelper dbHelper;
 
     public static ComponentHolder getInstance() {
         return INSTANCE;
     }
 
-    public PRDownloaderConfig getConfig() {
-        if (config == null) {
-            config = PRDownloaderConfig.newBuilder().build();
+    public void init(Context context, PRDownloaderConfig config) {
+        this.readTimeout = config.getReadTimeout();
+        this.connectTimeout = config.getConnectTimeout();
+        this.httpClient = config.getHttpClient();
+        this.dbHelper = config.isDatabaseEnabled() ? new AppDbHelper(context) : new NoOpsDbHelper();
+    }
+
+    public synchronized int getReadTimeout() {
+        if (readTimeout == 0) {
+            readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
         }
-        return config;
+        return readTimeout;
     }
 
-    public void setConfig(PRDownloaderConfig config) {
-        this.config = config;
+    public synchronized int getConnectTimeout() {
+        if (connectTimeout == 0) {
+            connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
+        }
+        return connectTimeout;
     }
 
-    public DbHelper getDbHelper() {
+    public synchronized DbHelper getDbHelper() {
         if (dbHelper == null) {
             dbHelper = new NoOpsDbHelper();
         }
         return dbHelper;
     }
 
-    public void setDbHelper(DbHelper dbHelper) {
-        this.dbHelper = dbHelper;
+    public synchronized HttpClient getHttpClient() {
+        if (httpClient == null) {
+            httpClient = new DefaultHttpClient();
+        }
+        return httpClient.clone();
     }
 
 }

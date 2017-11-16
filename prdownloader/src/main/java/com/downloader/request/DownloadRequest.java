@@ -22,7 +22,6 @@ import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
 import com.downloader.OnStartListener;
-import com.downloader.PRDownloaderConfig;
 import com.downloader.Priority;
 import com.downloader.Status;
 import com.downloader.core.Core;
@@ -297,12 +296,11 @@ public class DownloadRequest {
     }
 
     private int getReadTimeoutFromConfig() {
-        PRDownloaderConfig config = ComponentHolder.getInstance().getConfig();
-        return config.getReadTimeout();
+        return ComponentHolder.getInstance().getReadTimeout();
     }
 
     private int getConnectTimeoutFromConfig() {
-        PRDownloaderConfig config = ComponentHolder.getInstance().getConfig();
-        return config.getConnectTimeout();
+        return ComponentHolder.getInstance().getConnectTimeout();
     }
+
 }
