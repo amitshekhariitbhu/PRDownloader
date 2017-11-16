@@ -16,6 +16,9 @@
 
 package com.downloader;
 
+import com.downloader.httpclient.DefaultHttpClient;
+import com.downloader.httpclient.HttpClient;
+
 /**
  * Created by amitshekhar on 13/11/17.
  */
@@ -24,10 +27,14 @@ public class PRDownloaderConfig {
 
     private int readTimeout;
     private int connectTimeout;
+    private HttpClient httpClient;
+    private boolean databaseEnabled;
 
     private PRDownloaderConfig(Builder builder) {
         this.readTimeout = builder.readTimeout;
         this.connectTimeout = builder.connectTimeout;
+        this.httpClient = builder.httpClient;
+        this.databaseEnabled = builder.databaseEnabled;
     }
 
     public int getReadTimeout() {
@@ -46,6 +53,22 @@ public class PRDownloaderConfig {
         this.connectTimeout = connectTimeout;
     }
 
+    public HttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    public boolean isDatabaseEnabled() {
+        return databaseEnabled;
+    }
+
+    public void setDatabaseEnabled(boolean databaseEnabled) {
+        this.databaseEnabled = databaseEnabled;
+    }
+
     public static Builder newBuilder() {
         return new Builder();
     }
@@ -53,7 +76,9 @@ public class PRDownloaderConfig {
     public static class Builder {
 
         int readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
-        int connectTimeout = Constants.DEFAULT_CONNECTION_TIMEOUT_IN_MILLS;
+        int connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
+        HttpClient httpClient = new DefaultHttpClient();
+        boolean databaseEnabled = false;
 
         public Builder setReadTimeout(int readTimeout) {
             this.readTimeout = readTimeout;
@@ -62,6 +87,16 @@ public class PRDownloaderConfig {
 
         public Builder setConnectTimeout(int connectTimeout) {
             this.connectTimeout = connectTimeout;
+            return this;
+        }
+
+        public Builder setHttpClient(HttpClient httpClient) {
+            this.httpClient = httpClient;
+            return this;
+        }
+
+        public Builder enableDatabase() {
+            this.databaseEnabled = true;
             return this;
         }
 

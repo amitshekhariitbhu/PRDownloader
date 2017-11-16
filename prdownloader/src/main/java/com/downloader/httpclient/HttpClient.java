@@ -25,7 +25,9 @@ import java.io.InputStream;
  * Created by amitshekhar on 13/11/17.
  */
 
-public interface HttpClient {
+public interface HttpClient extends Cloneable {
+
+    HttpClient clone();
 
     void connect(DownloadRequest request) throws IOException;
 

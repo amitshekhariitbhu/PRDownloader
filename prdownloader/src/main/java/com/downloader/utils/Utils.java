@@ -17,7 +17,6 @@
 package com.downloader.utils;
 
 import com.downloader.core.Core;
-import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.request.DownloadRequest;
@@ -121,7 +120,7 @@ public final class Utils {
             httpClient.close();
 
             request.setUrl(location);
-            httpClient = new DefaultHttpClient();
+            httpClient = ComponentHolder.getInstance().getHttpClient();
             httpClient.connect(request);
             code = httpClient.getResponseCode();
             location = httpClient.getResponseHeader("Location");

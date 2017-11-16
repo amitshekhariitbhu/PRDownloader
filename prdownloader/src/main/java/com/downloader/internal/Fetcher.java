@@ -23,7 +23,6 @@ import com.downloader.Response;
 import com.downloader.Status;
 import com.downloader.database.DownloadModel;
 import com.downloader.handler.ProgressHandler;
-import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.request.DownloadRequest;
 import com.downloader.utils.Utils;
@@ -94,7 +93,7 @@ public class Fetcher {
                 request.setDownloadedBytes(model.getDownloadedBytes());
             }
 
-            httpClient = new DefaultHttpClient();
+            httpClient = ComponentHolder.getInstance().getHttpClient();
 
             httpClient.connect(request);
 
@@ -246,7 +245,7 @@ public class Fetcher {
             deleteTempFile();
             request.setDownloadedBytes(0);
             request.setTotalBytes(0);
-            httpClient = new DefaultHttpClient();
+            httpClient = ComponentHolder.getInstance().getHttpClient();
             httpClient.connect(request);
             httpClient = Utils.getRedirectedConnectionIfAny(httpClient, request);
             responseCode = httpClient.getResponseCode();
