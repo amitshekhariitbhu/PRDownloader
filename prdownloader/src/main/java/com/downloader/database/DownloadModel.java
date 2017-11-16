@@ -29,6 +29,7 @@ public class DownloadModel {
     public static final String FILE_NAME = "file_name";
     public static final String TOTAL_BYTES = "total_bytes";
     public static final String DOWNLOADED_BYTES = "downloaded_bytes";
+    public static final String LAST_MODIFIED_AT = "last_modified_at";
 
     private int id;
     private String url;
@@ -37,6 +38,7 @@ public class DownloadModel {
     private String fileName;
     private long totalBytes;
     private long downloadedBytes;
+    private long lastModifiedAt;
 
     public int getId() {
         return id;
@@ -93,4 +95,13 @@ public class DownloadModel {
     public void setDownloadedBytes(long downloadedBytes) {
         this.downloadedBytes = downloadedBytes;
     }
+
+    public long getLastModifiedAt() {
+        return lastModifiedAt;
+    }
+
+    public void setLastModifiedAt(long lastModifiedAt) {
+        this.lastModifiedAt = lastModifiedAt;
+    }
+
 }

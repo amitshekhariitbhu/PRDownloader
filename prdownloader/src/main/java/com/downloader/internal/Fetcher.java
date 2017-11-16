@@ -276,6 +276,7 @@ public class Fetcher {
         model.setFileName(request.getFileName());
         model.setDownloadedBytes(request.getDownloadedBytes());
         model.setTotalBytes(totalBytes);
+        model.setLastModifiedAt(System.currentTimeMillis());
         ComponentHolder.getInstance().getDbHelper().insert(model);
     }
 
@@ -303,7 +304,9 @@ public class Fetcher {
         fileDescriptor.sync();
         if (isResumeSupported) {
             ComponentHolder.getInstance().getDbHelper()
-                    .updateProgress(request.getDownloadId(), request.getDownloadedBytes());
+                    .updateProgress(request.getDownloadId(),
+                            request.getDownloadedBytes(),
+                            System.currentTimeMillis());
         }
         lastSyncTime = System.currentTimeMillis();
     }

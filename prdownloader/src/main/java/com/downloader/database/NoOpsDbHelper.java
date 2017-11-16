@@ -16,6 +16,8 @@
 
 package com.downloader.database;
 
+import java.util.List;
+
 /**
  * Created by anandgaurav on 14-11-2017.
  */
@@ -42,13 +44,18 @@ public class NoOpsDbHelper implements DbHelper {
     }
 
     @Override
-    public void updateProgress(int id, long downloadedBytes) {
+    public void updateProgress(int id, long downloadedBytes, long lastModifiedAt) {
 
     }
 
     @Override
     public void remove(int id) {
 
+    }
+
+    @Override
+    public List<DownloadModel> getUnwantedModels() {
+        return null;
     }
 
     @Override

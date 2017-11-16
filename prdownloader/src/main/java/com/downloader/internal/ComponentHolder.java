@@ -25,6 +25,7 @@ import com.downloader.database.DbHelper;
 import com.downloader.database.NoOpsDbHelper;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
+import com.downloader.utils.Utils;
 
 /**
  * Created by amitshekhar on 14/11/17.
@@ -49,6 +50,9 @@ public class ComponentHolder {
         this.userAgent = config.getUserAgent();
         this.httpClient = config.getHttpClient();
         this.dbHelper = config.isDatabaseEnabled() ? new AppDbHelper(context) : new NoOpsDbHelper();
+        if (config.isDatabaseEnabled()) {
+            Utils.deleteUnwantedModelsAndTempFiles();
+        }
     }
 
     public synchronized int getReadTimeout() {
