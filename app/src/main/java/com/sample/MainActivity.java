@@ -30,7 +30,7 @@ import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
-import com.downloader.OnStartListener;
+import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
 import com.downloader.Status;
@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
 
                 downloadIdOne = PRDownloader.download(URL1, rootDirPath, "facebook.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarOne.setIndeterminate(false);
                                 buttonOne.setEnabled(true);
                                 buttonOne.setText(R.string.pause);
@@ -280,9 +280,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdTwo = PRDownloader.download(URL2, rootDirPath, "wechat.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarTwo.setIndeterminate(false);
                                 buttonTwo.setEnabled(true);
                                 buttonTwo.setText(R.string.pause);
@@ -361,9 +361,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdThree = PRDownloader.download(URL3, rootDirPath, "instagram.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarThree.setIndeterminate(false);
                                 buttonThree.setEnabled(true);
                                 buttonThree.setText(R.string.pause);
@@ -442,9 +442,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdFour = PRDownloader.download(URL4, rootDirPath, "flashlight.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarFour.setIndeterminate(false);
                                 buttonFour.setEnabled(true);
                                 buttonFour.setText(R.string.pause);
@@ -523,9 +523,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdFive = PRDownloader.download(URL5, rootDirPath, "screenrecorder.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarFive.setIndeterminate(false);
                                 buttonFive.setEnabled(true);
                                 buttonFive.setText(R.string.pause);
@@ -605,9 +605,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdSix = PRDownloader.download(URL6, rootDirPath, "callrecorder.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarSix.setIndeterminate(false);
                                 buttonSix.setEnabled(true);
                                 buttonSix.setText(R.string.pause);
@@ -687,9 +687,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdSeven = PRDownloader.download(URL7, rootDirPath, "soundprofile.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarSeven.setIndeterminate(false);
                                 buttonSeven.setEnabled(true);
                                 buttonSeven.setText(R.string.pause);
@@ -769,9 +769,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdEight = PRDownloader.download(URL8, rootDirPath, "evernote.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarEight.setIndeterminate(false);
                                 buttonEight.setEnabled(true);
                                 buttonEight.setText(R.string.pause);
@@ -850,9 +850,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdNine = PRDownloader.download(URL9, rootDirPath, "ucbrowser.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarNine.setIndeterminate(false);
                                 buttonNine.setEnabled(true);
                                 buttonNine.setText(R.string.pause);
@@ -931,9 +931,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdTen = PRDownloader.download(URL10, rootDirPath, "barcodescanner.apk")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarTen.setIndeterminate(false);
                                 buttonTen.setEnabled(true);
                                 buttonTen.setText(R.string.pause);
@@ -1012,9 +1012,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdEleven = PRDownloader.download(URL11, rootDirPath, "htp.zip")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarEleven.setIndeterminate(false);
                                 buttonEleven.setEnabled(true);
                                 buttonEleven.setText(R.string.pause);
@@ -1093,9 +1093,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdTwelve = PRDownloader.download(URL12, rootDirPath, "harry-porter.pdf")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarTwelve.setIndeterminate(false);
                                 buttonTwelve.setEnabled(true);
                                 buttonTwelve.setText(R.string.pause);
@@ -1174,9 +1174,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdThirteen = PRDownloader.download(URL13, rootDirPath, "giphy.gif")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarThirteen.setIndeterminate(false);
                                 buttonThirteen.setEnabled(true);
                                 buttonThirteen.setText(R.string.pause);
@@ -1256,9 +1256,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdFourteen = PRDownloader.download(URL14, rootDirPath, "small.mp4")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarFourteen.setIndeterminate(false);
                                 buttonFourteen.setEnabled(true);
                                 buttonFourteen.setText(R.string.pause);
@@ -1338,9 +1338,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 downloadIdFifteen = PRDownloader.download(URL15, rootDirPath, "big_buck_bunny_720p_10mb.mp4")
                         .build()
-                        .setOnStartListener(new OnStartListener() {
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStart() {
+                            public void onStartOrResume() {
                                 progressBarFifteen.setIndeterminate(false);
                                 buttonFifteen.setEnabled(true);
                                 buttonFifteen.setText(R.string.pause);
