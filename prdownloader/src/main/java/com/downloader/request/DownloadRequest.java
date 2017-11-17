@@ -275,7 +275,7 @@ public class DownloadRequest {
                 });
     }
 
-    public void deliverCancelEvent() {
+    private void deliverCancelEvent() {
         Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                 .execute(new Runnable() {
                     public void run() {

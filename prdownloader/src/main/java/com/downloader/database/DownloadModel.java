@@ -22,14 +22,14 @@ package com.downloader.database;
 
 public class DownloadModel {
 
-    public static final String ID = "id";
-    public static final String URL = "url";
-    public static final String ETAG = "etag";
-    public static final String DIR_PATH = "dir_path";
-    public static final String FILE_NAME = "file_name";
-    public static final String TOTAL_BYTES = "total_bytes";
-    public static final String DOWNLOADED_BYTES = "downloaded_bytes";
-    public static final String LAST_MODIFIED_AT = "last_modified_at";
+    static final String ID = "id";
+    static final String URL = "url";
+    static final String ETAG = "etag";
+    static final String DIR_PATH = "dir_path";
+    static final String FILE_NAME = "file_name";
+    static final String TOTAL_BYTES = "total_bytes";
+    static final String DOWNLOADED_BYTES = "downloaded_bytes";
+    static final String LAST_MODIFIED_AT = "last_modified_at";
 
     private int id;
     private String url;

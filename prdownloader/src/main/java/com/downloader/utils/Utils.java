@@ -65,6 +65,7 @@ public final class Utils {
             }
         } finally {
             if (oldFile.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 oldFile.delete();
             }
         }
@@ -78,6 +79,7 @@ public final class Utils {
                         ComponentHolder.getInstance().getDbHelper().remove(downloadId);
                         File file = new File(path);
                         if (file.exists()) {
+                            //noinspection ResultOfMethodCallIgnored
                             file.delete();
                         }
                     }
@@ -98,6 +100,7 @@ public final class Utils {
                                 ComponentHolder.getInstance().getDbHelper().remove(model.getId());
                                 File file = new File(tempPath);
                                 if (file.exists()) {
+                                    //noinspection ResultOfMethodCallIgnored
                                     file.delete();
                                 }
                             }

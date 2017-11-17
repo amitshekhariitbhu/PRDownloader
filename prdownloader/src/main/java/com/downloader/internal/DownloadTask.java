@@ -41,7 +41,7 @@ import java.net.HttpURLConnection;
  * Created by amitshekhar on 13/11/17.
  */
 
-public class Fetcher {
+public class DownloadTask {
 
     private static final int BUFFER_SIZE = 1024 * 4;
     private static final long TIME_GAP_FOR_SYNC = 2000;
@@ -58,15 +58,15 @@ public class Fetcher {
     private boolean isResumeSupported;
     private String tempPath;
 
-    private Fetcher(DownloadRequest request) {
+    private DownloadTask(DownloadRequest request) {
         this.request = request;
     }
 
-    public static Fetcher create(DownloadRequest request) {
-        return new Fetcher(request);
+    static DownloadTask create(DownloadRequest request) {
+        return new DownloadTask(request);
     }
 
-    public Response fetch() {
+    Response run() {
 
         Response response = new Response();
 
@@ -227,6 +227,7 @@ public class Fetcher {
     private void deleteTempFile() {
         File file = new File(tempPath);
         if (file.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             file.delete();
         }
     }
