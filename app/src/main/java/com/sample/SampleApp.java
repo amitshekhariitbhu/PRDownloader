@@ -31,7 +31,7 @@ public class SampleApp extends Application {
     public void onCreate() {
         super.onCreate();
         PRDownloaderConfig config = PRDownloaderConfig.newBuilder()
-                .enableDatabase()
+                .setDatabaseEnabled(true)
                 .build();
         PRDownloader.initialize(this, config);
     }
