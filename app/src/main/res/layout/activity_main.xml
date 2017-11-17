@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarOne"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarTwo"
@@ -129,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarThree"
@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarFour"
@@ -229,7 +229,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarFive"
@@ -279,7 +279,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarSix"
@@ -329,7 +329,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarSeven"
@@ -379,7 +379,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarEight"
@@ -429,7 +429,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarNine"
@@ -479,7 +479,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarTen"
@@ -529,7 +529,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarEleven"
@@ -579,7 +579,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarTwelve"
@@ -629,7 +629,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarThirteen"
@@ -679,7 +679,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarFourteen"
@@ -729,7 +729,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:background="@drawable/rectangle_view">
+            android:background="@drawable/border_black">
 
             <ProgressBar
                 android:id="@+id/progressBarFifteen"
