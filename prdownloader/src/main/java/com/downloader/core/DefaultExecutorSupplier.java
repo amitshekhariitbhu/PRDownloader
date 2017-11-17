@@ -28,12 +28,12 @@ import java.util.concurrent.ThreadFactory;
 
 public class DefaultExecutorSupplier implements ExecutorSupplier {
 
-    public static final int DEFAULT_MAX_NUM_THREADS = 2 * Runtime.getRuntime().availableProcessors() + 1;
+    private static final int DEFAULT_MAX_NUM_THREADS = 2 * Runtime.getRuntime().availableProcessors() + 1;
     private final DownloadExecutor networkExecutor;
     private final Executor backgroundExecutor;
     private final Executor mainThreadExecutor;
 
-    public DefaultExecutorSupplier() {
+    DefaultExecutorSupplier() {
         ThreadFactory backgroundPriorityThreadFactory = new PriorityThreadFactory(Process.THREAD_PRIORITY_BACKGROUND);
         networkExecutor = new DownloadExecutor(DEFAULT_MAX_NUM_THREADS, backgroundPriorityThreadFactory);
         backgroundExecutor = Executors.newSingleThreadExecutor();

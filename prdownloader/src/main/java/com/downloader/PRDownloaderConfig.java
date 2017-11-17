@@ -111,8 +111,8 @@ public class PRDownloaderConfig {
             return this;
         }
 
-        public Builder enableDatabase() {
-            this.databaseEnabled = true;
+        public Builder setDatabaseEnabled(boolean databaseEnabled) {
+            this.databaseEnabled = databaseEnabled;
             return this;
         }
 

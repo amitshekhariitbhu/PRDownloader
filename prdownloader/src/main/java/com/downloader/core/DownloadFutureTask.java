@@ -29,7 +29,7 @@ public class DownloadFutureTask extends FutureTask<DownloadRunnable> implements 
 
     private final DownloadRunnable runnable;
 
-    public DownloadFutureTask(DownloadRunnable downloadRunnable) {
+    DownloadFutureTask(DownloadRunnable downloadRunnable) {
         super(downloadRunnable, null);
         this.runnable = downloadRunnable;
     }

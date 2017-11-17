@@ -24,10 +24,6 @@ package com.downloader;
  * Priority levels recognized by the request server.
  */
 public enum Priority {
-    /**
-     * NOTE: DO NOT CHANGE ORDERING OF THOSE CONSTANTS UNDER ANY CIRCUMSTANCES.
-     * Doing so will make ordering incorrect.
-     */
 
     /**
      * Lowest priority level. Used for prefetches of data.

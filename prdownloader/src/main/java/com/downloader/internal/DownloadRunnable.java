@@ -32,7 +32,7 @@ public class DownloadRunnable implements Runnable {
     public final int sequence;
     public final DownloadRequest request;
 
-    public DownloadRunnable(DownloadRequest request) {
+    DownloadRunnable(DownloadRequest request) {
         this.request = request;
         this.priority = request.getPriority();
         this.sequence = request.getSequenceNumber();
@@ -41,8 +41,8 @@ public class DownloadRunnable implements Runnable {
     @Override
     public void run() {
         request.setStatus(Status.RUNNING);
-        Fetcher fetcher = Fetcher.create(request);
-        Response response = fetcher.fetch();
+        DownloadTask downloadTask = DownloadTask.create(request);
+        Response response = downloadTask.run();
         if (response.isSuccessful()) {
             request.deliverSuccess();
         } else if (response.isPaused()) {
