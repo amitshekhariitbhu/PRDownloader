@@ -100,6 +100,15 @@ public class PRDownloader {
     }
 
     /**
+     * Method to cancel requests with the given tag
+     *
+     * @param tag The tag with which requests are to be cancelled
+     */
+    public static void cancel(Object tag) {
+        DownloadRequestQueue.getInstance().cancel(tag);
+    }
+
+    /**
      * Method to cancel all requests
      */
     public static void cancelAll() {

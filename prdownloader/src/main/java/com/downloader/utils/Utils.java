@@ -16,7 +16,9 @@
 
 package com.downloader.utils;
 
+import com.downloader.Constants;
 import com.downloader.core.Core;
+import com.downloader.database.DownloadModel;
 import com.downloader.httpclient.HttpClient;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.request.DownloadRequest;
@@ -27,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -76,6 +79,28 @@ public final class Utils {
                         File file = new File(path);
                         if (file.exists()) {
                             file.delete();
+                        }
+                    }
+                });
+    }
+
+    public static void deleteUnwantedModelsAndTempFiles() {
+        Core.getInstance().getExecutorSupplier().forBackgroundTasks()
+                .execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<DownloadModel> models = ComponentHolder.getInstance()
+                                .getDbHelper()
+                                .getUnwantedModels();
+                        if (models != null) {
+                            for (DownloadModel model : models) {
+                                final String tempPath = getTempPath(model.getDirPath(), model.getFileName());
+                                ComponentHolder.getInstance().getDbHelper().remove(model.getId());
+                                File file = new File(tempPath);
+                                if (file.exists()) {
+                                    file.delete();
+                                }
+                            }
                         }
                     }
                 });
@@ -138,8 +163,8 @@ public final class Utils {
                 || code == HttpURLConnection.HTTP_MOVED_TEMP
                 || code == HttpURLConnection.HTTP_SEE_OTHER
                 || code == HttpURLConnection.HTTP_MULT_CHOICE
-                || code == 307  // temporary redirect
-                || code == 308; // permanent redirect
+                || code == Constants.HTTP_TEMPORARY_REDIRECT
+                || code == Constants.HTTP_PERMANENT_REDIRECT;
     }
 
 }

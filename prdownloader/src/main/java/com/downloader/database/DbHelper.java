@@ -16,6 +16,8 @@
 
 package com.downloader.database;
 
+import java.util.List;
+
 /**
  * Created by anandgaurav on 14-11-2017.
  */
@@ -28,9 +30,11 @@ public interface DbHelper {
 
     void update(DownloadModel model);
 
-    void updateProgress(int id, long downloadedBytes);
+    void updateProgress(int id, long downloadedBytes, long lastModifiedAt);
 
     void remove(int id);
+
+    List<DownloadModel> getUnwantedModels();
 
     void clear();
 

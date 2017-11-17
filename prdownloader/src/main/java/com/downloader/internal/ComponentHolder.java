@@ -25,6 +25,7 @@ import com.downloader.database.DbHelper;
 import com.downloader.database.NoOpsDbHelper;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
+import com.downloader.utils.Utils;
 
 /**
  * Created by amitshekhar on 14/11/17.
@@ -35,6 +36,7 @@ public class ComponentHolder {
     private final static ComponentHolder INSTANCE = new ComponentHolder();
     private int readTimeout;
     private int connectTimeout;
+    private String userAgent;
     private HttpClient httpClient;
     private DbHelper dbHelper;
 
@@ -45,8 +47,12 @@ public class ComponentHolder {
     public void init(Context context, PRDownloaderConfig config) {
         this.readTimeout = config.getReadTimeout();
         this.connectTimeout = config.getConnectTimeout();
+        this.userAgent = config.getUserAgent();
         this.httpClient = config.getHttpClient();
         this.dbHelper = config.isDatabaseEnabled() ? new AppDbHelper(context) : new NoOpsDbHelper();
+        if (config.isDatabaseEnabled()) {
+            Utils.deleteUnwantedModelsAndTempFiles();
+        }
     }
 
     public synchronized int getReadTimeout() {
@@ -61,6 +67,13 @@ public class ComponentHolder {
             connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
         }
         return connectTimeout;
+    }
+
+    public synchronized String getUserAgent() {
+        if (userAgent == null) {
+            userAgent = Constants.DEFAULT_USER_AGENT;
+        }
+        return userAgent;
     }
 
     public synchronized DbHelper getDbHelper() {

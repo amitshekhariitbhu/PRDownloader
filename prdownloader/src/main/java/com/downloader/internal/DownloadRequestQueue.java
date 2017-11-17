@@ -20,9 +20,8 @@ import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.request.DownloadRequest;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -32,8 +31,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DownloadRequestQueue {
 
     private static DownloadRequestQueue instance;
-    private final Set<DownloadRequest> currentRequests = new HashSet<>();
-    private AtomicInteger sequenceGenerator = new AtomicInteger();
+    private final Map<Integer, DownloadRequest> currentRequestMap;
+    private final AtomicInteger sequenceGenerator;
+
+    private DownloadRequestQueue() {
+        currentRequestMap = new ConcurrentHashMap<>();
+        sequenceGenerator = new AtomicInteger();
+    }
 
     public static void initialize() {
         getInstance();
@@ -50,107 +54,81 @@ public class DownloadRequestQueue {
         return instance;
     }
 
-    public int getSequenceNumber() {
+    private int getSequenceNumber() {
         return sequenceGenerator.incrementAndGet();
     }
 
-    private DownloadRequest getWithDownloadId(int downloadId) {
-        for (DownloadRequest request : currentRequests) {
-            if (request.getDownloadId() == downloadId) {
-                return request;
-            }
-        }
-        return null;
-    }
-
     public void pause(int downloadId) {
-        DownloadRequest request = getWithDownloadId(downloadId);
+        DownloadRequest request = currentRequestMap.get(downloadId);
         if (request != null) {
             request.setStatus(Status.PAUSED);
         }
     }
 
     public void resume(int downloadId) {
-        DownloadRequest request = getWithDownloadId(downloadId);
+        DownloadRequest request = currentRequestMap.get(downloadId);
         if (request != null) {
-            try {
-                request.setStatus(Status.QUEUED);
-                request.setFuture(Core.getInstance()
-                        .getExecutorSupplier()
-                        .forDownloadTasks()
-                        .submit(new DownloadRunnable(request)));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            request.setStatus(Status.QUEUED);
+            request.setFuture(Core.getInstance()
+                    .getExecutorSupplier()
+                    .forDownloadTasks()
+                    .submit(new DownloadRunnable(request)));
+        }
+    }
+
+    private void cancelAndRemoveFromMap(DownloadRequest request) {
+        if (request != null) {
+            request.cancel();
+            currentRequestMap.remove(request.getDownloadId());
         }
     }
 
     public void cancel(int downloadId) {
-        synchronized (currentRequests) {
-            try {
-                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
-                    DownloadRequest request = iterator.next();
-                    if (request.getDownloadId() == downloadId) {
-                        request.cancel();
-                        iterator.remove();
-                    }
+        DownloadRequest request = currentRequestMap.get(downloadId);
+        cancelAndRemoveFromMap(request);
+    }
+
+    public void cancel(Object tag) {
+        for (Map.Entry<Integer, DownloadRequest> currentRequestMapEntry : currentRequestMap.entrySet()) {
+            DownloadRequest request = currentRequestMapEntry.getValue();
+            if (request.getTag() instanceof String && tag instanceof String) {
+                final String tempRequestTag = (String) request.getTag();
+                final String tempTag = (String) tag;
+                if (tempRequestTag.equals(tempTag)) {
+                    cancelAndRemoveFromMap(request);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else if (request.getTag().equals(tag)) {
+                cancelAndRemoveFromMap(request);
             }
         }
     }
 
     public void cancelAll() {
-        synchronized (currentRequests) {
-            try {
-                for (Iterator<DownloadRequest> iterator = currentRequests.iterator(); iterator.hasNext(); ) {
-                    DownloadRequest request = iterator.next();
-                    request.cancel();
-                    iterator.remove();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        for (Map.Entry<Integer, DownloadRequest> currentRequestMapEntry : currentRequestMap.entrySet()) {
+            DownloadRequest request = currentRequestMapEntry.getValue();
+            cancelAndRemoveFromMap(request);
         }
     }
 
     public Status getStatus(int downloadId) {
-        DownloadRequest request = getWithDownloadId(downloadId);
+        DownloadRequest request = currentRequestMap.get(downloadId);
         if (request != null) {
             return request.getStatus();
         }
         return Status.UNKNOWN;
     }
 
-    public DownloadRequest addRequest(DownloadRequest request) {
-        synchronized (currentRequests) {
-            try {
-                currentRequests.add(request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            request.setStatus(Status.QUEUED);
-            request.setSequenceNumber(getSequenceNumber());
-            request.setFuture(Core.getInstance()
-                    .getExecutorSupplier()
-                    .forDownloadTasks()
-                    .submit(new DownloadRunnable(request)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return request;
+    public void addRequest(DownloadRequest request) {
+        currentRequestMap.put(request.getDownloadId(), request);
+        request.setStatus(Status.QUEUED);
+        request.setSequenceNumber(getSequenceNumber());
+        request.setFuture(Core.getInstance()
+                .getExecutorSupplier()
+                .forDownloadTasks()
+                .submit(new DownloadRunnable(request)));
     }
 
     public void finish(DownloadRequest request) {
-        synchronized (currentRequests) {
-            try {
-                currentRequests.remove(request);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        currentRequestMap.remove(request.getDownloadId());
     }
 }

@@ -44,7 +44,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 DownloadModel.DIR_PATH + " VARCHAR, " +
                 DownloadModel.FILE_NAME + " VARCHAR, " +
                 DownloadModel.TOTAL_BYTES + " INTEGER, " +
-                DownloadModel.DOWNLOADED_BYTES + " INTEGER " +
+                DownloadModel.DOWNLOADED_BYTES + " INTEGER, " +
+                DownloadModel.LAST_MODIFIED_AT + " INTEGER " +
                 ")");
     }
 

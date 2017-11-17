@@ -10,9 +10,14 @@
 ## PRDownloader library is under development.
 
 ### Overview of PRDownloader library
-* PRDownloader is used for downloading any type of file.
-* PRDownloader supports pause and resume.
-* PRDownloader gives progress while downloading a file.
+* PRDownloader can be used to download any type of files like images, video, pdf, apk and etc.
+* This file downloader library supports pause and resume while downloading a file.
+* This downloader library has a simple interface to make download request.
+* We can check if the status of downloading with the given download Id.
+* PRDownloader gives callbacks for everything like onProgress, onCancel, onStart, onError and etc while downloading a file.
+* Supports proper request canceling.
+* Many requests can be made in parallel.
+* All types of customization are possible.
 
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
