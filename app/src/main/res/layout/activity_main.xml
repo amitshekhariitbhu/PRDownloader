@@ -28,452 +28,751 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewOne"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="1" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarOne"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewOne" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressOne"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonOne"
-                android:layout_toRightOf="@+id/textViewOne"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonOne"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarOne"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewTwo"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="2" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarTwo"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewTwo" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonTwo"
-                android:layout_toRightOf="@+id/textViewTwo"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonTwo"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarTwo"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewThree"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="3" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarThree"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewThree" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressThree"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonThree"
-                android:layout_toRightOf="@+id/textViewThree"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonThree"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarThree"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewFour"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="4" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarFour"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewFour" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressFour"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonFour"
-                android:layout_toRightOf="@+id/textViewFour"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonFour"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarFour"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressFour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelFour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonFour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewFive"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="5" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarFive"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewFive" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressFive"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonFive"
-                android:layout_toRightOf="@+id/textViewFive"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonFive"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarFive"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressFive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelFive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonFive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewSix"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="6" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarSix"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewSix" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressSix"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonSix"
-                android:layout_toRightOf="@+id/textViewSix"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonSix"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarSix"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressSix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelSix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonSix"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewSeven"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="7" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarSeven"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewSeven" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressSeven"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonSeven"
-                android:layout_toRightOf="@+id/textViewSeven"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonSeven"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarSeven"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressSeven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelSeven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonSeven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewEight"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="8" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarEight"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewEight" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressEight"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonEight"
-                android:layout_toRightOf="@+id/textViewEight"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonEight"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarEight"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressEight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelEight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonEight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewNine"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="9" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarNine"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewNine" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressNine"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonNine"
-                android:layout_toRightOf="@+id/textViewNine"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonNine"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarNine"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressNine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelNine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonNine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:background="@android:color/darker_gray">
-
-            <TextView
-                android:id="@+id/textViewTen"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:text="10" />
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
 
             <ProgressBar
                 android:id="@+id/progressBarTen"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:layout_toRightOf="@+id/textViewTen" />
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
 
-            <TextView
-                android:id="@+id/tvProgressTen"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/buttonTen"
-                android:layout_toRightOf="@+id/textViewTen"
-                android:padding="12dp"
-                android:text="Progress"
-                android:textAlignment="center" />
-
-            <Button
-                android:id="@+id/buttonTen"
-                android:layout_width="140dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/progressBarTen"
-                android:layout_margin="2dp"
-                android:text="START" />
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textViewProgressTen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelTen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonTen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
+
+            <ProgressBar
+                android:id="@+id/progressBarEleven"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBarEleven"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewProgressEleven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelEleven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonEleven"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
+
+            <ProgressBar
+                android:id="@+id/progressBarTwelve"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBarTwelve"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewProgressTwelve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelTwelve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonTwelve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
+
+            <ProgressBar
+                android:id="@+id/progressBarThirteen"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBarThirteen"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewProgressThirteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelThirteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonThirteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
+
+            <ProgressBar
+                android:id="@+id/progressBarFourteen"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBarFourteen"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewProgressFourteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelFourteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonFourteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:background="@drawable/rectangle_view">
+
+            <ProgressBar
+                android:id="@+id/progressBarFifteen"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:progressTint="@color/colorPrimaryDark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/progressBarFifteen"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewProgressFifteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/progress"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/buttonCancelFifteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/buttonFifteen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/start" />
+            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>
