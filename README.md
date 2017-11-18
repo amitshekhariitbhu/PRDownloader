@@ -143,4 +143,5 @@ PRDownloader.cleanUp(days);
 ```
 
 ### Contributing to PRDownloader
-Just make pull request. You are in!
+All pull requests are welcome, make sure to follow the [contribution guidelines](CONTRIBUTING.md)
+when you submit pull request.
