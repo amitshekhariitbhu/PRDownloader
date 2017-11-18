@@ -126,6 +126,8 @@ PRDownloader.cleanUp(days);
 * Test Cases
 * And of course many many features and bug fixes
 
+## If this library helps you in anyway, show your love :heart: by putting a :star: on this project :v:
+
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
 ### License
