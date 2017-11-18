@@ -23,6 +23,4 @@
     <string name="cancel">cancel</string>
     <string name="resume">resume</string>
     <string name="restart">restart</string>
-    <string name="cancelled">cancelled</string>
-    <string name="progress">progress</string>
 </resources>

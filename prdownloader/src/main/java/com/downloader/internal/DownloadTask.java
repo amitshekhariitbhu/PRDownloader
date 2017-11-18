@@ -300,11 +300,13 @@ public class DownloadTask {
     }
 
     private void sendProgress() {
-        if (progressHandler != null) {
-            progressHandler
-                    .obtainMessage(Constants.UPDATE,
-                            new Progress(request.getDownloadedBytes(),
-                                    totalBytes)).sendToTarget();
+        if (request.getStatus() != Status.CANCELLED) {
+            if (progressHandler != null) {
+                progressHandler
+                        .obtainMessage(Constants.UPDATE,
+                                new Progress(request.getDownloadedBytes(),
+                                        totalBytes)).sendToTarget();
+            }
         }
     }
 
