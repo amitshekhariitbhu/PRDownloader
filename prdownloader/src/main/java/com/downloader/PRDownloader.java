@@ -26,6 +26,7 @@ import com.downloader.core.Core;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.request.DownloadRequestBuilder;
+import com.downloader.utils.Utils;
 
 /**
  * PRDownloader entry point.
@@ -123,6 +124,15 @@ public class PRDownloader {
      */
     public static Status getStatus(int downloadId) {
         return DownloadRequestQueue.getInstance().getStatus(downloadId);
+    }
+
+    /**
+     * Method to clean up temporary resumed files which is older than the given day
+     *
+     * @param days the days
+     */
+    public static void cleanUp(int days) {
+        Utils.deleteUnwantedModelsAndTempFiles(days);
     }
 
     /**

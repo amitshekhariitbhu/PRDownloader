@@ -86,14 +86,14 @@ public final class Utils {
                 });
     }
 
-    public static void deleteUnwantedModelsAndTempFiles() {
+    public static void deleteUnwantedModelsAndTempFiles(final int days) {
         Core.getInstance().getExecutorSupplier().forBackgroundTasks()
                 .execute(new Runnable() {
                     @Override
                     public void run() {
                         List<DownloadModel> models = ComponentHolder.getInstance()
                                 .getDbHelper()
-                                .getUnwantedModels();
+                                .getUnwantedModels(days);
                         if (models != null) {
                             for (DownloadModel model : models) {
                                 final String tempPath = getTempPath(model.getDirPath(), model.getFileName());

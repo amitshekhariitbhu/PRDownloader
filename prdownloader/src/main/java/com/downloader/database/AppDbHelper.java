@@ -126,14 +126,14 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public List<DownloadModel> getUnwantedModels() {
+    public List<DownloadModel> getUnwantedModels(int days) {
         List<DownloadModel> models = new ArrayList<>();
         Cursor cursor = null;
         try {
-            final long thirtyDaysInMillis = 30 * 24 * 60 * 60 * 1000L;
-            final long thirtyDaysBeforeTimeInMillis = System.currentTimeMillis() - thirtyDaysInMillis;
+            final long daysInMillis = days * 24 * 60 * 60 * 1000L;
+            final long beforeTimeInMillis = System.currentTimeMillis() - daysInMillis;
             cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " +
-                    DownloadModel.LAST_MODIFIED_AT + " <= " + thirtyDaysBeforeTimeInMillis, null);
+                    DownloadModel.LAST_MODIFIED_AT + " <= " + beforeTimeInMillis, null);
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     DownloadModel model = new DownloadModel();

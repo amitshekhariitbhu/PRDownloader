@@ -19,13 +19,13 @@ package com.downloader.internal;
 import android.content.Context;
 
 import com.downloader.Constants;
+import com.downloader.PRDownloader;
 import com.downloader.PRDownloaderConfig;
 import com.downloader.database.AppDbHelper;
 import com.downloader.database.DbHelper;
 import com.downloader.database.NoOpsDbHelper;
 import com.downloader.httpclient.DefaultHttpClient;
 import com.downloader.httpclient.HttpClient;
-import com.downloader.utils.Utils;
 
 /**
  * Created by amitshekhar on 14/11/17.
@@ -51,41 +51,61 @@ public class ComponentHolder {
         this.httpClient = config.getHttpClient();
         this.dbHelper = config.isDatabaseEnabled() ? new AppDbHelper(context) : new NoOpsDbHelper();
         if (config.isDatabaseEnabled()) {
-            Utils.deleteUnwantedModelsAndTempFiles();
+            PRDownloader.cleanUp(30);
         }
     }
 
-    public synchronized int getReadTimeout() {
+    public int getReadTimeout() {
         if (readTimeout == 0) {
-            readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
+            synchronized (ComponentHolder.class) {
+                if (readTimeout == 0) {
+                    readTimeout = Constants.DEFAULT_READ_TIMEOUT_IN_MILLS;
+                }
+            }
         }
         return readTimeout;
     }
 
-    public synchronized int getConnectTimeout() {
+    public int getConnectTimeout() {
         if (connectTimeout == 0) {
-            connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
+            synchronized (ComponentHolder.class) {
+                if (connectTimeout == 0) {
+                    connectTimeout = Constants.DEFAULT_CONNECT_TIMEOUT_IN_MILLS;
+                }
+            }
         }
         return connectTimeout;
     }
 
-    public synchronized String getUserAgent() {
+    public String getUserAgent() {
         if (userAgent == null) {
-            userAgent = Constants.DEFAULT_USER_AGENT;
+            synchronized (ComponentHolder.class) {
+                if (userAgent == null) {
+                    userAgent = Constants.DEFAULT_USER_AGENT;
+                }
+            }
         }
         return userAgent;
     }
 
-    public synchronized DbHelper getDbHelper() {
+    public DbHelper getDbHelper() {
         if (dbHelper == null) {
-            dbHelper = new NoOpsDbHelper();
+            synchronized (ComponentHolder.class) {
+                if (dbHelper == null) {
+                    dbHelper = new NoOpsDbHelper();
+                }
+            }
         }
         return dbHelper;
     }
 
-    public synchronized HttpClient getHttpClient() {
+    public HttpClient getHttpClient() {
         if (httpClient == null) {
-            httpClient = new DefaultHttpClient();
+            synchronized (ComponentHolder.class) {
+                if (httpClient == null) {
+                    httpClient = new DefaultHttpClient();
+                }
+            }
         }
         return httpClient.clone();
     }
