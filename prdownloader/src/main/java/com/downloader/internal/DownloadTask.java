@@ -100,6 +100,8 @@ public class DownloadTask {
                     request.setDownloadedBytes(model.getDownloadedBytes());
                 } else {
                     removeNoMoreNeededModelFromDatabase();
+                    request.setDownloadedBytes(0);
+                    request.setTotalBytes(0);
                     model = null;
                 }
             }

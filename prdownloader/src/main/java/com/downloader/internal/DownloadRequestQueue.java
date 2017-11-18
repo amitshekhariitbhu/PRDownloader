@@ -69,8 +69,6 @@ public class DownloadRequestQueue {
         DownloadRequest request = currentRequestMap.get(downloadId);
         if (request != null) {
             request.setStatus(Status.QUEUED);
-            request.setDownloadedBytes(0);
-            request.setTotalBytes(0);
             request.setFuture(Core.getInstance()
                     .getExecutorSupplier()
                     .forDownloadTasks()
