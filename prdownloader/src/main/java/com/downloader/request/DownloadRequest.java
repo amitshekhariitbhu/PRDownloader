@@ -229,50 +229,58 @@ public class DownloadRequest {
     }
 
     public void deliverError(final Error error) {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
-                .execute(new Runnable() {
-                    public void run() {
-                        if (onDownloadListener != null) {
-                            onDownloadListener.onError(error);
+        if (status != Status.CANCELLED) {
+            Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                    .execute(new Runnable() {
+                        public void run() {
+                            if (onDownloadListener != null) {
+                                onDownloadListener.onError(error);
+                            }
+                            finish();
                         }
-                        finish();
-                    }
-                });
+                    });
+        }
     }
 
     public void deliverSuccess() {
-        setStatus(Status.COMPLETED);
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
-                .execute(new Runnable() {
-                    public void run() {
-                        if (onDownloadListener != null) {
-                            onDownloadListener.onDownloadComplete();
+        if (status != Status.CANCELLED) {
+            setStatus(Status.COMPLETED);
+            Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                    .execute(new Runnable() {
+                        public void run() {
+                            if (onDownloadListener != null) {
+                                onDownloadListener.onDownloadComplete();
+                            }
+                            finish();
                         }
-                        finish();
-                    }
-                });
+                    });
+        }
     }
 
     public void deliverStartEvent() {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
-                .execute(new Runnable() {
-                    public void run() {
-                        if (onStartOrResumeListener != null) {
-                            onStartOrResumeListener.onStartOrResume();
+        if (status != Status.CANCELLED) {
+            Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                    .execute(new Runnable() {
+                        public void run() {
+                            if (onStartOrResumeListener != null) {
+                                onStartOrResumeListener.onStartOrResume();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     public void deliverPauseEvent() {
-        Core.getInstance().getExecutorSupplier().forMainThreadTasks()
-                .execute(new Runnable() {
-                    public void run() {
-                        if (onPauseListener != null) {
-                            onPauseListener.onPause();
+        if (status != Status.CANCELLED) {
+            Core.getInstance().getExecutorSupplier().forMainThreadTasks()
+                    .execute(new Runnable() {
+                        public void run() {
+                            if (onPauseListener != null) {
+                                onPauseListener.onPause();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void deliverCancelEvent() {
