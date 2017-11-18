@@ -90,11 +90,18 @@ public class DownloadTask {
 
             tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
 
+            File file = new File(tempPath);
+
             DownloadModel model = getDownloadModelIfAlreadyPresentInDatabase();
 
             if (model != null) {
-                request.setTotalBytes(model.getTotalBytes());
-                request.setDownloadedBytes(model.getDownloadedBytes());
+                if (file.exists()) {
+                    request.setTotalBytes(model.getTotalBytes());
+                    request.setDownloadedBytes(model.getDownloadedBytes());
+                } else {
+                    removeNoMoreNeededModelFromDatabase();
+                    model = null;
+                }
             }
 
             httpClient = ComponentHolder.getInstance().getHttpClient();
@@ -113,7 +120,7 @@ public class DownloadTask {
 
             responseCode = httpClient.getResponseCode();
 
-            eTag = httpClient.getResponseHeader("ETag");
+            eTag = httpClient.getResponseHeader(Constants.ETAG);
 
             if (checkIfFreshStartRequiredAndStart(model)) {
                 model = null;
@@ -157,7 +164,6 @@ public class DownloadTask {
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            File file = new File(tempPath);
             if (!file.exists()) {
                 //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
