@@ -54,7 +54,7 @@ public class NoOpsDbHelper implements DbHelper {
     }
 
     @Override
-    public List<DownloadModel> getUnwantedModels() {
+    public List<DownloadModel> getUnwantedModels(int days) {
         return null;
     }
 
