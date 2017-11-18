@@ -7,8 +7,6 @@
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## PRDownloader library is under development.
-
 ### Overview of PRDownloader library
 * PRDownloader can be used to download any type of files like image, video, pdf, apk and etc.
 * This file downloader library supports pause and resume while downloading a file.
