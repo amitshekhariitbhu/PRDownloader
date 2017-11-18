@@ -50,8 +50,6 @@ public class DownloadTask {
     private ProgressHandler progressHandler;
     private long lastSyncTime;
     private long lastSyncBytes;
-    private BufferedOutputStream outputStream;
-    private FileDescriptor fileDescriptor;
     private InputStream inputStream;
     private HttpClient httpClient;
     private long totalBytes;
@@ -79,6 +77,10 @@ public class DownloadTask {
             response.setPaused(true);
             return response;
         }
+
+        BufferedOutputStream outputStream = null;
+
+        FileDescriptor fileDescriptor = null;
 
         try {
 
@@ -155,7 +157,19 @@ public class DownloadTask {
 
             byte[] buff = new byte[BUFFER_SIZE];
 
-            createOutputStreamAndSeekIfRequired();
+            File file = new File(tempPath);
+            if (!file.exists()) {
+                //noinspection ResultOfMethodCallIgnored
+                file.createNewFile();
+            }
+
+            RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
+            fileDescriptor = randomAccess.getFD();
+            outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
+
+            if (isResumeSupported && request.getDownloadedBytes() != 0) {
+                randomAccess.seek(request.getDownloadedBytes());
+            }
 
             if (request.getStatus() == Status.CANCELLED) {
                 response.setCancelled(true);
@@ -179,13 +193,13 @@ public class DownloadTask {
 
                 sendProgress();
 
-                syncIfRequired();
+                syncIfRequired(outputStream, fileDescriptor);
 
                 if (request.getStatus() == Status.CANCELLED) {
                     response.setCancelled(true);
                     return response;
                 } else if (request.getStatus() == Status.PAUSED) {
-                    sync();
+                    sync(outputStream, fileDescriptor);
                     response.setPaused(true);
                     return response;
                 }
@@ -210,24 +224,10 @@ public class DownloadTask {
             error.setConnectionError(true);
             response.setError(error);
         } finally {
-            closeAllSafely();
+            closeAllSafely(outputStream, fileDescriptor);
         }
 
         return response;
-    }
-
-    private void createOutputStreamAndSeekIfRequired() throws IOException {
-        File file = new File(tempPath);
-        if (!file.exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            file.createNewFile();
-        }
-        RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
-        fileDescriptor = randomAccess.getFD();
-        outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
-        if (isResumeSupported && request.getDownloadedBytes() != 0) {
-            randomAccess.seek(request.getDownloadedBytes());
-        }
     }
 
     private void deleteTempFile() {
@@ -300,19 +300,19 @@ public class DownloadTask {
         }
     }
 
-    private void syncIfRequired() throws IOException {
+    private void syncIfRequired(BufferedOutputStream outputStream, FileDescriptor fileDescriptor) throws IOException {
         final long currentBytes = request.getDownloadedBytes();
         final long currentTime = System.currentTimeMillis();
         final long bytesDelta = currentBytes - lastSyncBytes;
         final long timeDelta = currentTime - lastSyncTime;
         if (bytesDelta > MIN_BYTES_FOR_SYNC && timeDelta > TIME_GAP_FOR_SYNC) {
-            sync();
+            sync(outputStream, fileDescriptor);
             lastSyncBytes = currentBytes;
             lastSyncTime = currentTime;
         }
     }
 
-    private void sync() {
+    private void sync(BufferedOutputStream outputStream, FileDescriptor fileDescriptor) {
         boolean success;
         try {
             outputStream.flush();
@@ -331,7 +331,7 @@ public class DownloadTask {
 
     }
 
-    private void closeAllSafely() {
+    private void closeAllSafely(BufferedOutputStream outputStream, FileDescriptor fileDescriptor) {
         if (httpClient != null) {
             try {
                 httpClient.close();
