@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Sample Download
-<img src=https://raw.githubusercontent.com/MindorksOpenSource/PRDownloader/master/assets/sample_download.png) width=360 height=640 />
+<img src=https://raw.githubusercontent.com/MindorksOpenSource/PRDownloader/master/assets/sample_download.png width=360 height=640 />
 
 ### Overview of PRDownloader library
 * PRDownloader can be used to download any type of files like image, video, pdf, apk and etc.
