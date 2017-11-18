@@ -45,9 +45,11 @@ public class DownloadTask {
 
     private static final int BUFFER_SIZE = 1024 * 4;
     private static final long TIME_GAP_FOR_SYNC = 2000;
+    private static final long MIN_BYTES_FOR_SYNC = 65536;
     private final DownloadRequest request;
     private ProgressHandler progressHandler;
     private long lastSyncTime;
+    private long lastSyncBytes;
     private BufferedOutputStream outputStream;
     private FileDescriptor fileDescriptor;
     private InputStream inputStream;
@@ -216,6 +218,10 @@ public class DownloadTask {
 
     private void createOutputStreamAndSeekIfRequired() throws IOException {
         File file = new File(tempPath);
+        if (!file.exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            file.createNewFile();
+        }
         RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
         fileDescriptor = randomAccess.getFD();
         outputStream = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
@@ -295,21 +301,34 @@ public class DownloadTask {
     }
 
     private void syncIfRequired() throws IOException {
-        if (System.currentTimeMillis() - lastSyncTime > TIME_GAP_FOR_SYNC) {
+        final long currentBytes = request.getDownloadedBytes();
+        final long currentTime = System.currentTimeMillis();
+        final long bytesDelta = currentBytes - lastSyncBytes;
+        final long timeDelta = currentTime - lastSyncTime;
+        if (bytesDelta > MIN_BYTES_FOR_SYNC && timeDelta > TIME_GAP_FOR_SYNC) {
             sync();
+            lastSyncBytes = currentBytes;
+            lastSyncTime = currentTime;
         }
     }
 
-    private void sync() throws IOException {
-        outputStream.flush();
-        fileDescriptor.sync();
-        if (isResumeSupported) {
+    private void sync() {
+        boolean success;
+        try {
+            outputStream.flush();
+            fileDescriptor.sync();
+            success = true;
+        } catch (IOException e) {
+            success = false;
+            e.printStackTrace();
+        }
+        if (success && isResumeSupported) {
             ComponentHolder.getInstance().getDbHelper()
                     .updateProgress(request.getDownloadId(),
                             request.getDownloadedBytes(),
                             System.currentTimeMillis());
         }
-        lastSyncTime = System.currentTimeMillis();
+
     }
 
     private void closeAllSafely() {
