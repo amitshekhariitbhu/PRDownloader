@@ -21,7 +21,7 @@ import com.downloader.OnCancelListener;
 import com.downloader.OnDownloadListener;
 import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
-import com.downloader.OnStartListener;
+import com.downloader.OnStartOrResumeListener;
 import com.downloader.Priority;
 import com.downloader.Status;
 import com.downloader.core.Core;
@@ -53,7 +53,7 @@ public class DownloadRequest {
     private String userAgent;
     private OnProgressListener onProgressListener;
     private OnDownloadListener onDownloadListener;
-    private OnStartListener onStartListener;
+    private OnStartOrResumeListener onStartOrResumeListener;
     private OnPauseListener onPauseListener;
     private OnCancelListener onCancelListener;
     private int downloadId;
@@ -201,8 +201,8 @@ public class DownloadRequest {
         return onProgressListener;
     }
 
-    public DownloadRequest setOnStartListener(OnStartListener onStartListener) {
-        this.onStartListener = onStartListener;
+    public DownloadRequest setOnStartOrResumeListener(OnStartOrResumeListener onStartOrResumeListener) {
+        this.onStartOrResumeListener = onStartOrResumeListener;
         return this;
     }
 
@@ -257,8 +257,8 @@ public class DownloadRequest {
         Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                 .execute(new Runnable() {
                     public void run() {
-                        if (onStartListener != null) {
-                            onStartListener.onStart();
+                        if (onStartOrResumeListener != null) {
+                            onStartOrResumeListener.onStartOrResume();
                         }
                     }
                 });
@@ -275,7 +275,7 @@ public class DownloadRequest {
                 });
     }
 
-    public void deliverCancelEvent() {
+    private void deliverCancelEvent() {
         Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                 .execute(new Runnable() {
                     public void run() {
@@ -303,7 +303,7 @@ public class DownloadRequest {
     private void destroy() {
         this.onProgressListener = null;
         this.onDownloadListener = null;
-        this.onStartListener = null;
+        this.onStartOrResumeListener = null;
         this.onPauseListener = null;
         this.onCancelListener = null;
     }

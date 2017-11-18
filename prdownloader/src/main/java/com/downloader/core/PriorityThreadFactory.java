@@ -28,7 +28,7 @@ public class PriorityThreadFactory implements ThreadFactory {
 
     private final int mThreadPriority;
 
-    public PriorityThreadFactory(int threadPriority) {
+    PriorityThreadFactory(int threadPriority) {
         mThreadPriority = threadPriority;
     }
 
@@ -39,7 +39,7 @@ public class PriorityThreadFactory implements ThreadFactory {
             public void run() {
                 try {
                     Process.setThreadPriority(mThreadPriority);
-                } catch (Throwable t) {
+                } catch (Throwable ignored) {
 
                 }
                 runnable.run();

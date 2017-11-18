@@ -16,4 +16,13 @@
 
 <resources>
     <string name="app_name">PRDownloader</string>
+    <string name="some_error_occurred">Some error occurred</string>
+    <string name="start">start</string>
+    <string name="completed">completed</string>
+    <string name="pause">pause</string>
+    <string name="cancel">cancel</string>
+    <string name="resume">resume</string>
+    <string name="restart">restart</string>
+    <string name="cancelled">cancelled</string>
+    <string name="progress">progress</string>
 </resources>
