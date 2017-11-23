@@ -123,7 +123,7 @@ Status status = PRDownloader.getStatus(downloadId);
 PRDownloader.cleanUp(days);
 ```
 ### TODO
-* Integration with other libraries like OkHttp
+* Integration with other libraries like OkHttp, RxJava
 * Test Cases
 * And of course many many features and bug fixes
 
