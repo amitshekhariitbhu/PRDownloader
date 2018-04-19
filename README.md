@@ -25,7 +25,7 @@
 
 Add this in your build.gradle
 ```groovy
-compile 'com.mindorks.android:prdownloader:0.2.0'
+compile 'com.mindorks.android:prdownloader:0.3.0'
 ```
 Do not forget to add internet permission in manifest if already not present
 ```xml
