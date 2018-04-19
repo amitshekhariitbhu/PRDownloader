@@ -167,8 +167,15 @@ public class DownloadTask {
             byte[] buff = new byte[BUFFER_SIZE];
 
             if (!file.exists()) {
-                //noinspection ResultOfMethodCallIgnored
-                file.createNewFile();
+                if (file.getParentFile() != null && !file.getParentFile().exists()) {
+                    if (file.getParentFile().mkdirs()) {
+                        //noinspection ResultOfMethodCallIgnored
+                        file.createNewFile();
+                    }
+                } else {
+                    //noinspection ResultOfMethodCallIgnored
+                    file.createNewFile();
+                }
             }
 
             RandomAccessFile randomAccess = new RandomAccessFile(file, "rw");
