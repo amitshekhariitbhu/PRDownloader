@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     final String URL8 = "http://www.appsapk.com/downloading/latest/Evernote%20-%20stay%20organized.-7.9.7.apk";
     final String URL9 = "http://www.appsapk.com/downloading/latest/UC-Browser.apk";
     final String URL10 = "http://www.appsapk.com/downloading/latest/Barcode%20Scanner-1.2.apk";
-    final String URL11 = "http://songs.djmazadownload.com/music/Zip/Hasee%20Toh%20Phasee%20[2014-MP3-VBR]%20-%20[DJMaza.Life].zip";
+    final String URL11 = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v";
     final String URL12 = "http://www2.sdfi.edu.cn/netclass/jiaoan/englit/download/Harry%20Potter%20and%20the%20Sorcerer's%20Stone.pdf";
     final String URL13 = "https://media.giphy.com/media/Bk0CW5frw4qfS/giphy.gif";
     final String URL14 = "http://techslides.com/demos/sample-videos/small.mp4";
@@ -1059,7 +1059,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdEleven);
                     return;
                 }
-                downloadIdEleven = PRDownloader.download(URL11, dirPath, "htp.zip")
+                downloadIdEleven = PRDownloader.download(URL11, dirPath, "BigBuckBunny.m4v")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
