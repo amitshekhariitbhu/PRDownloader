@@ -196,7 +196,7 @@ public class DownloadTask {
 
             do {
 
-                final int byteCount = inputStream.read(buff);
+                final int byteCount = inputStream.read(buff, 0, BUFFER_SIZE);
 
                 if (byteCount == -1) {
                     break;
