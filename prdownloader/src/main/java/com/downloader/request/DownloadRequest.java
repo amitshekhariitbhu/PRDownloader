@@ -23,10 +23,12 @@ import com.downloader.OnPauseListener;
 import com.downloader.OnProgressListener;
 import com.downloader.OnStartOrResumeListener;
 import com.downloader.Priority;
+import com.downloader.Response;
 import com.downloader.Status;
 import com.downloader.core.Core;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
+import com.downloader.internal.SynchronousCall;
 import com.downloader.utils.Utils;
 
 import java.util.HashMap;
@@ -226,6 +228,11 @@ public class DownloadRequest {
         downloadId = Utils.getUniqueId(url, dirPath, fileName);
         DownloadRequestQueue.getInstance().addRequest(this);
         return downloadId;
+    }
+
+    public Response executeSync() {
+        downloadId = Utils.getUniqueId(url, dirPath, fileName);
+        return new SynchronousCall(this).execute();
     }
 
     public void deliverError(final Error error) {
