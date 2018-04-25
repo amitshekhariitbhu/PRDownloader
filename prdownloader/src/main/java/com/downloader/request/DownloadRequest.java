@@ -231,6 +231,7 @@ public class DownloadRequest {
     }
 
     public Response executeSync() {
+        downloadId = Utils.getUniqueId(url, dirPath, fileName);
         return new SynchronousCall(this).execute();
     }
 
