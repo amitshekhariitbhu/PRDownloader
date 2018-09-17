@@ -256,7 +256,7 @@ public class DownloadRequest {
                     .execute(new Runnable() {
                         public void run() {
                             if (onDownloadListener != null) {
-                                onDownloadListener.onDownloadComplete();
+                                onDownloadListener.onDownloadComplete(downloadId);
                             }
                             finish();
                         }

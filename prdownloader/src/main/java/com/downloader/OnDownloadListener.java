@@ -22,7 +22,7 @@ package com.downloader;
 
 public interface OnDownloadListener {
 
-    void onDownloadComplete();
+    void onDownloadComplete(int downloadid);
 
     void onError(Error error);
 
