@@ -28,6 +28,7 @@ import com.downloader.internal.stream.FileDownloadOutputStream;
 import com.downloader.internal.stream.FileDownloadRandomAccessFile;
 import com.downloader.request.DownloadRequest;
 import com.downloader.utils.Utils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,7 @@ public class DownloadTask {
     private long lastSyncTime;
     private long lastSyncBytes;
     private InputStream inputStream;
-    FileDownloadOutputStream outputStream;
+    private FileDownloadOutputStream outputStream;
     private HttpClient httpClient;
     private long totalBytes;
     private int responseCode;
@@ -74,8 +75,6 @@ public class DownloadTask {
             response.setPaused(true);
             return response;
         }
-
-        FileDownloadOutputStream outputStream = null;
 
         try {
 
@@ -173,7 +172,7 @@ public class DownloadTask {
                 }
             }
 
-            this.outputStream = outputStream = FileDownloadRandomAccessFile.create(file);
+            this.outputStream = FileDownloadRandomAccessFile.create(file);
 
             if (isResumeSupported && request.getDownloadedBytes() != 0) {
                 outputStream.seek(request.getDownloadedBytes());
@@ -310,7 +309,7 @@ public class DownloadTask {
         }
     }
 
-    private void syncIfRequired(FileDownloadOutputStream outputStream) throws IOException {
+    private void syncIfRequired(FileDownloadOutputStream outputStream) {
         final long currentBytes = request.getDownloadedBytes();
         final long currentTime = System.currentTimeMillis();
         final long bytesDelta = currentBytes - lastSyncBytes;
@@ -358,7 +357,7 @@ public class DownloadTask {
         try {
             if (outputStream != null) {
                 try {
-                   sync(outputStream);
+                    sync(outputStream);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

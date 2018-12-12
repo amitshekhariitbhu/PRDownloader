@@ -1,17 +1,13 @@
 package com.downloader.internal.stream;
 
 
-import java.io.FileDescriptor;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.SyncFailedException;
 
 public interface FileDownloadOutputStream {
 
     /**
      * Writes <code>len</code> bytes from the specified byte array
      * starting at offset <code>off</code> to this file.
-     *
      */
     void write(byte b[], int off, int len) throws IOException;
 
@@ -38,4 +34,5 @@ public interface FileDownloadOutputStream {
      * Sets the length of this file.
      */
     void setLength(final long newLength) throws IOException, IllegalAccessException;
+
 }

@@ -8,11 +8,12 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class FileDownloadRandomAccessFile implements FileDownloadOutputStream {
+
     private final BufferedOutputStream out;
     private final FileDescriptor fd;
     private final RandomAccessFile randomAccess;
 
-    FileDownloadRandomAccessFile(File file) throws IOException {
+    private FileDownloadRandomAccessFile(File file) throws IOException {
         randomAccess = new RandomAccessFile(file, "rw");
         fd = randomAccess.getFD();
         out = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
@@ -45,10 +46,8 @@ public class FileDownloadRandomAccessFile implements FileDownloadOutputStream {
         randomAccess.setLength(totalBytes);
     }
 
-
     public static FileDownloadOutputStream create(File file) throws IOException {
         return new FileDownloadRandomAccessFile(file);
     }
-
 
 }
