@@ -43,8 +43,6 @@ public interface HttpClient extends Cloneable {
 
     void close();
 
-    InputStream getErrorStream() throws IOException;
-
     Map<String, List<String>> getHeaderFields();
 
 }

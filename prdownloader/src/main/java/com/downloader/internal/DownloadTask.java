@@ -29,14 +29,11 @@ import com.downloader.internal.stream.FileDownloadRandomAccessFile;
 import com.downloader.request.DownloadRequest;
 import com.downloader.utils.Utils;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
-import java.io.SyncFailedException;
 import java.net.HttpURLConnection;
 
 /**
@@ -130,7 +127,7 @@ public class DownloadTask {
             if (!isSuccessful()) {
                 Error error = new Error();
                 error.setServerError(true);
-                error.setServerErrorMessage(convertStreamToString(httpClient.getErrorStream()));
+                error.setServerErrorMessage(convertStreamToString());
                 error.setHeaderFields(httpClient.getHeaderFields());
                 response.setError(error);
                 return response;
@@ -381,23 +378,24 @@ public class DownloadTask {
         }
     }
 
-    private String convertStreamToString(InputStream errorStream) {
+    private String convertStreamToString() {
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         } finally {
             try {
-                bufferedReader.close();
-            } catch (NullPointerException | IOException e) {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (NullPointerException | IOException ignored) {
+
             }
         }
         return stringBuilder.toString();
