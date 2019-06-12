@@ -95,6 +95,11 @@ public class DefaultHttpClient implements HttpClient {
         // no operation
     }
 
+    @Override
+    public Map<String, List<String>> getHeaderFields() {
+        return connection.getHeaderFields();
+    }
+
     private void addHeaders(DownloadRequest request) {
         final HashMap<String, List<String>> headers = request.getHeaders();
         if (headers != null) {
