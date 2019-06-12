@@ -127,7 +127,7 @@ public class DownloadTask {
             if (!isSuccessful()) {
                 Error error = new Error();
                 error.setServerError(true);
-                error.setServerErrorMessage(convertStreamToString());
+                error.setServerErrorMessage(convertStreamToString(httpClient.getErrorStream()));
                 error.setHeaderFields(httpClient.getHeaderFields());
                 response.setError(error);
                 return response;
@@ -378,12 +378,12 @@ public class DownloadTask {
         }
     }
 
-    private String convertStreamToString() {
+    private String convertStreamToString(InputStream errorStream) {
         StringBuilder stringBuilder = new StringBuilder();
         String line;
         BufferedReader bufferedReader = null;
         try {
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            bufferedReader = new BufferedReader(new InputStreamReader(errorStream));
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
