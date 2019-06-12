@@ -129,6 +129,7 @@ public class DownloadTask {
                 error.setServerError(true);
                 error.setServerErrorMessage(convertStreamToString(httpClient.getErrorStream()));
                 error.setHeaderFields(httpClient.getHeaderFields());
+                error.setResponseCode(responseCode);
                 response.setError(error);
                 return response;
             }
