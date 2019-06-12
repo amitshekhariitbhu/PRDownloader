@@ -20,6 +20,8 @@ import com.downloader.request.DownloadRequest;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by amitshekhar on 13/11/17.
@@ -40,5 +42,9 @@ public interface HttpClient extends Cloneable {
     String getResponseHeader(String name);
 
     void close();
+
+    InputStream getErrorStream() throws IOException;
+
+    Map<String, List<String>> getHeaderFields();
 
 }
