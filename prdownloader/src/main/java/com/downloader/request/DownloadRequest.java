@@ -237,6 +237,7 @@ public class DownloadRequest {
 
     public void deliverError(final Error error) {
         if (status != Status.CANCELLED) {
+            setStatus(Status.FAILED);
             Core.getInstance().getExecutorSupplier().forMainThreadTasks()
                     .execute(new Runnable() {
                         public void run() {
