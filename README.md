@@ -3,6 +3,7 @@
 </p>
 
 # PRDownloader - A file downloader library for Android with pause and resume support
+[![Mindorks Android Store](https://img.shields.io/badge/Mindorks%20Android%20Store-PRDownloader-blue.svg?style=flat)](https://mindorks.com/android/store)
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -25,7 +26,7 @@
 
 Add this in your build.gradle
 ```groovy
-compile 'com.mindorks.android:prdownloader:0.4.0'
+implementation 'com.mindorks.android:prdownloader:0.5.0'
 ```
 Do not forget to add internet permission in manifest if already not present
 ```xml
