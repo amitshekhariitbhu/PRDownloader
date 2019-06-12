@@ -378,24 +378,26 @@ public class DownloadTask {
         }
     }
 
-    private String convertStreamToString(InputStream errorStream) {
+    private String convertStreamToString(InputStream stream) {
         StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(errorStream));
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException ignored) {
-
-        } finally {
+        if (stream != null) {
+            String line;
+            BufferedReader bufferedReader = null;
             try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
+                bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
                 }
-            } catch (NullPointerException | IOException ignored) {
+            } catch (IOException ignored) {
 
+            } finally {
+                try {
+                    if (bufferedReader != null) {
+                        bufferedReader.close();
+                    }
+                } catch (NullPointerException | IOException ignored) {
+
+                }
             }
         }
         return stringBuilder.toString();
