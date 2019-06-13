@@ -30,7 +30,7 @@ public class Error {
     private String serverErrorMessage;
     private Map<String, List<String>> headerFields;
     private Throwable connectionException;
-
+    private int responseCode;
 
     public boolean isServerError() {
         return isServerError;
@@ -70,5 +70,13 @@ public class Error {
 
     public Throwable getConnectionException() {
         return connectionException;
+    }
+
+    public void setResponseCode(int responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public int getResponseCode() {
+        return responseCode;
     }
 }
