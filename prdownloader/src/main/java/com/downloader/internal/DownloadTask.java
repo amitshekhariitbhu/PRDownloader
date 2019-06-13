@@ -368,7 +368,6 @@ public class DownloadTask {
                     e.printStackTrace();
                 }
             }
-
         } finally {
             if (outputStream != null)
                 try {
