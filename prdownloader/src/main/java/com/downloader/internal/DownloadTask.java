@@ -127,8 +127,9 @@ public class DownloadTask {
             if (!isSuccessful()) {
                 Error error = new Error();
                 error.setServerError(true);
-                error.setServerErrorMessage(convertStreamToString());
+                error.setServerErrorMessage(convertStreamToString(httpClient.getErrorStream()));
                 error.setHeaderFields(httpClient.getHeaderFields());
+                error.setResponseCode(responseCode);
                 response.setError(error);
                 return response;
             }
@@ -378,24 +379,26 @@ public class DownloadTask {
         }
     }
 
-    private String convertStreamToString() {
+    private String convertStreamToString(InputStream stream) {
         StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-        } catch (IOException ignored) {
-
-        } finally {
+        if (stream != null) {
+            String line;
+            BufferedReader bufferedReader = null;
             try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
+                bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
                 }
-            } catch (NullPointerException | IOException ignored) {
+            } catch (IOException ignored) {
 
+            } finally {
+                try {
+                    if (bufferedReader != null) {
+                        bufferedReader.close();
+                    }
+                } catch (NullPointerException | IOException ignored) {
+
+                }
             }
         }
         return stringBuilder.toString();
