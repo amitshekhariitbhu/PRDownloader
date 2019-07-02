@@ -16,12 +16,14 @@
 
 package com.downloader;
 
+import com.downloader.request.DownloadRequest;
+
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
 public interface OnPauseListener {
 
-    void onPause();
+    void onPause(DownloadRequest downloadRequest);
 
 }

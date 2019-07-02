@@ -184,7 +184,7 @@ public class DownloadRequest {
     }
 
     public int getDownloadId() {
-        return downloadId;
+        return downloadId=Utils.getUniqueId(url,dirPath,fileName);
     }
 
     public void setDownloadId(int downloadId) {
@@ -242,7 +242,7 @@ public class DownloadRequest {
                     .execute(new Runnable() {
                         public void run() {
                             if (onDownloadListener != null) {
-                                onDownloadListener.onError(error);
+                                onDownloadListener.onError(DownloadRequest.this,error);
                             }
                             finish();
                         }
@@ -257,7 +257,7 @@ public class DownloadRequest {
                     .execute(new Runnable() {
                         public void run() {
                             if (onDownloadListener != null) {
-                                onDownloadListener.onDownloadComplete();
+                                onDownloadListener.onDownloadComplete(DownloadRequest.this);
                             }
                             finish();
                         }
@@ -271,7 +271,7 @@ public class DownloadRequest {
                     .execute(new Runnable() {
                         public void run() {
                             if (onStartOrResumeListener != null) {
-                                onStartOrResumeListener.onStartOrResume();
+                                onStartOrResumeListener.onStartOrResume(DownloadRequest.this);
                             }
                         }
                     });
@@ -284,7 +284,7 @@ public class DownloadRequest {
                     .execute(new Runnable() {
                         public void run() {
                             if (onPauseListener != null) {
-                                onPauseListener.onPause();
+                                onPauseListener.onPause(DownloadRequest.this);
                             }
                         }
                     });
@@ -296,7 +296,7 @@ public class DownloadRequest {
                 .execute(new Runnable() {
                     public void run() {
                         if (onCancelListener != null) {
-                            onCancelListener.onCancel();
+                            onCancelListener.onCancel(DownloadRequest.this);
                         }
                     }
                 });

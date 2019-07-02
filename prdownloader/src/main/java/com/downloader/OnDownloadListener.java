@@ -16,14 +16,16 @@
 
 package com.downloader;
 
+import com.downloader.request.DownloadRequest;
+
 /**
  * Created by amitshekhar on 13/11/17.
  */
 
 public interface OnDownloadListener {
 
-    void onDownloadComplete();
+    void onDownloadComplete(DownloadRequest downloadRequest);
 
-    void onError(Error error);
+    void onError(DownloadRequest downloadRequest,Error error);
 
 }

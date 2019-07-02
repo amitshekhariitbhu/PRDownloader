@@ -131,4 +131,8 @@ public class DownloadRequestQueue {
     public void finish(DownloadRequest request) {
         currentRequestMap.remove(request.getDownloadId());
     }
+
+    public DownloadRequest getDownloadRequest(int downloadId){
+        return currentRequestMap.get(downloadId);
+    }
 }

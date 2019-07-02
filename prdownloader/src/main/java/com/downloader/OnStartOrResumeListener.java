@@ -16,12 +16,14 @@
 
 package com.downloader;
 
+import com.downloader.request.DownloadRequest;
+
 /**
  * Created by amitshekhar on 15/11/17.
  */
 
 public interface OnStartOrResumeListener {
 
-    void onStartOrResume();
+    void onStartOrResume(DownloadRequest downloadRequest);
 
 }

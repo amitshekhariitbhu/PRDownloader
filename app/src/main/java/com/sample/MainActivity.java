@@ -34,6 +34,7 @@ import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
 import com.downloader.Status;
+import com.downloader.request.DownloadRequest;
 import com.sample.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -200,7 +201,13 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
+                                
+                            }
+                        })
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
+                            @Override
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarOne.setIndeterminate(false);
                                 buttonOne.setEnabled(true);
                                 buttonOne.setText(R.string.pause);
@@ -209,13 +216,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonOne.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 buttonOne.setText(R.string.start);
                                 buttonCancelOne.setEnabled(false);
                                 progressBarOne.setProgress(0);
@@ -235,14 +242,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonOne.setEnabled(false);
                                 buttonCancelOne.setEnabled(false);
                                 buttonOne.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonOne.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "1", Toast.LENGTH_SHORT).show();
                                 textViewProgressOne.setText("");
@@ -286,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarTwo.setIndeterminate(false);
                                 buttonTwo.setEnabled(true);
                                 buttonTwo.setText(R.string.pause);
@@ -296,13 +303,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonTwo.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdTwo = 0;
                                 buttonTwo.setText(R.string.start);
                                 buttonCancelTwo.setEnabled(false);
@@ -321,14 +328,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonTwo.setEnabled(false);
                                 buttonCancelTwo.setEnabled(false);
                                 buttonTwo.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonTwo.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "2", Toast.LENGTH_SHORT).show();
                                 textViewProgressTwo.setText("");
@@ -372,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarThree.setIndeterminate(false);
                                 buttonThree.setEnabled(true);
                                 buttonThree.setText(R.string.pause);
@@ -382,13 +389,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonThree.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdThree = 0;
                                 buttonThree.setText(R.string.start);
                                 buttonCancelThree.setEnabled(false);
@@ -407,14 +414,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonThree.setEnabled(false);
                                 buttonCancelThree.setEnabled(false);
                                 buttonThree.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonThree.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "3", Toast.LENGTH_SHORT).show();
                                 textViewProgressThree.setText("");
@@ -458,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarFour.setIndeterminate(false);
                                 buttonFour.setEnabled(true);
                                 buttonFour.setText(R.string.pause);
@@ -468,13 +475,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonFour.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdFour = 0;
                                 buttonFour.setText(R.string.start);
                                 buttonCancelFour.setEnabled(false);
@@ -493,14 +500,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonFour.setEnabled(false);
                                 buttonCancelFour.setEnabled(false);
                                 buttonFour.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonFour.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "4", Toast.LENGTH_SHORT).show();
                                 textViewProgressFour.setText("");
@@ -544,7 +551,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarFive.setIndeterminate(false);
                                 buttonFive.setEnabled(true);
                                 buttonFive.setText(R.string.pause);
@@ -554,13 +561,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonFive.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdFive = 0;
                                 buttonFive.setText(R.string.start);
                                 buttonCancelFive.setEnabled(false);
@@ -579,14 +586,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonFive.setEnabled(false);
                                 buttonCancelFive.setEnabled(false);
                                 buttonFive.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonFive.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "5", Toast.LENGTH_SHORT).show();
                                 textViewProgressFive.setText("");
@@ -631,7 +638,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarSix.setIndeterminate(false);
                                 buttonSix.setEnabled(true);
                                 buttonSix.setText(R.string.pause);
@@ -641,13 +648,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonSix.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdSix = 0;
                                 buttonSix.setText(R.string.start);
                                 buttonCancelSix.setEnabled(false);
@@ -666,14 +673,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonSix.setEnabled(false);
                                 buttonCancelSix.setEnabled(false);
                                 buttonSix.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonSix.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "6", Toast.LENGTH_SHORT).show();
                                 textViewProgressSix.setText("");
@@ -718,7 +725,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarSeven.setIndeterminate(false);
                                 buttonSeven.setEnabled(true);
                                 buttonSeven.setText(R.string.pause);
@@ -728,13 +735,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonSeven.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdSeven = 0;
                                 buttonSeven.setText(R.string.start);
                                 buttonCancelSeven.setEnabled(false);
@@ -753,14 +760,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonSeven.setEnabled(false);
                                 buttonCancelSeven.setEnabled(false);
                                 buttonSeven.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonSeven.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "7", Toast.LENGTH_SHORT).show();
                                 textViewProgressSeven.setText("");
@@ -805,7 +812,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarEight.setIndeterminate(false);
                                 buttonEight.setEnabled(true);
                                 buttonEight.setText(R.string.pause);
@@ -815,13 +822,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonEight.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdEight = 0;
                                 buttonEight.setText(R.string.start);
                                 buttonCancelEight.setEnabled(false);
@@ -840,14 +847,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonEight.setEnabled(false);
                                 buttonCancelEight.setEnabled(false);
                                 buttonEight.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonEight.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "8", Toast.LENGTH_SHORT).show();
                                 textViewProgressEight.setText("");
@@ -891,7 +898,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarNine.setIndeterminate(false);
                                 buttonNine.setEnabled(true);
                                 buttonNine.setText(R.string.pause);
@@ -901,13 +908,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonNine.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdNine = 0;
                                 buttonNine.setText(R.string.start);
                                 buttonCancelNine.setEnabled(false);
@@ -926,14 +933,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonNine.setEnabled(false);
                                 buttonCancelNine.setEnabled(false);
                                 buttonNine.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonNine.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "9", Toast.LENGTH_SHORT).show();
                                 textViewProgressNine.setText("");
@@ -977,7 +984,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarTen.setIndeterminate(false);
                                 buttonTen.setEnabled(true);
                                 buttonTen.setText(R.string.pause);
@@ -987,13 +994,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonTen.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdTen = 0;
                                 buttonTen.setText(R.string.start);
                                 buttonCancelTen.setEnabled(false);
@@ -1012,14 +1019,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonTen.setEnabled(false);
                                 buttonCancelTen.setEnabled(false);
                                 buttonTen.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonTen.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "10", Toast.LENGTH_SHORT).show();
                                 textViewProgressTen.setText("");
@@ -1063,7 +1070,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarEleven.setIndeterminate(false);
                                 buttonEleven.setEnabled(true);
                                 buttonEleven.setText(R.string.pause);
@@ -1073,13 +1080,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonEleven.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdEleven = 0;
                                 buttonEleven.setText(R.string.start);
                                 buttonCancelEleven.setEnabled(false);
@@ -1098,14 +1105,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonEleven.setEnabled(false);
                                 buttonCancelEleven.setEnabled(false);
                                 buttonEleven.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonEleven.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "11", Toast.LENGTH_SHORT).show();
                                 textViewProgressEleven.setText("");
@@ -1149,7 +1156,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarTwelve.setIndeterminate(false);
                                 buttonTwelve.setEnabled(true);
                                 buttonTwelve.setText(R.string.pause);
@@ -1159,13 +1166,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonTwelve.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdTwelve = 0;
                                 buttonTwelve.setText(R.string.start);
                                 buttonCancelTwelve.setEnabled(false);
@@ -1184,14 +1191,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonTwelve.setEnabled(false);
                                 buttonCancelTwelve.setEnabled(false);
                                 buttonTwelve.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonTwelve.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "12", Toast.LENGTH_SHORT).show();
                                 textViewProgressTwelve.setText("");
@@ -1235,7 +1242,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarThirteen.setIndeterminate(false);
                                 buttonThirteen.setEnabled(true);
                                 buttonThirteen.setText(R.string.pause);
@@ -1245,13 +1252,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonThirteen.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdThirteen = 0;
                                 buttonThirteen.setText(R.string.start);
                                 buttonCancelThirteen.setEnabled(false);
@@ -1270,14 +1277,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonThirteen.setEnabled(false);
                                 buttonCancelThirteen.setEnabled(false);
                                 buttonThirteen.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonThirteen.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "13", Toast.LENGTH_SHORT).show();
                                 textViewProgressThirteen.setText("");
@@ -1322,7 +1329,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarFourteen.setIndeterminate(false);
                                 buttonFourteen.setEnabled(true);
                                 buttonFourteen.setText(R.string.pause);
@@ -1332,13 +1339,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonFourteen.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdFourteen = 0;
                                 buttonFourteen.setText(R.string.start);
                                 buttonCancelFourteen.setEnabled(false);
@@ -1357,14 +1364,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonFourteen.setEnabled(false);
                                 buttonCancelFourteen.setEnabled(false);
                                 buttonFourteen.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonFourteen.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "14", Toast.LENGTH_SHORT).show();
                                 textViewProgressFourteen.setText("");
@@ -1409,7 +1416,7 @@ public class MainActivity extends AppCompatActivity {
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
-                            public void onStartOrResume() {
+                            public void onStartOrResume(DownloadRequest downloadRequest) {
                                 progressBarFifteen.setIndeterminate(false);
                                 buttonFifteen.setEnabled(true);
                                 buttonFifteen.setText(R.string.pause);
@@ -1419,13 +1426,13 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .setOnPauseListener(new OnPauseListener() {
                             @Override
-                            public void onPause() {
+                            public void onPause(DownloadRequest downloadRequest) {
                                 buttonFifteen.setText(R.string.resume);
                             }
                         })
                         .setOnCancelListener(new OnCancelListener() {
                             @Override
-                            public void onCancel() {
+                            public void onCancel(DownloadRequest downloadRequest) {
                                 downloadIdFifteen = 0;
                                 buttonFifteen.setText(R.string.start);
                                 buttonCancelFifteen.setEnabled(false);
@@ -1444,14 +1451,14 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .start(new OnDownloadListener() {
                             @Override
-                            public void onDownloadComplete() {
+                            public void onDownloadComplete(DownloadRequest downloadRequest) {
                                 buttonFifteen.setEnabled(false);
                                 buttonCancelFifteen.setEnabled(false);
                                 buttonFifteen.setText(R.string.completed);
                             }
 
                             @Override
-                            public void onError(Error error) {
+                            public void onError(DownloadRequest downloadRequest,Error error) {
                                 buttonFifteen.setText(R.string.start);
                                 Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "15", Toast.LENGTH_SHORT).show();
                                 textViewProgressFifteen.setText("");

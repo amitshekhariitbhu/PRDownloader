@@ -25,6 +25,7 @@ import android.content.Context;
 import com.downloader.core.Core;
 import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
+import com.downloader.request.DownloadRequest;
 import com.downloader.request.DownloadRequestBuilder;
 import com.downloader.utils.Utils;
 
@@ -140,6 +141,10 @@ public class PRDownloader {
      */
     public static void shutDown() {
         Core.shutDown();
+    }
+
+    public static DownloadRequest getDownloadRequest(int downloadId){
+        return DownloadRequestQueue.getInstance().getDownloadRequest(downloadId);
     }
 
 }
