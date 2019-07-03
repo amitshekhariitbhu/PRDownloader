@@ -27,6 +27,7 @@ import com.downloader.internal.ComponentHolder;
 import com.downloader.internal.DownloadRequestQueue;
 import com.downloader.request.DownloadRequest;
 import com.downloader.request.DownloadRequestBuilder;
+import com.downloader.utils.DataUtil;
 import com.downloader.utils.Utils;
 
 /**
@@ -60,6 +61,7 @@ public class PRDownloader {
     public static void initialize(Context context, PRDownloaderConfig config) {
         ComponentHolder.getInstance().init(context, config);
         DownloadRequestQueue.initialize();
+        DataUtil.init(context);
     }
 
     /**
@@ -82,6 +84,17 @@ public class PRDownloader {
     public static void pause(int downloadId) {
         DownloadRequestQueue.getInstance().pause(downloadId);
     }
+
+    /**
+     * Method to pause request with the given downloadId
+     *
+     * @param downloadId The downloadId with which request is to be paused
+     */
+    public static void saveDownloadRequest(int downloadId) {
+        DownloadRequestQueue.getInstance().pause(downloadId);
+    }
+
+
 
     /**
      * Method to resume request with the given downloadId

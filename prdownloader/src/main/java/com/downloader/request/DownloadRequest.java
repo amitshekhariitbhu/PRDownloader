@@ -41,26 +41,26 @@ import java.util.concurrent.Future;
 
 public class DownloadRequest {
 
-    private Priority priority;
-    private Object tag;
+     private Priority priority;
+    transient private Object tag;
     private String url;
     private String dirPath;
     private String fileName;
     private int sequenceNumber;
-    private Future future;
+    transient private Future future;
     private long downloadedBytes;
     private long totalBytes;
     private int readTimeout;
     private int connectTimeout;
     private String userAgent;
-    private OnProgressListener onProgressListener;
-    private OnDownloadListener onDownloadListener;
-    private OnStartOrResumeListener onStartOrResumeListener;
-    private OnPauseListener onPauseListener;
-    private OnCancelListener onCancelListener;
+    transient private OnProgressListener onProgressListener;
+    transient private OnDownloadListener onDownloadListener;
+    transient private OnStartOrResumeListener onStartOrResumeListener;
+    transient private OnPauseListener onPauseListener;
+    transient private OnCancelListener onCancelListener;
     private int downloadId;
-    private HashMap<String, List<String>> headerMap;
-    private Status status;
+    transient private HashMap<String, List<String>> headerMap;
+     private Status status;
 
     DownloadRequest(DownloadRequestBuilder builder) {
         this.url = builder.url;
@@ -184,6 +184,7 @@ public class DownloadRequest {
     }
 
     public int getDownloadId() {
+        if (downloadId!=0)return downloadId;
         return downloadId=Utils.getUniqueId(url,dirPath,fileName);
     }
 

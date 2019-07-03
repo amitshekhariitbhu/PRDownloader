@@ -16,6 +16,8 @@
 
 package com.downloader.utils;
 
+import android.util.Log;
+
 import com.downloader.Constants;
 import com.downloader.core.Core;
 import com.downloader.database.DownloadModel;
@@ -112,6 +114,10 @@ public final class Utils {
     public static int getUniqueId(String url, String dirPath, String fileName) {
 
         String string = url + File.separator + dirPath + File.separator + fileName;
+
+        Log.e("url",url);
+        Log.e("dir",dirPath);
+        Log.e("file",fileName);
 
         byte[] hash;
 
