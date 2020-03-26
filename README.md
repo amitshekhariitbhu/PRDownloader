@@ -130,6 +130,9 @@ PRDownloader.cleanUp(days);
 
 ## If this library helps you in anyway, show your love :heart: by putting a :star: on this project :v:
 
+
+### Learn to build a ride-sharing Android app like Uber, Lyft - [Check here](https://github.com/MindorksOpenSource/ridesharing-uber-lyft-app)
+
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
 ### License
