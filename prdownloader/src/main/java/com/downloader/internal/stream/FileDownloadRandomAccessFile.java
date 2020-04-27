@@ -14,9 +14,13 @@ public class FileDownloadRandomAccessFile implements FileDownloadOutputStream {
     private final RandomAccessFile randomAccess;
 
     private FileDownloadRandomAccessFile(File file) throws IOException {
-        randomAccess = new RandomAccessFile(file, "rw");
-        fd = randomAccess.getFD();
-        out = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
+//         randomAccess = new RandomAccessFile(file, "rw");
+//         fd = randomAccess.getFD();
+//         out = new BufferedOutputStream(new FileOutputStream(randomAccess.getFD()));
+        
+         FileOutputStream fos = new FileOutputStream(file);
+            outputStream = new BufferedOutputStream(fos);
+            fileDescriptor = fos.getFD(); 
     }
 
     @Override
