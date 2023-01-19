@@ -257,7 +257,9 @@ public class DownloadTask {
     }
 
     private void setResumeSupportedOrNot() {
-        isResumeSupported = (responseCode == HttpURLConnection.HTTP_PARTIAL);
+        final String acceptRanges = httpClient.getResponseHeader(Constants.ACCEPT_RANGES);
+        final boolean isAcceptBytesRange = acceptRanges != null && acceptRanges.length() > 0 && acceptRanges.contains("bytes");
+        isResumeSupported = (responseCode == HttpURLConnection.HTTP_PARTIAL) || isAcceptBytesRange;
     }
 
     private boolean checkIfFreshStartRequiredAndStart(DownloadModel model) throws IOException,
