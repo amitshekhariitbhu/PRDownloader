@@ -21,8 +21,8 @@ import android.os.Looper;
 import android.os.Message;
 
 import com.downloader.Constants;
-import com.downloader.Progress;
 import com.downloader.OnProgressListener;
+import com.downloader.Progress;
 
 /**
  * Created by amitshekhar on 13/11/17.

@@ -18,12 +18,13 @@ package com.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.downloader.Error;
 import com.downloader.OnCancelListener;
@@ -40,21 +41,21 @@ public class MainActivity extends AppCompatActivity {
 
     private static String dirPath;
 
-    final String URL1 = "http://www.appsapk.com/downloading/latest/Facebook-119.0.0.23.70.apk";
-    final String URL2 = "http://www.appsapk.com/downloading/latest/WeChat-6.5.7.apk";
-    final String URL3 = "http://www.appsapk.com/downloading/latest/Instagram.apk";
-    final String URL4 = "http://www.appsapk.com/downloading/latest/Emoji%20Flashlight%20-%20Brightest%20Flashlight%202018-2.0.1.apk";
-    final String URL5 = "http://www.appsapk.com/downloading/latest/Screen%20Recorder-7.7.apk";
-    final String URL6 = "http://www.appsapk.com/downloading/latest/Call%20Recorder%20-%20Automatic%20Call%20Recorder-1.6.0.apk";
-    final String URL7 = "http://www.appsapk.com/downloading/latest/Sound%20Profile%20(+%20volume%20scheduler)-5.25.apk";
-    final String URL8 = "http://www.appsapk.com/downloading/latest/Evernote%20-%20stay%20organized.-7.9.7.apk";
-    final String URL9 = "http://www.appsapk.com/downloading/latest/UC-Browser.apk";
-    final String URL10 = "http://www.appsapk.com/downloading/latest/Barcode%20Scanner-1.2.apk";
-    final String URL11 = "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v";
-    final String URL12 = "http://www2.sdfi.edu.cn/netclass/jiaoan/englit/download/Harry%20Potter%20and%20the%20Sorcerer's%20Stone.pdf";
+    final String URL1 = "https://r2-static-assets.androidapksfree.com/sdata/f5963091fb0fd7e683c0cec9e2025b7f/com.facebook.katana_v445.0.0.34.118-448014984_Android-8.0.apk";
+    final String URL2 = "https://r2-static-assets.androidapksfree.com/sdata/efe2bee67907827a1a42efdf317b8ae3/com.tencent.mm_v8.0.37-2380_Android-6.0.apk";
+    final String URL3 = "https://r-static-assets.androidapks.com/rdata/629a15b917738fc4db672ddd772f453f/com.instagram.android_v314.0.0.20.114-371410133_Android-7.0.apk";
+    final String URL4 = "https://r-static-assets.androidapks.com/rdata/32eaeba780349ec9a596ea4d68047d29/com.google.android.youtube_v19.01.34-1543755200_Android-8.0.apk";
+    final String URL5 = "https://r-static-assets.androidapks.com/rdata/458f499e9087aad93ce5be09b59a9be0/com.nll.screenrecorder_v11.1-111_Android-5.0.apk";
+    final String URL6 = "https://r-static-assets.androidapks.com/rdata/eee65b03b3cbfa6087117690f924130f/com.appstar.callrecorder_v6.40-245_Android-5.0.apk";
+    final String URL7 = "https://r2-static-assets.androidapksfree.com/sdata/d3ab26eeec167494b66d4b5de6193460/org.videolan.vlc_v3.5.4-13050404_Android-4.2.apk";
+    final String URL8 = "https://r2-static-assets.androidapksfree.com/sdata/cc88a0779892cd0954bf90465eb214d5/com.evernote_v10.51.1-1130687_Android-10.0.apk";
+    final String URL9 = "https://r2-static-assets.androidapksfree.com/sdata/616af4dd55d7cc2c962ddf4b8bcf52dd/com.UCMobile.intl_v13.4.2.1307-50212_Android-8.0.apk";
+    final String URL10 = "https://r-static-assets.androidapks.com/rdata/f8bcfee07f98ba05a91c4b55b41e08d5/com.snapchat.android_v12.67.0.24-106822_Android-5.0.apk";
+    final String URL11 = "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v";
+    final String URL12 = "https://docenti.unimc.it/antonella.pascali/teaching/2018/19055/files/ultima-lezione/harry-potter-and-the-philosophers-stone";
     final String URL13 = "https://media.giphy.com/media/Bk0CW5frw4qfS/giphy.gif";
-    final String URL14 = "http://techslides.com/demos/sample-videos/small.mp4";
-    final String URL15 = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4";
+    final String URL14 = "https://www.pexels.com/download/video/3195394/";
+    final String URL15 = "https://www.pexels.com/download/video/3209828/";
 
     Button buttonOne, buttonTwo, buttonThree, buttonFour,
             buttonFive, buttonSix, buttonSeven, buttonEight,
@@ -454,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdFour);
                     return;
                 }
-                downloadIdFour = PRDownloader.download(URL4, dirPath, "flashlight.apk")
+                downloadIdFour = PRDownloader.download(URL4, dirPath, "youtube.apk")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
@@ -714,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdSeven);
                     return;
                 }
-                downloadIdSeven = PRDownloader.download(URL7, dirPath, "soundprofile.apk")
+                downloadIdSeven = PRDownloader.download(URL7, dirPath, "vlc.apk")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
@@ -973,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdTen);
                     return;
                 }
-                downloadIdTen = PRDownloader.download(URL10, dirPath, "barcodescanner.apk")
+                downloadIdTen = PRDownloader.download(URL10, dirPath, "snapchat.apk")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
@@ -1318,7 +1319,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdFourteen);
                     return;
                 }
-                downloadIdFourteen = PRDownloader.download(URL14, dirPath, "small.mp4")
+                downloadIdFourteen = PRDownloader.download(URL14, dirPath, "pexels-3195394.mp4")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override
@@ -1405,7 +1406,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdFifteen);
                     return;
                 }
-                downloadIdFifteen = PRDownloader.download(URL15, dirPath, "big_buck_bunny_720p_10mb.mp4")
+                downloadIdFifteen = PRDownloader.download(URL15, dirPath, "pexels-3209828.mp4")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override

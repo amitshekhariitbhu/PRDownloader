@@ -18,7 +18,8 @@ package com.sample.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import java.io.File;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public final class Utils {
         return getBytesToMBString(currentBytes) + "/" + getBytesToMBString(totalBytes);
     }
 
-    private static String getBytesToMBString(long bytes){
+    private static String getBytesToMBString(long bytes) {
         return String.format(Locale.ENGLISH, "%.2fMb", bytes / (1024.00 * 1024.00));
     }
 
