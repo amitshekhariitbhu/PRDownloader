@@ -20,7 +20,7 @@
 
 ## About me
 
-Hi, I am [**Amit Shekhar**](https://amitshekhar.me), I have mentored many developers, and their efforts landed them high-paying tech jobs, helped many tech companies in solving their unique problems, and created many open-source libraries being used by top companies. I am passionate about sharing knowledge through open-source, blogs, and videos.
+Hi, I am Amit Shekhar, Co-Founder @ [Outcome School](https://outcomeschool.com) • IIT 2010-14 • I have taught and mentored many developers, and their efforts landed them high-paying tech jobs, helped many tech companies in solving their unique problems, and created many open-source libraries being used by top companies. I am passionate about sharing knowledge through open-source, blogs, and videos.
 
 You can connect with me on:
 
@@ -135,11 +135,13 @@ PRDownloader.cleanUp(days);
 * Test Cases
 * And of course many many features and bug fixes
 
+## [Outcome School Blog](https://outcomeschool.com/blog) - High-quality content to learn Android concepts.
+
 ## If this library helps you in anyway, show your love :heart: by putting a :star: on this project :v:
 
 ### License
 ```
-   Copyright (C) 2022 Amit Shekhar
+   Copyright (C) 2024 Amit Shekhar
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
