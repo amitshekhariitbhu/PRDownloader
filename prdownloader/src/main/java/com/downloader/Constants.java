@@ -28,6 +28,7 @@ public final class Constants {
 
     public static final int UPDATE = 0x01;
     public static final String RANGE = "Range";
+    public static final String ACCEPT_RANGES = "Accept-Ranges";
     public static final String ETAG = "ETag";
     public static final String USER_AGENT = "User-Agent";
     public static final String DEFAULT_USER_AGENT = "PRDownloader";
