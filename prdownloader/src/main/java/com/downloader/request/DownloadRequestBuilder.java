@@ -41,7 +41,18 @@ public class DownloadRequestBuilder implements RequestBuilder {
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
         this.url = url;
         this.dirPath = dirPath;
-        this.fileName = fileName;
+        this.fileName = sanitizeFilename(fileName);
+    }
+
+    /**
+     * replace all illegal file name characters with "_"
+     */
+    public static String sanitizeFilename(String filename) {
+        // Define the set of illegal characters for filenames
+        String illegalChars = "[/\\\\?%*:|\"<>]";
+
+        // Replace illegal characters with an underscore
+        return filename.replaceAll(illegalChars, "_");
     }
 
     @Override
