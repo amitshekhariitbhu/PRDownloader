@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     final String URL7 = "https://r2-static-assets.androidapksfree.com/sdata/d3ab26eeec167494b66d4b5de6193460/org.videolan.vlc_v3.5.4-13050404_Android-4.2.apk";
     final String URL8 = "https://r2-static-assets.androidapksfree.com/sdata/cc88a0779892cd0954bf90465eb214d5/com.evernote_v10.51.1-1130687_Android-10.0.apk";
     final String URL9 = "https://r2-static-assets.androidapksfree.com/sdata/616af4dd55d7cc2c962ddf4b8bcf52dd/com.UCMobile.intl_v13.4.2.1307-50212_Android-8.0.apk";
-    final String URL10 = "https://r-static-assets.androidapks.com/rdata/f8bcfee07f98ba05a91c4b55b41e08d5/com.snapchat.android_v12.67.0.24-106822_Android-5.0.apk";
+    final String URL10 = "https://picsum.photos/1500/1500.jpg";
     final String URL11 = "https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v";
     final String URL12 = "https://docenti.unimc.it/antonella.pascali/teaching/2018/19055/files/ultima-lezione/harry-potter-and-the-philosophers-stone";
     final String URL13 = "https://media.giphy.com/media/Bk0CW5frw4qfS/giphy.gif";
@@ -981,7 +981,7 @@ public class MainActivity extends AppCompatActivity {
                     PRDownloader.resume(downloadIdTen);
                     return;
                 }
-                downloadIdTen = PRDownloader.download(URL10, dirPath, "snapchat.apk")
+                downloadIdTen = PRDownloader.download(URL10, dirPath, "sample_image.jpg")
                         .build()
                         .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                             @Override

@@ -311,8 +311,7 @@ public class DownloadTask {
             if (progressHandler != null) {
                 progressHandler
                         .obtainMessage(Constants.UPDATE,
-                                new Progress(request.getDownloadedBytes(),
-                                        totalBytes)).sendToTarget();
+                                new Progress(request.getDownloadedBytes(), totalBytes)).sendToTarget();
             }
         }
     }

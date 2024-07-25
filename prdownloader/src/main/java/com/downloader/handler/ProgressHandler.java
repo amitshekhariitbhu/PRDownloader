@@ -45,8 +45,8 @@ public class ProgressHandler extends Handler {
         switch (msg.what) {
             case Constants.UPDATE:
                 if (listener != null) {
-                    if (System.currentTimeMillis() > timeCounter + progressInterval) {
-                        final Progress progress = (Progress) msg.obj;
+                    final Progress progress = (Progress) msg.obj;
+                    if (progress.currentBytes == progress.totalBytes || System.currentTimeMillis() > timeCounter + progressInterval) {
                         listener.onProgress(progress);
                         timeCounter = System.currentTimeMillis();
                     }
