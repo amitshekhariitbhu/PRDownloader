@@ -31,6 +31,7 @@ public class DownloadRequestBuilder implements RequestBuilder {
     String url;
     String dirPath;
     String fileName;
+    Long progressInterval = 100L;
     Priority priority = Priority.MEDIUM;
     Object tag;
     int readTimeout;
@@ -98,6 +99,12 @@ public class DownloadRequestBuilder implements RequestBuilder {
     @Override
     public DownloadRequestBuilder setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+        return this;
+    }
+
+    @Override
+    public RequestBuilder setProgressInterval(Long progressInterval) {
+        this.progressInterval = progressInterval;
         return this;
     }
 

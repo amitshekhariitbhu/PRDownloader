@@ -56,34 +56,36 @@ public class MainActivity extends AppCompatActivity {
     final String URL13 = "https://media.giphy.com/media/Bk0CW5frw4qfS/giphy.gif";
     final String URL14 = "https://www.pexels.com/download/video/3195394/";
     final String URL15 = "https://www.pexels.com/download/video/3209828/";
+    final String URL16 = "https://filesamples.com/samples/document/txt/sample3.txt";
 
     Button buttonOne, buttonTwo, buttonThree, buttonFour,
             buttonFive, buttonSix, buttonSeven, buttonEight,
             buttonNine, buttonTen, buttonEleven, buttonTwelve,
-            buttonThirteen, buttonFourteen, buttonFifteen,
+            buttonThirteen, buttonFourteen, buttonFifteen, buttonSixteen,
             buttonCancelOne, buttonCancelTwo, buttonCancelThree,
             buttonCancelFour, buttonCancelFive, buttonCancelSix,
             buttonCancelSeven, buttonCancelEight, buttonCancelNine,
             buttonCancelTen, buttonCancelEleven, buttonCancelTwelve,
-            buttonCancelThirteen, buttonCancelFourteen, buttonCancelFifteen;
+            buttonCancelThirteen, buttonCancelFourteen, buttonCancelFifteen, buttonCancelSixteen;
 
     TextView textViewProgressOne, textViewProgressTwo, textViewProgressThree,
             textViewProgressFour, textViewProgressFive, textViewProgressSix,
             textViewProgressSeven, textViewProgressEight, textViewProgressNine,
             textViewProgressTen, textViewProgressEleven, textViewProgressTwelve,
-            textViewProgressThirteen, textViewProgressFourteen, textViewProgressFifteen;
+            textViewProgressThirteen, textViewProgressFourteen, textViewProgressFifteen,
+            textViewProgressSixteen;
 
     ProgressBar progressBarOne, progressBarTwo, progressBarThree,
             progressBarFour, progressBarFive, progressBarSix,
             progressBarSeven, progressBarEight, progressBarNine,
             progressBarTen, progressBarEleven, progressBarTwelve,
-            progressBarThirteen, progressBarFourteen, progressBarFifteen;
+            progressBarThirteen, progressBarFourteen, progressBarFifteen, progressBarSixteen;
 
     int downloadIdOne, downloadIdTwo, downloadIdThree, downloadIdFour,
             downloadIdFive, downloadIdSix, downloadIdSeven,
             downloadIdEight, downloadIdNine, downloadIdTen,
             downloadIdEleven, downloadIdTwelve, downloadIdThirteen,
-            downloadIdFourteen, downloadIdFifteen;
+            downloadIdFourteen, downloadIdFifteen, downloadIdSixteen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         onClickListenerThirteen();
         onClickListenerFourteen();
         onClickListenerFifteen();
+        onClickListenerSixteen();
     }
 
     private void init() {
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         buttonThirteen = findViewById(R.id.buttonThirteen);
         buttonFourteen = findViewById(R.id.buttonFourteen);
         buttonFifteen = findViewById(R.id.buttonFifteen);
+        buttonSixteen = findViewById(R.id.buttonSixteen);
 
         buttonCancelOne = findViewById(R.id.buttonCancelOne);
         buttonCancelTwo = findViewById(R.id.buttonCancelTwo);
@@ -143,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         buttonCancelThirteen = findViewById(R.id.buttonCancelThirteen);
         buttonCancelFourteen = findViewById(R.id.buttonCancelFourteen);
         buttonCancelFifteen = findViewById(R.id.buttonCancelFifteen);
+        buttonCancelSixteen = findViewById(R.id.buttonCancelSixteen);
 
         textViewProgressOne = findViewById(R.id.textViewProgressOne);
         textViewProgressTwo = findViewById(R.id.textViewProgressTwo);
@@ -159,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
         textViewProgressThirteen = findViewById(R.id.textViewProgressThirteen);
         textViewProgressFourteen = findViewById(R.id.textViewProgressFourteen);
         textViewProgressFifteen = findViewById(R.id.textViewProgressFifteen);
+        textViewProgressSixteen = findViewById(R.id.textViewProgressSixteen);
 
         progressBarOne = findViewById(R.id.progressBarOne);
         progressBarTwo = findViewById(R.id.progressBarTwo);
@@ -175,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         progressBarThirteen = findViewById(R.id.progressBarThirteen);
         progressBarFourteen = findViewById(R.id.progressBarFourteen);
         progressBarFifteen = findViewById(R.id.progressBarFifteen);
+        progressBarSixteen = findViewById(R.id.progressBarSixteen);
     }
 
     public void onClickListenerOne() {
@@ -1470,6 +1477,92 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PRDownloader.cancel(downloadIdFifteen);
+            }
+        });
+    }
+
+    public void onClickListenerSixteen() {
+        buttonSixteen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Status.RUNNING == PRDownloader.getStatus(downloadIdSixteen)) {
+                    PRDownloader.pause(downloadIdSixteen);
+                    return;
+                }
+
+                buttonSixteen.setEnabled(false);
+                progressBarSixteen.setIndeterminate(true);
+                progressBarSixteen.getIndeterminateDrawable().setColorFilter(
+                        Color.BLUE, android.graphics.PorterDuff.Mode.SRC_IN);
+
+                if (Status.PAUSED == PRDownloader.getStatus(downloadIdSixteen)) {
+                    PRDownloader.resume(downloadIdSixteen);
+                    return;
+                }
+                downloadIdSixteen = PRDownloader.download(URL16, dirPath, "sample3.txt")
+                        .build()
+                        .setOnStartOrResumeListener(new OnStartOrResumeListener() {
+                            @Override
+                            public void onStartOrResume() {
+                                progressBarSixteen.setIndeterminate(false);
+                                buttonSixteen.setEnabled(true);
+                                buttonSixteen.setText(R.string.pause);
+                                buttonCancelSixteen.setEnabled(true);
+                                buttonCancelSixteen.setText(R.string.cancel);
+                            }
+                        })
+                        .setOnPauseListener(new OnPauseListener() {
+                            @Override
+                            public void onPause() {
+                                buttonSixteen.setText(R.string.resume);
+                            }
+                        })
+                        .setOnCancelListener(new OnCancelListener() {
+                            @Override
+                            public void onCancel() {
+                                downloadIdSixteen = 0;
+                                buttonSixteen.setText(R.string.start);
+                                buttonCancelSixteen.setEnabled(false);
+                                progressBarSixteen.setProgress(0);
+                                textViewProgressSixteen.setText("");
+                                progressBarSixteen.setIndeterminate(false);
+                            }
+                        })
+                        .setOnProgressListener(new OnProgressListener() {
+                            @Override
+                            public void onProgress(Progress progress) {
+                                long progressPercent = progress.currentBytes * 100 / progress.totalBytes;
+                                progressBarSixteen.setProgress((int) progressPercent);
+                                textViewProgressSixteen.setText(Utils.getProgressDisplayLine(progress.currentBytes, progress.totalBytes));
+                            }
+                        })
+                        .start(new OnDownloadListener() {
+                            @Override
+                            public void onDownloadComplete() {
+                                buttonSixteen.setEnabled(false);
+                                buttonCancelSixteen.setEnabled(false);
+                                buttonSixteen.setText(R.string.completed);
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                buttonSixteen.setText(R.string.start);
+                                Toast.makeText(getApplicationContext(), getString(R.string.some_error_occurred) + " " + "15", Toast.LENGTH_SHORT).show();
+                                textViewProgressSixteen.setText("");
+                                progressBarSixteen.setProgress(0);
+                                downloadIdSixteen = 0;
+                                buttonCancelSixteen.setEnabled(false);
+                                progressBarSixteen.setIndeterminate(false);
+                                buttonSixteen.setEnabled(true);
+                            }
+                        });
+            }
+        });
+
+        buttonCancelSixteen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PRDownloader.cancel(downloadIdSixteen);
             }
         });
     }

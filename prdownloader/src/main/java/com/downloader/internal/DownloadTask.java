@@ -81,7 +81,9 @@ public class DownloadTask {
         try {
 
             if (request.getOnProgressListener() != null) {
-                progressHandler = new ProgressHandler(request.getOnProgressListener());
+                progressHandler = new ProgressHandler(
+                        request.getProgressInterval(),
+                        request.getOnProgressListener());
             }
 
             tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());

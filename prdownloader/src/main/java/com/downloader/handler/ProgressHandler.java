@@ -31,9 +31,12 @@ import com.downloader.Progress;
 public class ProgressHandler extends Handler {
 
     private final OnProgressListener listener;
+    private Long progressInterval;
+    private Long timeCounter = 0L;
 
-    public ProgressHandler(OnProgressListener listener) {
+    public ProgressHandler(Long progressInterval, OnProgressListener listener) {
         super(Looper.getMainLooper());
+        this.progressInterval = progressInterval;
         this.listener = listener;
     }
 
@@ -42,8 +45,11 @@ public class ProgressHandler extends Handler {
         switch (msg.what) {
             case Constants.UPDATE:
                 if (listener != null) {
-                    final Progress progress = (Progress) msg.obj;
-                    listener.onProgress(progress);
+                    if (System.currentTimeMillis() > timeCounter + progressInterval) {
+                        final Progress progress = (Progress) msg.obj;
+                        listener.onProgress(progress);
+                        timeCounter = System.currentTimeMillis();
+                    }
                 }
                 break;
             default:
