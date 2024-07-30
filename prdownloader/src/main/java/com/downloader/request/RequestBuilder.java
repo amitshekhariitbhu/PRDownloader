@@ -36,4 +36,5 @@ public interface RequestBuilder {
 
     RequestBuilder setUserAgent(String userAgent);
 
+    RequestBuilder setProgressInterval(Long progressInterval);
 }

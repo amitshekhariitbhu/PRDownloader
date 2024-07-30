@@ -81,7 +81,9 @@ public class DownloadTask {
         try {
 
             if (request.getOnProgressListener() != null) {
-                progressHandler = new ProgressHandler(request.getOnProgressListener());
+                progressHandler = new ProgressHandler(
+                        request.getProgressInterval(),
+                        request.getOnProgressListener());
             }
 
             tempPath = Utils.getTempPath(request.getDirPath(), request.getFileName());
@@ -309,8 +311,7 @@ public class DownloadTask {
             if (progressHandler != null) {
                 progressHandler
                         .obtainMessage(Constants.UPDATE,
-                                new Progress(request.getDownloadedBytes(),
-                                        totalBytes)).sendToTarget();
+                                new Progress(request.getDownloadedBytes(), totalBytes)).sendToTarget();
             }
         }
     }

@@ -40,6 +40,7 @@ public class Core {
         return instance;
     }
 
+
     public ExecutorSupplier getExecutorSupplier() {
         return executorSupplier;
     }

@@ -46,6 +46,7 @@ public class DownloadRequest {
     private String url;
     private String dirPath;
     private String fileName;
+    private Long progressInterval;
     private int sequenceNumber;
     private Future future;
     private long downloadedBytes;
@@ -69,15 +70,21 @@ public class DownloadRequest {
         this.headerMap = builder.headerMap;
         this.priority = builder.priority;
         this.tag = builder.tag;
-        this.readTimeout =
-                builder.readTimeout != 0 ?
-                        builder.readTimeout :
-                        getReadTimeoutFromConfig();
+        this.readTimeout = builder.readTimeout != 0 ? builder.readTimeout : getReadTimeoutFromConfig();
         this.connectTimeout =
                 builder.connectTimeout != 0 ?
                         builder.connectTimeout :
                         getConnectTimeoutFromConfig();
         this.userAgent = builder.userAgent;
+        this.progressInterval = builder.progressInterval;
+    }
+
+    public Long getProgressInterval() {
+        return progressInterval;
+    }
+
+    public void setProgressInterval(Long progressInterval) {
+        this.progressInterval = progressInterval;
     }
 
     public Priority getPriority() {

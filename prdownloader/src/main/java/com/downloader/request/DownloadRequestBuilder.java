@@ -31,6 +31,7 @@ public class DownloadRequestBuilder implements RequestBuilder {
     String url;
     String dirPath;
     String fileName;
+    Long progressInterval = 100L;
     Priority priority = Priority.MEDIUM;
     Object tag;
     int readTimeout;
@@ -41,7 +42,18 @@ public class DownloadRequestBuilder implements RequestBuilder {
     public DownloadRequestBuilder(String url, String dirPath, String fileName) {
         this.url = url;
         this.dirPath = dirPath;
-        this.fileName = fileName;
+        this.fileName = sanitizeFilename(fileName);
+    }
+
+    /**
+     * replace all illegal file name characters with "_"
+     */
+    public static String sanitizeFilename(String filename) {
+        // Define the set of illegal characters for filenames
+        String illegalChars = "[/\\\\?%*:|\"<>]";
+
+        // Replace illegal characters with an underscore
+        return filename.replaceAll(illegalChars, "_");
     }
 
     @Override
@@ -87,6 +99,12 @@ public class DownloadRequestBuilder implements RequestBuilder {
     @Override
     public DownloadRequestBuilder setUserAgent(String userAgent) {
         this.userAgent = userAgent;
+        return this;
+    }
+
+    @Override
+    public RequestBuilder setProgressInterval(Long progressInterval) {
+        this.progressInterval = progressInterval;
         return this;
     }
 
