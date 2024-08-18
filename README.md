@@ -33,12 +33,12 @@ You can connect with me on:
 
 Add this in your `settings.gradle`:
 ```groovy
-    maven { url 'https://jitpack.io' }
+maven { url 'https://jitpack.io' }
 ```
 
 If you are using `settings.gradle.kts`, add the following:
 ```kotlin
-    maven { setUrl("https://jitpack.io") }
+maven { setUrl("https://jitpack.io") }
 ```
 
 Add this in your `build.gradle`
