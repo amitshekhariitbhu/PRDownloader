@@ -35,8 +35,8 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.amitshekhariitbhu'
-            artifactId = 'prdownloader'
-            version = '0.7.0'
+            artifactId = 'PRDownloader'
+            version = '1.0.1'
 
             afterEvaluate {
                 from components.release
