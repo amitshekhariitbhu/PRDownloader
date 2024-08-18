@@ -33,7 +33,7 @@ You can connect with me on:
 
 Add this in your build.gradle
 ```groovy
-implementation 'com.mindorks.android:prdownloader:0.6.0'
+implementation 'com.github.amitshekhariitbhu:prdownloader:0.7.0'
 ```
 Do not forget to add internet permission in manifest if already not present
 ```xml
