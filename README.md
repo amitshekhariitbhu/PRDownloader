@@ -43,12 +43,12 @@ maven { setUrl("https://jitpack.io") }
 
 Add this in your `build.gradle`
 ```groovy
-implementation 'com.github.amitshekhariitbhu:PRDownloader:1.0.1'
+implementation 'com.github.amitshekhariitbhu:PRDownloader:1.0.2'
 ```
 
 If you are using `build.gradle.kts`, add the following:
 ```kotlin
-implementation("com.github.amitshekhariitbhu:PRDownloader:1.0.1")
+implementation("com.github.amitshekhariitbhu:PRDownloader:1.0.2")
 ```
 
 Do not forget to add internet permission in manifest if already not present
